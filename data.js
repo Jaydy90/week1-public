@@ -25,58 +25,100 @@ const foodData = {
   },
   gyeonggi: {
     name: "경기도",
-    foods: [],
+    foods: [
+      { name: "수원갈비 맛집", desc: "정통 수원갈비를 즐길 수 있는 인기 맛집", img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" },
+      { name: "파주 장단콩 요리", desc: "지역 특산물로 만든 건강한 한 상", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   incheon: {
     name: "인천광역시",
-    foods: [],
+    foods: [
+      { name: "차이나타운 짜장면", desc: "인천 차이나타운 대표 메뉴", img: "https://images.unsplash.com/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=600&q=80" },
+      { name: "연안부두 해산물", desc: "신선한 해산물을 즐길 수 있는 곳", img: "https://images.unsplash.com/photo-1516685018646-549198525c1b?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   gangwon: {
     name: "강원도",
-    foods: [],
+    foods: [
+      { name: "춘천 닭갈비", desc: "철판에 볶아 먹는 강원도 대표 음식", img: "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=600&q=80" },
+      { name: "강릉 초당순두부", desc: "담백한 순두부 정식", img: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   chungnam: {
     name: "충청남도",
-    foods: [],
+    foods: [
+      { name: "천안 호두과자", desc: "선물로 인기 높은 지역 간식", img: "https://images.unsplash.com/photo-1542826438-565f32f86d0a?auto=format&fit=crop&w=600&q=80" },
+      { name: "서산 간장게장", desc: "짭짤하고 깊은 맛의 간장게장", img: "https://images.unsplash.com/photo-1617196035154-1a4c6bd3d91b?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   chungbuk: {
     name: "충청북도",
-    foods: [],
+    foods: [
+      { name: "청주 올갱이국", desc: "깊은 국물 맛이 특징인 향토 음식", img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=600&q=80" },
+      { name: "단양 마늘 요리", desc: "지역 특산물 마늘로 만든 요리", img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   sejong: {
     name: "세종특별자치시",
-    foods: [],
+    foods: [
+      { name: "세종 한식 정식", desc: "깔끔한 구성의 한식 정식 맛집", img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" },
+      { name: "세종 카페 거리", desc: "디저트와 커피를 즐기기 좋은 곳", img: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   daejeon: {
     name: "대전광역시",
-    foods: [],
+    foods: [
+      { name: "성심당 빵집", desc: "대전 대표 베이커리", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+      { name: "대전 칼국수", desc: "칼국수 거리에서 즐기는 한 그릇", img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   gyeongbuk: {
     name: "경상북도",
-    foods: [],
+    foods: [
+      { name: "안동찜닭", desc: "짭짤한 양념의 대표 향토 음식", img: "https://images.unsplash.com/photo-1604908554025-e47742b1f17c?auto=format&fit=crop&w=600&q=80" },
+      { name: "경주 황남빵", desc: "경주를 대표하는 전통 빵", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   daegu: {
     name: "대구광역시",
-    foods: [],
+    foods: [
+      { name: "대구 막창", desc: "쫄깃한 식감의 막창구이", img: "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=600&q=80" },
+      { name: "납작만두", desc: "대구의 대표 분식", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   ulsan: {
     name: "울산광역시",
-    foods: [],
+    foods: [
+      { name: "울산 언양불고기", desc: "숯불 향 가득한 불고기", img: "https://images.unsplash.com/photo-1604908554025-e47742b1f17c?auto=format&fit=crop&w=600&q=80" },
+      { name: "대왕암 해산물", desc: "바다 전망과 함께 즐기는 해산물", img: "https://images.unsplash.com/photo-1516685018646-549198525c1b?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   gyeongnam: {
     name: "경상남도",
-    foods: [],
+    foods: [
+      { name: "통영 충무김밥", desc: "담백한 김밥과 매콤한 반찬", img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&q=80" },
+      { name: "진주 냉면", desc: "시원하고 담백한 진주 냉면", img: "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   jeonnam: {
     name: "전라남도",
-    foods: [],
+    foods: [
+      { name: "여수 게장", desc: "간장게장과 양념게장이 인기", img: "https://images.unsplash.com/photo-1617196035154-1a4c6bd3d91b?auto=format&fit=crop&w=600&q=80" },
+      { name: "보성 녹차 요리", desc: "녹차를 활용한 건강한 메뉴", img: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   gwangju: {
     name: "광주광역시",
-    foods: [],
+    foods: [
+      { name: "광주 떡갈비", desc: "달콤짭짤한 떡갈비 정식", img: "https://images.unsplash.com/photo-1604908554025-e47742b1f17c?auto=format&fit=crop&w=600&q=80" },
+      { name: "무등산 보리밥", desc: "산채와 함께 즐기는 보리밥", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
   jeonbuk: {
     name: "전라북도",
-    foods: [],
+    foods: [
+      { name: "전주 비빔밥", desc: "다채로운 고명과 고소한 맛", img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=600&q=80" },
+      { name: "남원 추어탕", desc: "진하고 든든한 추어탕", img: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&q=80" },
+    ],
   },
 };
