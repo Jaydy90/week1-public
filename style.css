@@ -522,6 +522,60 @@ input:checked + .slider:before {
   margin-top: 0;
 }
 
+.updates-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.updates-lead {
+  margin: 0.5rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.updates-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.updates-item {
+  background-color: var(--card-bg-color);
+  padding: 1.3rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.updates-item h3 {
+  margin-top: 0;
+}
+
+.faq-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.faq-lead {
+  margin: 0.5rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.faq-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.faq-item {
+  background-color: var(--card-bg-color);
+  padding: 1.3rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.faq-item h3 {
+  margin-top: 0;
+}
+
 @media (max-width: 900px) {
   .header {
     flex-wrap: wrap;
