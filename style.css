@@ -180,9 +180,9 @@ input:checked + .slider:before {
 [data-id="gyeonggi"] { --x: 52%; --y: 24%; --dy: -6px; }
 [data-id="gangwon"] { --x: 68%; --y: 26%; }
 [data-id="chungnam"] { --x: 41%; --y: 45%; --dx: -10px; }
-[data-id="chungbuk"] { --x: 57%; --y: 41%; --dx: 8px; }
+[data-id="chungbuk"] { --x: 59%; --y: 40%; --dx: 12px; }
 [data-id="daejeon"] { --x: 51%; --y: 47%; --dy: 10px; }
-[data-id="sejong"] { --x: 50%; --y: 39%; --dy: -4px; }
+[data-id="sejong"] { --x: 49%; --y: 38%; --dy: -8px; }
 [data-id="gyeongbuk"] { --x: 68%; --y: 46%; }
 [data-id="daegu"] { --x: 63%; --y: 56%; --dx: 6px; }
 [data-id="ulsan"] { --x: 74%; --y: 61%; --dx: 10px; }
