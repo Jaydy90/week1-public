@@ -1,1 +1,253 @@
-/* Add styles here */
+:root {
+  --bg-color: #F0F2F5;
+  --text-color: #333;
+  --header-bg-color: #FFF;
+  --map-stroke-color: #FFF;
+  --map-fill-color: #D1D5DB;
+  --map-hover-color: #A5B4FC;
+  --map-active-color: #6366F1;
+  --modal-bg-color: #FFF;
+  --modal-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  --card-bg-color: #F9FAFB;
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --close-button-color: #999;
+  --close-button-hover-color: #666;
+  --slider-bg-color: #ccc;
+  --slider-checked-bg-color: #6366F1;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1A1A1A;
+  --text-color: #E0E0E0;
+  --header-bg-color: #2D2D2D;
+  --map-stroke-color: #444;
+  --map-fill-color: #4B5563;
+  --map-hover-color: #4F46E5;
+  --map-active-color: #818CF8;
+  --modal-bg-color: #2D2D2D;
+  --modal-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  --card-bg-color: #374151;
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  --close-button-color: #aaa;
+  --close-button-hover-color: #fff;
+  --slider-bg-color: #555;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--header-bg-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s;
+}
+
+.title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+/* Theme Switch Styles */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--slider-bg-color);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--slider-checked-bg-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.main-content {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.map-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.map-container::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.kindpng.com/picc/m/575-5754006_south-korea-map-outline-png-blank-south-korea.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5; /* Increased opacity */
+}
+
+.map-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* More columns for precision */
+  grid-template-rows: repeat(10, 1fr); /* More rows for precision */
+  height: 800px; /* Adjust as needed */
+  gap: 2px;
+}
+
+.region {
+  background-color: rgba(165, 180, 252, 0.7); /* Semi-transparent */
+  color: var(--text-color);
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  font-size: 0.7rem;
+}
+
+.region:hover {
+  background-color: rgba(99, 102, 241, 0.9);
+}
+
+/* More accurate positioning */
+[data-id="seoul"] { grid-area: 3 / 4 / 4 / 6; }
+[data-id="incheon"] { grid-area: 3 / 2 / 4 / 4; }
+[data-id="gyeonggi"] { grid-area: 2 / 3 / 3 / 6; }
+[data-id="gangwon"] { grid-area: 2 / 6 / 4 / 9; }
+[data-id="chungnam"] { grid-area: 4 / 3 / 5 / 5; }
+[data-id="chungbuk"] { grid-area: 4 / 5 / 5 / 7; }
+[data-id="daejeon"] { grid-area: 5 / 5 / 6 / 6; }
+[data-id="sejong"] { grid-area: 4 / 4 / 5 / 5; }
+[data-id="gyeongbuk"] { grid-area: 4 / 7 / 6 / 10; }
+[data-id="daegu"] { grid-area: 6 / 8 / 7 / 9; }
+[data-id="ulsan"] { grid-area: 7 / 10 / 8 / 11; }
+[data-id="busan"] { grid-area: 8 / 9 / 9 / 10; }
+[data-id="gyeongnam"] { grid-area: 7 / 7 / 9 / 9; }
+[data-id="jeonbuk"] { grid-area: 6 / 4 / 7 / 7; }
+[data-id="gwangju"] { grid-area: 8 / 4 / 9 / 5; }
+[data-id="jeonnam"] { grid-area: 8 / 2 / 10 / 5; }
+[data-id="jeju"] { grid-area: 10 / 1 / 11 / 3; }
+
+
+
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: var(--modal-bg-color);
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: var(--modal-shadow);
+  position: relative;
+}
+
+.close-button {
+  color: var(--close-button-color);
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: var(--close-button-hover-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modal-title {
+  margin-top: 0;
+}
+
+.food-card {
+  display: flex;
+  margin-bottom: 1rem;
+  background-color: var(--card-bg-color);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.food-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.food-info h3 {
+  margin-top: 0;
+}
