@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const regions = document.querySelectorAll('.region');
     const navButtons = document.querySelectorAll('.nav-button');
     const sections = document.querySelectorAll('.page-section');
+    const titleLink = document.querySelector('.title-link');
 
     regions.forEach(region => {
         region.addEventListener('click', () => {
@@ -82,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
     navButtons.forEach(button => {
         button.addEventListener('click', () => setActiveSection(button.dataset.target));
     });
+
+    if (titleLink) {
+        titleLink.addEventListener('click', () => setActiveSection('map'));
+    }
 
     const ensureTeachableModel = async () => {
         if (tmModel) {
