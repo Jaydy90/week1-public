@@ -353,3 +353,75 @@ input:checked + .slider:before {
   gap: 0.35rem;
   text-align: left;
 }
+
+.tm-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.guide-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.guide-lead {
+  margin: 0.5rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.guide-card {
+  background-color: var(--card-bg-color);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.guide-card h3 {
+  margin-top: 0;
+}
+
+.guide-card ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  line-height: 1.5;
+}
+
+.site-footer {
+  max-width: 900px;
+  margin: 2rem auto 3rem;
+  padding: 1.2rem;
+  text-align: center;
+  background-color: var(--card-bg-color);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.site-footer p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+@media (max-width: 900px) {
+  .header {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .top-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .main-content {
+    padding: 1.5rem;
+  }
+}

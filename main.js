@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return foods.map(food => `
             <div class="food-card">
-                <img src="${food.img}" alt="${food.name}">
+                <img src="${food.img}" alt="${food.name}" loading="lazy" decoding="async">
                 <div class="food-info">
                     <h3>${food.name}</h3>
                     <p>${food.desc}</p>

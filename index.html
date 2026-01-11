@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>대한민국 맛집 지도</title>
+    <meta name="description" content="지역별 맛집 정보를 한눈에 확인하고, 추천 기준과 업데이트 계획까지 투명하게 안내하는 대한민국 맛집 지도.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <h1 class="title">대한민국 맛집 지도</h1>
-        <nav class="top-nav">
+        <nav class="top-nav" aria-label="주요 메뉴">
             <button class="nav-button is-active" type="button" data-target="map">지도</button>
             <button class="nav-button" type="button" data-target="jiu-jitsu">주짓수</button>
             <button class="nav-button" type="button" data-target="teachable">AI 판별</button>
+            <button class="nav-button" type="button" data-target="guide">안내</button>
         </nav>
         <div class="theme-switch-wrapper">
             <label class="theme-switch" for="checkbox">
@@ -74,6 +76,47 @@
                     <div class="tm-webcam" id="tm-webcam"></div>
                     <div class="tm-labels" id="tm-labels"></div>
                 </div>
+                <p class="tm-note">웹캠 영상은 브라우저에서만 처리되며 외부로 전송되지 않습니다.</p>
+            </div>
+        </section>
+        <section class="page-section" data-section="guide">
+            <div class="guide-container">
+                <h2>서비스 안내</h2>
+                <p class="guide-lead">대한민국 지역별 맛집 정보를 쉽게 탐색할 수 있도록 구성했습니다.</p>
+                <div class="guide-grid">
+                    <div class="guide-card">
+                        <h3>추천 기준</h3>
+                        <ul>
+                            <li>지역별 대표 음식과 방문 만족도가 높은 곳을 우선 소개합니다.</li>
+                            <li>메뉴 구성, 재방문 후기, 현장 접근성을 참고해 정리합니다.</li>
+                            <li>최신 리뷰를 기반으로 주기적으로 업데이트합니다.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-card">
+                        <h3>데이터 업데이트</h3>
+                        <ul>
+                            <li>비어 있는 지역은 자료 수집 후 순차적으로 추가합니다.</li>
+                            <li>정보 제보는 아래 제휴 문의 폼으로 남겨주세요.</li>
+                            <li>오류가 확인되면 최대한 빠르게 수정합니다.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-card">
+                        <h3>이용 팁</h3>
+                        <ul>
+                            <li>지도를 클릭하면 지역별 맛집 리스트가 열립니다.</li>
+                            <li>여행 동선과 예산에 따라 맛집을 비교해 보세요.</li>
+                            <li>방문 전 영업시간과 휴무일은 꼭 확인하세요.</li>
+                        </ul>
+                    </div>
+                    <div class="guide-card">
+                        <h3>개인정보 처리 안내</h3>
+                        <ul>
+                            <li>문의 폼은 이메일과 내용만 전달받습니다.</li>
+                            <li>웹캠 판별 기능은 브라우저에서만 처리됩니다.</li>
+                            <li>필요 최소한의 정보만 수집합니다.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -90,6 +133,7 @@
 
     <div id="contact-form-container" style="margin: 2rem auto; padding: 2rem; max-width: 600px; background-color: var(--card-bg-color); border-radius: 8px; box-shadow: var(--card-shadow);">
       <h2 style="text-align: center;">제휴 문의</h2>
+      <p style="text-align: center; margin-top: 0.5rem;">정보 제보, 광고, 협업 문의를 환영합니다.</p>
       <form action="https://formspree.io/f/xeeejnjp" method="POST">
         <div style="margin-bottom: 1rem;">
           <label for="email" style="display: block; margin-bottom: 0.5rem;">
@@ -108,6 +152,11 @@
         </button>
       </form>
     </div>
+
+    <footer class="site-footer">
+        <p>대한민국 맛집 지도 · 최신 업데이트: 2024-12</p>
+        <p>제보 및 문의는 위 제휴 문의 폼을 이용해 주세요.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
