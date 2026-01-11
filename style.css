@@ -120,6 +120,7 @@ input:checked + .slider:before {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  aspect-ratio: 1 / 1;
 }
 
 .map-container::before {
@@ -135,15 +136,13 @@ input:checked + .slider:before {
   background-repeat: no-repeat;
   background-position: center;
   opacity: 0.5; /* Increased opacity */
+  z-index: 0;
 }
 
 .map-grid {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr); /* More columns for precision */
-  grid-template-rows: repeat(10, 1fr); /* More rows for precision */
-  height: 800px; /* Adjust as needed */
-  gap: 2px;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 .region {
@@ -159,6 +158,11 @@ input:checked + .slider:before {
   align-items: center;
   padding: 2px;
   font-size: 0.7rem;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
 }
 
 .region:hover {
@@ -166,23 +170,23 @@ input:checked + .slider:before {
 }
 
 /* More accurate positioning */
-[data-id="seoul"] { grid-area: 3 / 4 / 4 / 6; }
-[data-id="incheon"] { grid-area: 3 / 2 / 4 / 4; }
-[data-id="gyeonggi"] { grid-area: 2 / 3 / 3 / 6; }
-[data-id="gangwon"] { grid-area: 2 / 6 / 4 / 9; }
-[data-id="chungnam"] { grid-area: 4 / 3 / 5 / 5; }
-[data-id="chungbuk"] { grid-area: 4 / 5 / 5 / 7; }
-[data-id="daejeon"] { grid-area: 5 / 5 / 6 / 6; }
-[data-id="sejong"] { grid-area: 4 / 4 / 5 / 5; }
-[data-id="gyeongbuk"] { grid-area: 4 / 7 / 6 / 10; }
-[data-id="daegu"] { grid-area: 6 / 8 / 7 / 9; }
-[data-id="ulsan"] { grid-area: 7 / 10 / 8 / 11; }
-[data-id="busan"] { grid-area: 8 / 9 / 9 / 10; }
-[data-id="gyeongnam"] { grid-area: 7 / 7 / 9 / 9; }
-[data-id="jeonbuk"] { grid-area: 6 / 4 / 7 / 7; }
-[data-id="gwangju"] { grid-area: 8 / 4 / 9 / 5; }
-[data-id="jeonnam"] { grid-area: 8 / 2 / 10 / 5; }
-[data-id="jeju"] { grid-area: 10 / 1 / 11 / 3; }
+[data-id="seoul"] { --x: 47%; --y: 30%; }
+[data-id="incheon"] { --x: 41%; --y: 30%; }
+[data-id="gyeonggi"] { --x: 50%; --y: 27%; }
+[data-id="gangwon"] { --x: 64%; --y: 27%; }
+[data-id="chungnam"] { --x: 44%; --y: 41%; }
+[data-id="chungbuk"] { --x: 54%; --y: 40%; }
+[data-id="daejeon"] { --x: 50%; --y: 47%; }
+[data-id="sejong"] { --x: 47%; --y: 44%; }
+[data-id="gyeongbuk"] { --x: 64%; --y: 44%; }
+[data-id="daegu"] { --x: 62%; --y: 55%; }
+[data-id="ulsan"] { --x: 72%; --y: 60%; }
+[data-id="busan"] { --x: 69%; --y: 66%; }
+[data-id="gyeongnam"] { --x: 58%; --y: 61%; }
+[data-id="jeonbuk"] { --x: 47%; --y: 54%; }
+[data-id="gwangju"] { --x: 41%; --y: 63%; }
+[data-id="jeonnam"] { --x: 34%; --y: 70%; }
+[data-id="jeju"] { --x: 30%; --y: 85%; }
 
 
 
