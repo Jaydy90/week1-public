@@ -481,6 +481,47 @@ input:checked + .slider:before {
   opacity: 0.7;
 }
 
+.about-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.about-lead {
+  margin: 0.5rem 0 1.8rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.about-card {
+  background-color: var(--card-bg-color);
+  padding: 1.4rem;
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+}
+
+.about-card h3 {
+  margin-top: 0;
+}
+
+.about-callout {
+  background-color: var(--card-bg-color);
+  padding: 1.4rem;
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+}
+
+.about-callout h3 {
+  margin-top: 0;
+}
+
 @media (max-width: 900px) {
   .header {
     flex-wrap: wrap;
