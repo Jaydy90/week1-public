@@ -56,6 +56,34 @@ body {
   margin: 0;
 }
 
+.top-nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-button {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.nav-button:hover {
+  border-color: var(--map-active-color);
+  color: var(--map-active-color);
+}
+
+.nav-button.is-active {
+  background-color: var(--map-active-color);
+  color: #fff;
+  border-color: transparent;
+}
+
 /* Theme Switch Styles */
 .theme-switch-wrapper {
   display: flex;
@@ -112,6 +140,15 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.page-section {
+  display: none;
+  width: 100%;
+}
+
+.page-section.is-active {
+  display: block;
 }
 
 
@@ -259,4 +296,60 @@ input:checked + .slider:before {
 
 .food-info h3 {
   margin-top: 0;
+}
+
+.tm-container {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tm-subtitle {
+  margin: 0.5rem 0 1.5rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.tm-card {
+  background-color: var(--card-bg-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+}
+
+.tm-action {
+  background-color: var(--map-active-color);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tm-action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tm-status {
+  margin: 0.75rem 0 1rem;
+  font-size: 0.95rem;
+}
+
+.tm-webcam {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.tm-webcam canvas {
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.tm-labels {
+  display: grid;
+  gap: 0.35rem;
+  text-align: left;
 }

@@ -10,6 +10,11 @@
 <body>
     <header class="header">
         <h1 class="title">대한민국 맛집 지도</h1>
+        <nav class="top-nav">
+            <button class="nav-button is-active" type="button" data-target="map">지도</button>
+            <button class="nav-button" type="button" data-target="jiu-jitsu">주짓수</button>
+            <button class="nav-button" type="button" data-target="teachable">AI 판별</button>
+        </nav>
         <div class="theme-switch-wrapper">
             <label class="theme-switch" for="checkbox">
                 <input type="checkbox" id="checkbox" />
@@ -19,27 +24,58 @@
     </header>
 
     <main class="main-content">
-        <div class="map-container">
-            <div class="map-grid">
-                <div class="region" data-id="seoul">서울특별시</div>
-                <div class="region" data-id="busan">부산광역시</div>
-                <div class="region" data-id="daegu">대구광역시</div>
-                <div class="region" data-id="incheon">인천광역시</div>
-                <div class="region" data-id="gwangju">광주광역시</div>
-                <div class="region" data-id="daejeon">대전광역시</div>
-                <div class="region" data-id="ulsan">울산광역시</div>
-                <div class="region" data-id="gyeonggi">경기도</div>
-                <div class="region" data-id="gangwon">강원도</div>
-                <div class="region" data-id="chungbuk">충청북도</div>
-                <div class="region" data-id="chungnam">충청남도</div>
-                <div class="region" data-id="jeonbuk">전라북도</div>
-                <div class="region" data-id="jeonnam">전라남도</div>
-                <div class="region" data-id="gyeongbuk">경상북도</div>
-                <div class="region" data-id="gyeongnam">경상남도</div>
-                <div class="region" data-id="jeju">제주특별자치도</div>
-                <div class="region" data-id="sejong">세종특별자치시</div>
+        <section class="page-section is-active" data-section="map">
+            <div class="map-container">
+                <div class="map-grid">
+                    <div class="region" data-id="seoul">서울특별시</div>
+                    <div class="region" data-id="busan">부산광역시</div>
+                    <div class="region" data-id="daegu">대구광역시</div>
+                    <div class="region" data-id="incheon">인천광역시</div>
+                    <div class="region" data-id="gwangju">광주광역시</div>
+                    <div class="region" data-id="daejeon">대전광역시</div>
+                    <div class="region" data-id="ulsan">울산광역시</div>
+                    <div class="region" data-id="gyeonggi">경기도</div>
+                    <div class="region" data-id="gangwon">강원도</div>
+                    <div class="region" data-id="chungbuk">충청북도</div>
+                    <div class="region" data-id="chungnam">충청남도</div>
+                    <div class="region" data-id="jeonbuk">전라북도</div>
+                    <div class="region" data-id="jeonnam">전라남도</div>
+                    <div class="region" data-id="gyeongbuk">경상북도</div>
+                    <div class="region" data-id="gyeongnam">경상남도</div>
+                    <div class="region" data-id="jeju">제주특별자치도</div>
+                    <div class="region" data-id="sejong">세종특별자치시</div>
+                </div>
             </div>
-        </div>
+        </section>
+        <section class="page-section" data-section="jiu-jitsu">
+            <div class="jj-container">
+                <h2>주짓수 판별</h2>
+                <p class="jj-subtitle">사진을 업로드하면 판별 결과를 표시합니다.</p>
+                <div class="jj-card">
+                    <label class="jj-upload">
+                        <input type="file" id="jj-file" accept="image/*">
+                        <span>사진 선택</span>
+                    </label>
+                    <div class="jj-preview" id="jj-preview">
+                        <span>미리보기가 여기에 표시됩니다.</span>
+                    </div>
+                    <button class="jj-action" type="button" id="jj-analyze">판별하기</button>
+                    <p class="jj-result" id="jj-result">사진을 업로드해 주세요.</p>
+                </div>
+            </div>
+        </section>
+        <section class="page-section" data-section="teachable">
+            <div class="tm-container">
+                <h2>AI 이미지 판별</h2>
+                <p class="tm-subtitle">Start를 눌러 웹캠을 켜고 판별 결과를 확인하세요.</p>
+                <div class="tm-card">
+                    <button class="tm-action" type="button" id="tm-start">Start</button>
+                    <p class="tm-status" id="tm-status">대기 중입니다.</p>
+                    <div class="tm-webcam" id="tm-webcam"></div>
+                    <div class="tm-labels" id="tm-labels"></div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <div id="modal" class="modal">
@@ -73,6 +109,8 @@
       </form>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
     <div id="disqus_thread"></div>
