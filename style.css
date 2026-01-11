@@ -446,6 +446,41 @@ input:checked + .slider:before {
   padding-left: 1.2rem;
 }
 
+.blog-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.blog-lead {
+  margin: 0.5rem 0 2rem;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.blog-card {
+  background-color: var(--card-bg-color);
+  padding: 1.4rem;
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+}
+
+.blog-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+.blog-meta {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
 @media (max-width: 900px) {
   .header {
     flex-wrap: wrap;
