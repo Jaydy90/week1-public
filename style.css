@@ -156,13 +156,18 @@ input:checked + .slider:before {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2px;
-  font-size: 0.7rem;
+  padding: 6px 10px;
+  font-size: clamp(0.75rem, 2.2vw, 0.95rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  max-width: 120px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   position: absolute;
   left: var(--x);
   top: var(--y);
   transform: translate(-50%, -50%);
-  white-space: nowrap;
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .region:hover {
