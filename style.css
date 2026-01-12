@@ -152,7 +152,7 @@ input:checked + .slider:before {
   padding: 2rem;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .page-section {
@@ -164,6 +164,30 @@ input:checked + .slider:before {
   display: block;
 }
 
+.map-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(280px, 1fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.map-intro h2 {
+  margin-top: 0;
+}
+
+.map-highlights {
+  margin: 1rem 0 0.5rem;
+  padding-left: 1.1rem;
+  line-height: 1.6;
+}
+
+.map-disclaimer {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
 
 .map-container {
   position: relative;
@@ -311,66 +335,33 @@ input:checked + .slider:before {
   margin-top: 0;
 }
 
-.tm-container {
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
+.map-preview {
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
 }
 
-.tm-subtitle {
-  margin: 0.5rem 0 1.5rem;
-  color: var(--text-color);
-  opacity: 0.8;
-}
-
-.tm-card {
-  background-color: var(--card-bg-color);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: var(--card-shadow);
-}
-
-.tm-action {
-  background-color: var(--map-active-color);
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.4rem;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.tm-action:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.tm-status {
-  margin: 0.75rem 0 1rem;
-  font-size: 0.95rem;
-}
-
-.tm-webcam {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.tm-webcam canvas {
-  border-radius: 12px;
-  box-shadow: var(--card-shadow);
-}
-
-.tm-labels {
+.preview-grid {
   display: grid;
-  gap: 0.35rem;
-  text-align: left;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
 }
 
-.tm-note {
-  margin-top: 1rem;
+.preview-card {
+  background-color: var(--card-bg-color);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.preview-card h4 {
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+
+.preview-meta {
+  margin-top: 0.8rem;
   font-size: 0.9rem;
-  opacity: 0.75;
+  opacity: 0.7;
 }
 
 .guide-container {
@@ -602,5 +593,9 @@ input:checked + .slider:before {
 
   .main-content {
     padding: 1.5rem;
+  }
+
+  .map-hero {
+    grid-template-columns: 1fr;
   }
 }
