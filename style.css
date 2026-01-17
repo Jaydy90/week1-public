@@ -580,6 +580,76 @@ input:checked + .slider:before {
   margin-top: 0;
 }
 
+.partnership-section {
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 960px;
+  background-color: var(--card-bg-color);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+}
+
+.partnership-section h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.partnership-lead {
+  text-align: center;
+  margin: 0.5rem 0 2rem;
+  opacity: 0.85;
+}
+
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.package-card {
+  background-color: var(--bg-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+}
+
+.package-card h3 {
+  margin-top: 0;
+}
+
+.package-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem;
+  color: var(--map-active-color);
+}
+
+.package-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.6;
+}
+
+.partnership-cta {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.partnership-button {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--map-active-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.partnership-button:hover {
+  opacity: 0.9;
+}
+
 @media (max-width: 900px) {
   .header {
     flex-wrap: wrap;
@@ -596,6 +666,12 @@ input:checked + .slider:before {
   }
 
   .map-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .package-grid {
     grid-template-columns: 1fr;
   }
 }
