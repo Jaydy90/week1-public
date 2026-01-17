@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://week1-public.pages.dev/sitemap.xml
