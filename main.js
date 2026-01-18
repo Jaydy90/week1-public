@@ -1,61 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const closeButton = document.querySelector('.close-button');
-    const themeSwitch = document.getElementById('checkbox');
-    const regions = document.querySelectorAll('.region');
     const navButtons = document.querySelectorAll('.nav-button');
     const sections = document.querySelectorAll('.page-section');
     const titleLink = document.querySelector('.title-link');
+    const heroButtons = document.querySelectorAll('.hero-actions button');
 
-    regions.forEach(region => {
-        region.addEventListener('click', () => {
-            const regionId = region.dataset.id;
-            const regionData = foodData[regionId];
-            if (regionData) {
-                modalTitle.textContent = regionData.name;
-                modalBody.innerHTML = createFoodList(regionData.foods);
-                modal.style.display = 'block';
-            }
-        });
-    });
-
-    // Create food list HTML
-    function createFoodList(foods) {
-        if (foods.length === 0) {
-            return '<p>맛집 정보가 아직 없습니다.</p>';
-        }
-        return foods.map(food => `
-            <div class="food-card">
-                <img src="${food.img}" alt="${food.name}" loading="lazy" decoding="async">
-                <div class="food-info">
-                    <h3>${food.name}</h3>
-                    <p>${food.desc}</p>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    // Close modal
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-
-    // Theme switch
-    themeSwitch.addEventListener('change', () => {
-        if (themeSwitch.checked) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-        }
-    });
+    const idolList = document.getElementById('idol-list');
+    const chefList = document.getElementById('chef-list');
 
     const setActiveSection = (target) => {
         navButtons.forEach(button => {
@@ -71,7 +21,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (titleLink) {
-        titleLink.addEventListener('click', () => setActiveSection('map'));
+        titleLink.addEventListener('click', () => setActiveSection('idol'));
     }
 
+    heroButtons.forEach(button => {
+        button.addEventListener('click', () => setActiveSection(button.dataset.target));
+    });
+
+    const createSourceLink = (item) => {
+        if (!item.sourceUrl) {
+            return `<span class="card-source muted">${item.sourceLabel}</span>`;
+        }
+        return `<a class="card-source" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>`;
+    };
+
+    const renderCards = (items, container, type) => {
+        if (!container) return;
+        if (!items || items.length === 0) {
+            container.innerHTML = '<div class="empty-card">검증 완료된 항목이 준비 중입니다. 제보/제휴 메뉴에서 출처를 공유해 주세요.</div>';
+            return;
+        }
+
+        container.innerHTML = items.map((item, index) => {
+            const badgeClass = item.status === '검증 완료' ? 'badge verified' : 'badge pending';
+            const badgeLabel = item.status === '검증 완료' ? '검증 완료' : '검증 중';
+
+            if (type === 'idol') {
+                return `
+                    <article class="info-card" style="--delay:${index * 0.08}s">
+                        <div class="card-header">
+                            <span class="card-title">${item.name}</span>
+                            <span class="${badgeClass}">${badgeLabel}</span>
+                        </div>
+                        <p class="card-location">${item.location}</p>
+                        <div class="card-meta">
+                            <span>아이돌: ${item.idol}</span>
+                            <span>메뉴: ${item.menu}</span>
+                        </div>
+                        <p class="card-context">${item.context}</p>
+                        <div class="card-footer">
+                            ${createSourceLink(item)}
+                            <span class="card-date">업데이트: ${item.updatedAt}</span>
+                        </div>
+                    </article>
+                `;
+            }
+
+            return `
+                <article class="info-card" style="--delay:${index * 0.08}s">
+                    <div class="card-header">
+                        <span class="card-title">${item.name}</span>
+                        <span class="${badgeClass}">${badgeLabel}</span>
+                    </div>
+                    <p class="card-location">${item.location}</p>
+                    <div class="card-meta">
+                        <span>셰프: ${item.chef}</span>
+                        <span>시그니처: ${item.signature}</span>
+                    </div>
+                    <p class="card-context">${item.context}</p>
+                    <div class="card-footer">
+                        ${createSourceLink(item)}
+                        <span class="card-date">업데이트: ${item.updatedAt}</span>
+                    </div>
+                </article>
+            `;
+        }).join('');
+    };
+
+    renderCards(idolEats, idolList, 'idol');
+    renderCards(chefSpots, chefList, 'chef');
 });
