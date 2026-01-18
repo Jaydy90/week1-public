@@ -189,6 +189,30 @@ input:checked + .slider:before {
   opacity: 0.75;
 }
 
+.geo-summary {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(99, 102, 241, 0.08);
+}
+
+.geo-summary h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.geo-summary-list {
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
+  line-height: 1.6;
+}
+
+.geo-meta {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
 .map-container {
   position: relative;
   width: 100%;

@@ -24,8 +24,9 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대한민국 맛집 지도</title>
+    <title>대한민국 맛집 지도 | 지역별 맛집 추천과 방문 팁</title>
     <meta name="description" content="지역별 맛집 정보를 한눈에 확인하고, 추천 기준과 업데이트 계획까지 투명하게 안내하는 대한민국 맛집 지도.">
+    <meta name="author" content="대한민국 맛집 지도 운영팀">
     <link rel="canonical" href="https://kpopeats.cc/">
     <meta name="robots" content="index,follow">
     <meta property="og:title" content="대한민국 맛집 지도">
@@ -50,6 +51,17 @@
                     "name": "대한민국 맛집 지도",
                     "url": "https://kpopeats.cc/",
                     "description": "지역별 맛집 정보를 한눈에 확인하고, 추천 기준과 업데이트 계획까지 투명하게 안내하는 대한민국 맛집 지도.",
+                    "inLanguage": "ko-KR",
+                    "publisher": {
+                        "@id": "https://kpopeats.cc/#organization"
+                    }
+                },
+                {
+                    "@type": "Organization",
+                    "@id": "https://kpopeats.cc/#organization",
+                    "name": "대한민국 맛집 지도",
+                    "url": "https://kpopeats.cc/",
+                    "description": "지역별 맛집 정보를 정리하고, 방문 팁과 업데이트 로그를 제공하는 로컬 맛집 큐레이션 사이트.",
                     "inLanguage": "ko-KR"
                 },
                 {
@@ -61,7 +73,86 @@
                         "@id": "https://kpopeats.cc/#website"
                     },
                     "description": "지역별 맛집 정보를 한눈에 확인하고, 추천 기준과 업데이트 계획까지 투명하게 안내하는 대한민국 맛집 지도.",
-                    "inLanguage": "ko-KR"
+                    "inLanguage": "ko-KR",
+                    "dateModified": "2026-01-18"
+                },
+                {
+                    "@type": "FAQPage",
+                    "@id": "https://kpopeats.cc/#faq",
+                    "mainEntity": [
+                        {
+                            "@type": "Question",
+                            "name": "맛집 기준은 어떻게 정하나요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "지역 대표 메뉴와 방문 만족도, 접근성, 리뷰 신뢰도를 함께 고려해 선정합니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "정보가 다르면 어떻게 하나요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "제휴 문의 폼으로 알려주시면 확인 후 반영합니다. 영업시간/가격은 수시로 변동될 수 있습니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "제보는 어떻게 하나요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "아래 제휴 문의 폼에 지역명, 상호, 추천 이유를 적어 보내주세요."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "AI 판별 기능은 어떤 데이터가 저장되나요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "웹캠 영상은 브라우저에서만 처리되며 서버로 전송되지 않습니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "가격대는 어느 정도인가요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "지역과 메뉴에 따라 차이가 큽니다. 기본적으로 1인 기준 1만~2만원대를 참고하고 있습니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "예약이 필요한가요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "인기 맛집은 예약이 빠르게 마감될 수 있어요. 방문 전 예약 가능 여부를 확인해 주세요."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "주차는 가능한가요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "지역마다 주차 여건이 다릅니다. 도심 지역은 공영주차장 이용을 권장합니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "혼잡한 시간대는 언제인가요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "점심 12~1시, 저녁 6~7시가 가장 붐비는 시간대입니다."
+                            }
+                        },
+                        {
+                            "@type": "Question",
+                            "name": "추천 코스가 있나요?",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "같은 동네 맛집 2~3곳을 묶어 이동 동선을 줄이는 코스를 추천합니다."
+                            }
+                        }
+                    ]
                 }
             ]
         }
@@ -102,6 +193,16 @@
                         <li>가격대, 동선, 혼잡 시간대를 한 번에 비교할 수 있습니다.</li>
                         <li>정보가 부족한 지역은 제보를 받아 빠르게 보강합니다.</li>
                     </ul>
+                    <div class="geo-summary">
+                        <h3>한눈에 보는 이용 가이드</h3>
+                        <ul class="geo-summary-list">
+                            <li>누구에게: 지역 여행을 계획하는 1~3인 방문자</li>
+                            <li>언제: 점심·저녁 피크 타임 전 방문 동선 점검</li>
+                            <li>어떻게: 지역 버튼 클릭 → 추천 메뉴 → 방문 팁 확인</li>
+                            <li>무엇을 제공: 맛집 후보, 방문 시간대, 가격대 힌트</li>
+                        </ul>
+                        <p class="geo-meta">최종 업데이트: 2026-01-18 · 정보 출처: 직접 방문 기록, 공개 리뷰, 제보</p>
+                    </div>
                     <p class="map-disclaimer">맛집 정보는 실제 방문 경험과 공개 리뷰를 종합해 정리하며, 변경 사항은 공지에 기록합니다.</p>
                 </div>
                 <div class="map-container">
