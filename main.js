@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const michelinList = document.getElementById('michelin-list');
     const celebrityList = document.getElementById('celebrity-list');
     const chefList = document.getElementById('chef-list');
-    let activeMinutes = 10;
+    const initialMinutes = Number(document.querySelector('.filter-pill.is-active')?.dataset.minutes || 15);
+    let activeMinutes = initialMinutes;
     let activeSort = 'distance';
 
     const setActiveSection = (target) => {
