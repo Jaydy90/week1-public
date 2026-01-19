@@ -295,6 +295,30 @@ footer {
   color: var(--muted);
 }
 
+.time-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.filter-pill {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-pill:hover,
+.filter-pill.is-active {
+  background: var(--secondary);
+  color: #fff;
+  border-color: transparent;
+}
+
 .value-grid,
 .card-grid,
 .badge-grid,
@@ -408,6 +432,32 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.trust-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 2fr;
+  gap: 1.5rem;
+  margin-top: 1.8rem;
+}
+
+.trust-summary {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trust-summary h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.trust-list {
+  margin: 0.8rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
 .evidence-card h4 {
   margin: 0 0 0.4rem;
   font-size: 1.05rem;
@@ -417,6 +467,42 @@ footer {
   margin: 0;
   color: var(--muted);
   line-height: 1.6;
+}
+
+.evidence-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.evidence-badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(228, 90, 43, 0.14);
+  color: var(--primary-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.evidence-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.8rem;
+}
+
+.evidence-link {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.evidence-link:hover {
+  text-decoration: underline;
 }
 
 .flow-grid {
@@ -494,6 +580,15 @@ footer {
   padding: 1.6rem;
 }
 
+.mvp-section {
+  margin-top: 2.5rem;
+}
+
+.mvp-section h3 {
+  margin-bottom: 0.6rem;
+  font-size: 1.3rem;
+}
+
 .form-field {
   display: flex;
   flex-direction: column;
@@ -554,6 +649,10 @@ textarea {
   }
 
   .hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-layout {
     grid-template-columns: 1fr;
   }
 }

@@ -133,6 +133,7 @@
             <button class="nav-button" type="button" data-target="flow">MVP 플로우</button>
             <button class="nav-button" type="button" data-target="metrics">핵심 지표</button>
             <button class="nav-button" type="button" data-target="revenue">수익 모델</button>
+            <button class="nav-button" type="button" data-target="mvp">서울 MVP 데이터</button>
             <button class="nav-button" type="button" data-target="faq">FAQ</button>
             <button class="nav-button" type="button" data-target="partner">제보/제휴</button>
         </nav>
@@ -211,6 +212,11 @@
                 <h2>내 주변 15분 후보</h2>
                 <p class="section-lead">현재 위치 기준으로 신뢰 배지가 있는 식당만 먼저 보여주고, 이동 가능 시간으로 재정렬합니다.</p>
             </div>
+            <div class="time-filter">
+                <button class="filter-pill is-active" type="button" data-minutes="10">내 주변 10분</button>
+                <button class="filter-pill" type="button" data-minutes="15">내 주변 15분</button>
+                <button class="filter-pill" type="button" data-minutes="30">내 주변 30분</button>
+            </div>
             <div class="card-grid" id="nearby-list"></div>
             <p class="section-note">가장 효율적인 이동수단을 기본값으로 제안하며, 지도 앱 딥링크로 즉시 전환됩니다.</p>
         </section>
@@ -220,19 +226,30 @@
                 <h2>신뢰 배지와 근거 카드</h2>
                 <p class="section-lead">모든 카드에는 출처·확인일·근거 유형이 포함됩니다. 배지는 판매되지 않습니다.</p>
             </div>
-            <div class="badge-grid">
-                <article class="badge-card">
-                    <h3>미쉐린</h3>
-                    <p>가이드 등재 여부와 연도, 등급 정보를 명확히 표기합니다.</p>
-                </article>
-                <article class="badge-card">
-                    <h3>유명인 방문</h3>
-                    <p>방송·공식 SNS·인터뷰 기반 출처만 인증합니다.</p>
-                </article>
-                <article class="badge-card">
-                    <h3>흑백요리사</h3>
-                    <p>출연 셰프의 직접 운영/협업 매장을 구분해 제공합니다.</p>
-                </article>
+            <div class="trust-layout">
+                <div class="trust-summary">
+                    <h3>근거 카드 구성</h3>
+                    <ul class="trust-list">
+                        <li>출처 링크 + 확인일 + 근거 유형을 표준화합니다.</li>
+                        <li>배지 레벨(1~5)로 신뢰 강도를 표기합니다.</li>
+                        <li>방문/등재/운영 여부를 명확하게 구분합니다.</li>
+                        <li>정정 요청 시 즉시 갱신합니다.</li>
+                    </ul>
+                </div>
+                <div class="badge-grid">
+                    <article class="badge-card">
+                        <h3>미쉐린</h3>
+                        <p>가이드 등재 여부와 연도, 등급 정보를 명확히 표기합니다.</p>
+                    </article>
+                    <article class="badge-card">
+                        <h3>유명인 방문</h3>
+                        <p>방송·공식 SNS·인터뷰 기반 출처만 인증합니다.</p>
+                    </article>
+                    <article class="badge-card">
+                        <h3>흑백요리사</h3>
+                        <p>출연 셰프의 운영/협업 매장을 구분해 제공합니다.</p>
+                    </article>
+                </div>
             </div>
             <div class="evidence-grid" id="evidence-list"></div>
         </section>
@@ -313,6 +330,25 @@
                     <h3>4단계 · 커머스/콘텐츠</h3>
                     <p>셰프 굿즈, 코스 컬렉션, 큐레이션 판매.</p>
                 </article>
+            </div>
+        </section>
+
+        <section class="page-section" data-section="mvp">
+            <div class="section-head">
+                <h2>서울 MVP 데이터 1차</h2>
+                <p class="section-lead">신뢰 근거가 확인된 서울 지역 맛집을 1차로 공개합니다.</p>
+            </div>
+            <div class="mvp-section">
+                <h3>미쉐린 가이드</h3>
+                <div class="card-grid" id="michelin-list"></div>
+            </div>
+            <div class="mvp-section">
+                <h3>유명인 추천/방문</h3>
+                <div class="card-grid" id="celebrity-list"></div>
+            </div>
+            <div class="mvp-section">
+                <h3>흑백요리사 출연진</h3>
+                <div class="card-grid" id="chef-list"></div>
             </div>
         </section>
 

@@ -6,6 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nearbyList = document.getElementById('nearby-list');
     const evidenceList = document.getElementById('evidence-list');
+    const nearbyTitle = document.querySelector('[data-section="nearby"] h2');
+    const filterPills = document.querySelectorAll('.filter-pill');
+    const michelinList = document.getElementById('michelin-list');
+    const celebrityList = document.getElementById('celebrity-list');
+    const chefList = document.getElementById('chef-list');
+    let activeMinutes = 10;
 
     const setActiveSection = (target) => {
         navButtons.forEach(button => {
@@ -69,10 +75,43 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = items.map(item => {
             return `
                 <article class="evidence-card">
-                    <h4>${item.title}</h4>
+                    <div class="evidence-header">
+                        <h4>${item.title}</h4>
+                        <span class="evidence-badge">레벨 ${item.level}</span>
+                    </div>
                     <p>${item.caption}</p>
+                    <div class="evidence-meta">
+                        <span>${item.badgeType}</span>
+                        <span>${item.verifiedAt}</span>
+                    </div>
+                    <div class="evidence-meta">
+                        <a class="evidence-link" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>
+                        <span>${item.scope}</span>
+                    </div>
+                </article>
+            `;
+        }).join('');
+    };
+
+    const renderMvpCards = (items, container) => {
+        if (!container) return;
+        if (!items || items.length === 0) {
+            container.innerHTML = '<div class="info-card">데이터 준비 중입니다.</div>';
+            return;
+        }
+
+        container.innerHTML = items.map((item, index) => {
+            return `
+                <article class="info-card" style="--delay:${index * 0.06}s">
+                    <div class="card-meta">
+                        <span class="status-pill">${item.badgeType}</span>
+                        <span>${item.category}</span>
+                    </div>
+                    <span class="card-title">${item.name}</span>
+                    <span class="card-location">${item.location}</span>
+                    <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
                     <div class="card-footer">
-                        <span>${item.sourceLabel}</span>
+                        <a class="evidence-link" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>
                         <span>확인일: ${item.verifiedAt}</span>
                     </div>
                 </article>
@@ -80,6 +119,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     };
 
-    renderNearbyCards(nearbySpots, nearbyList);
+    const updateNearbyView = () => {
+        const filtered = nearbySpots.filter(item => item.travelMinutes <= activeMinutes);
+        renderNearbyCards(filtered, nearbyList);
+        if (nearbyTitle) {
+            nearbyTitle.textContent = `내 주변 ${activeMinutes}분 후보`;
+        }
+    };
+
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            activeMinutes = Number(pill.dataset.minutes);
+            filterPills.forEach(btn => btn.classList.toggle('is-active', btn === pill));
+            updateNearbyView();
+        });
+    });
+
+    updateNearbyView();
     renderEvidenceCards(trustEvidence, evidenceList);
+    renderMvpCards(michelinSpots, michelinList);
+    renderMvpCards(celebritySpots, celebrityList);
+    renderMvpCards(chefSpots, chefList);
 });
