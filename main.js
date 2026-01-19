@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const michelinList = document.getElementById('michelin-list');
     const celebrityList = document.getElementById('celebrity-list');
     const chefList = document.getElementById('chef-list');
+    const chefOnlyList = document.getElementById('chef-only-list');
     const initialMinutes = Number(document.querySelector('.filter-pill.is-active')?.dataset.minutes || 15);
     let activeMinutes = initialMinutes;
     let activeSort = 'distance';
@@ -189,4 +190,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMvpCards(michelinSpots, michelinList);
     renderMvpCards(celebritySpots, celebrityList);
     renderMvpCards(chefSpots, chefList);
+    renderMvpCards(chefSpots, chefOnlyList);
 });
