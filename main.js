@@ -131,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="card-title">${item.name}</span>
                     <span class="card-location">${item.location}</span>
                     <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
+                    ${item.address ? `<p class="card-context">주소: ${item.address}</p>` : ''}
                     <div class="card-footer">
                         <a class="evidence-link" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>
                         <span>확인일: ${item.verifiedAt}</span>

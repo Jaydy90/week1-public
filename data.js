@@ -270,6 +270,7 @@ const chefSpots = [
   {
     name: "디핀",
     location: "서울 중구",
+    address: "서울 중구 퇴계로 411",
     category: "프렌치 에스닉",
     mainMenu: "머쉬룸 타르트",
     badgeType: "윤남노 셰프",
@@ -283,6 +284,7 @@ const chefSpots = [
   {
     name: "트리드",
     location: "서울 강남구",
+    address: "서울 강남구 선릉로162길 16",
     category: "이노베이티브",
     mainMenu: "트러플 슈",
     badgeType: "강승원 셰프",
@@ -296,6 +298,7 @@ const chefSpots = [
   {
     name: "비아 톨레도 파스타바",
     location: "서울 용산구",
+    address: "서울 용산구 원효로83길 7-2",
     category: "이탈리안",
     mainMenu: "할머니의 라자냐",
     badgeType: "권성준 셰프",
@@ -309,6 +312,7 @@ const chefSpots = [
   {
     name: "레스토랑 네오",
     location: "서울 서초구",
+    address: "서울 서초구 사임당로 185",
     category: "일식 다이닝",
     mainMenu: "닭 날개 만두",
     badgeType: "윤남노 셰프",
@@ -322,6 +326,7 @@ const chefSpots = [
   {
     name: "리북방",
     location: "서울 마포구",
+    address: "서울 마포구 마포대로14길 16",
     category: "이북음식 오마카세",
     mainMenu: "순대 플래터",
     badgeType: "최강록 셰프",
