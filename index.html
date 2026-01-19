@@ -755,6 +755,35 @@
                 <h2>전체 맛집 데이터</h2>
                 <p class="section-lead">서울 중심으로 확장하며 경기·제주까지 포함합니다. 출처 링크는 확인 중입니다.</p>
             </div>
+            <div class="data-filters">
+                <div class="filter-group">
+                    <span class="filter-label">지역</span>
+                    <button class="filter-button is-active" type="button" data-filter="region" data-value="all">전체</button>
+                    <button class="filter-button" type="button" data-filter="region" data-value="서울">서울</button>
+                    <button class="filter-button" type="button" data-filter="region" data-value="경기">경기</button>
+                    <button class="filter-button" type="button" data-filter="region" data-value="제주">제주</button>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">분류</span>
+                    <button class="filter-button is-active" type="button" data-filter="group" data-value="all">전체</button>
+                    <button class="filter-button" type="button" data-filter="group" data-value="michelin">미쉐린</button>
+                    <button class="filter-button" type="button" data-filter="group" data-value="celebrity">유명인</button>
+                    <button class="filter-button" type="button" data-filter="group" data-value="chef">흑백요리사</button>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">검증 상태</span>
+                    <button class="filter-button is-active" type="button" data-filter="status" data-value="all">전체</button>
+                    <button class="filter-button" type="button" data-filter="status" data-value="verified">검증 완료</button>
+                    <button class="filter-button" type="button" data-filter="status" data-value="pending">확인 중</button>
+                </div>
+            </div>
+            <div class="data-counts">
+                <span data-count="total">총 0개</span>
+                <span data-count="verified">검증 완료 0개</span>
+                <span data-count="pending">확인 중 0개</span>
+            </div>
+            <div id="all-data-list" class="data-section"></div>
+            <div class="fallback-data">
             <div class="region-section">
                 <h3>서울</h3>
                 <ul class="data-list">
@@ -854,6 +883,7 @@
                 <ul class="data-list">
                     <li class="data-item"><span class="data-name">우진해장국</span> · 제주 제주시 · 해장국 · 대표 메뉴: 고사리 육개장 · 출처: 확인 중 · 2026-01-19</li>
                 </ul>
+            </div>
             </div>
         </section>
 

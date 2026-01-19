@@ -14,9 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const celebrityList = document.getElementById('celebrity-list');
     const chefList = document.getElementById('chef-list');
     const chefOnlyList = document.getElementById('chef-only-list');
+    const allDataList = document.getElementById('all-data-list');
+    const filterButtons = document.querySelectorAll('.filter-button[data-filter]');
+    const countTotal = document.querySelector('[data-count="total"]');
+    const countVerified = document.querySelector('[data-count="verified"]');
+    const countPending = document.querySelector('[data-count="pending"]');
     const initialMinutes = Number(document.querySelector('.filter-pill.is-active')?.dataset.minutes || 15);
     let activeMinutes = initialMinutes;
     let activeSort = 'distance';
+    const activeFilters = { region: 'all', group: 'all', status: 'all' };
 
     const setActiveSection = (target) => {
         navButtons.forEach(button => {
@@ -161,6 +167,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     };
 
+    const getStatus = (item) => (item.sourceUrl ? 'verified' : 'pending');
+
+    const applyAllFilters = (items) => {
+        return items.filter((item) => {
+            const status = getStatus(item);
+            const regionOk = activeFilters.region === 'all' || item.region === activeFilters.region;
+            const groupOk = activeFilters.group === 'all' || item.group === activeFilters.group;
+            const statusOk = activeFilters.status === 'all' || status === activeFilters.status;
+            return regionOk && groupOk && statusOk;
+        });
+    };
+
+    const renderAllData = () => {
+        if (!allDataList || !Array.isArray(allRestaurants)) return;
+        const filtered = applyAllFilters(allRestaurants);
+        const verifiedCount = filtered.filter((item) => getStatus(item) === 'verified').length;
+        const pendingCount = filtered.length - verifiedCount;
+
+        if (countTotal) countTotal.textContent = `총 ${filtered.length}개`;
+        if (countVerified) countVerified.textContent = `검증 완료 ${verifiedCount}개`;
+        if (countPending) countPending.textContent = `확인 중 ${pendingCount}개`;
+
+        const regionOrder = ['서울', '경기', '제주', '기타'];
+        const grouped = filtered.reduce((acc, item) => {
+            const regionKey = regionOrder.includes(item.region) ? item.region : '기타';
+            if (!acc[regionKey]) acc[regionKey] = [];
+            acc[regionKey].push(item);
+            return acc;
+        }, {});
+
+        const sectionMarkup = regionOrder.map((region) => {
+            const items = grouped[region] || [];
+            if (items.length === 0) return '';
+            const itemsMarkup = items.map((item) => {
+                const status = getStatus(item);
+                const badgeClass = status === 'verified' ? 'data-badge--verified' : 'data-badge--pending';
+                const sourceMarkup = item.sourceUrl
+                    ? `<a class=\"evidence-link\" href=\"${item.sourceUrl}\" target=\"_blank\" rel=\"noopener\">${item.sourceLabel}</a>`
+                    : `<span>${item.sourceLabel}</span>`;
+                const location = `${item.region} ${item.area}`;
+                const meta = `${location} · ${item.category} · ${item.badgeType} · 대표 메뉴: ${item.mainMenu}`;
+
+                return `\n<li class=\"data-item\">\n  <div><span class=\"data-name\">${item.name}</span></div>\n  <div class=\"data-meta\">${meta}</div>\n  <div class=\"data-status\">\n    <span class=\"data-badge ${badgeClass}\">${status === 'verified' ? '검증 완료' : '확인 중'}</span>\n    ${sourceMarkup}\n    <span>${item.verifiedAt}</span>\n  </div>\n</li>`;
+            }).join('');
+
+            return `\n<div class=\"region-section\">\n  <h3>${region}</h3>\n  <ul class=\"data-list\">${itemsMarkup}</ul>\n</div>`;
+        }).join('');
+
+        allDataList.innerHTML = sectionMarkup || '<div class=\"info-card\">선택한 조건에 해당하는 데이터가 없습니다.</div>';
+    };
+
     const sortNearbyItems = (items) => {
         const sorted = [...items];
         if (activeSort === 'saves') {
@@ -201,6 +258,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const filterKey = button.dataset.filter;
+            const filterValue = button.dataset.value;
+            activeFilters[filterKey] = filterValue;
+            filterButtons.forEach((btn) => {
+                if (btn.dataset.filter === filterKey) {
+                    btn.classList.toggle('is-active', btn === button);
+                }
+            });
+            renderAllData();
+        });
+    });
+
     const initialSection = window.location.hash.replace('#', '');
     if (initialSection) {
         setActiveSection(initialSection);
@@ -211,4 +282,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMvpCards(celebritySpots, celebrityList);
     renderMvpCards(chefSpots, chefList);
     renderMvpCards(chefSpots, chefOnlyList);
+    renderAllData();
 });
