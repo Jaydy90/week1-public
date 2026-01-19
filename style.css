@@ -302,6 +302,19 @@ footer {
   margin-top: 1.2rem;
 }
 
+.sort-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.sort-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 .filter-pill {
   border: 1px solid rgba(0, 0, 0, 0.12);
   background: rgba(255, 255, 255, 0.85);
@@ -315,6 +328,23 @@ footer {
 .filter-pill:hover,
 .filter-pill.is-active {
   background: var(--secondary);
+  color: #fff;
+  border-color: transparent;
+}
+
+.sort-pill {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sort-pill:hover,
+.sort-pill.is-active {
+  background: var(--ink);
   color: #fff;
   border-color: transparent;
 }
@@ -477,6 +507,45 @@ footer {
   margin-bottom: 0.6rem;
 }
 
+.evidence-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.evidence-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.evidence-icon--michelin {
+  background: #c92e2e;
+}
+
+.evidence-icon--youtube {
+  background: #ff0033;
+}
+
+.evidence-icon--instagram {
+  background: linear-gradient(135deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+}
+
+.evidence-icon--catchtable {
+  background: #1b1f24;
+}
+
+.evidence-icon--policy {
+  background: #0f6b66;
+}
+
 .evidence-badge {
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
@@ -499,6 +568,32 @@ footer {
   color: var(--secondary);
   text-decoration: none;
   font-weight: 600;
+}
+
+.map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.map-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.map-button:hover {
+  background: var(--secondary);
+  color: #fff;
+  border-color: transparent;
 }
 
 .evidence-link:hover {

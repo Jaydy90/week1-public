@@ -4,6 +4,8 @@ const nearbySpots = [
     location: "서울 강남구",
     travelMinutes: 12,
     travelTime: "도보 12분(예상)",
+    distanceKm: 1.1,
+    saves: 284,
     bestRoute: "가장 효율적: 도보",
     badges: ["미쉐린 2스타", "검증 완료"],
     context: "미쉐린 가이드 등재 기준으로 선필터",
@@ -15,6 +17,8 @@ const nearbySpots = [
     location: "서울 마포구",
     travelMinutes: 15,
     travelTime: "대중교통 15분(예상)",
+    distanceKm: 2.2,
+    saves: 196,
     bestRoute: "가장 효율적: 대중교통",
     badges: ["빕 구르망", "검증 완료"],
     context: "미쉐린 빕 구르망 등재 식당",
@@ -26,6 +30,8 @@ const nearbySpots = [
     location: "서울 중구",
     travelMinutes: 18,
     travelTime: "도보 18분(예상)",
+    distanceKm: 1.8,
+    saves: 143,
     bestRoute: "가장 효율적: 도보",
     badges: ["유명인 추천", "검증 완료"],
     context: "공식 채널 공개 방문 기준",
@@ -37,6 +43,8 @@ const nearbySpots = [
     location: "서울 중구",
     travelMinutes: 22,
     travelTime: "차량 22분(예상)",
+    distanceKm: 4.6,
+    saves: 317,
     bestRoute: "가장 효율적: 차량",
     badges: ["유명인 방문", "검증 완료"],
     context: "공식 계정 출처 기반 검증",
@@ -48,6 +56,8 @@ const nearbySpots = [
     location: "서울 용산구",
     travelMinutes: 25,
     travelTime: "대중교통 25분(예상)",
+    distanceKm: 5.2,
+    saves: 168,
     bestRoute: "가장 효율적: 대중교통",
     badges: ["흑백요리사", "검증 완료"],
     context: "출연 셰프 운영 매장 기준",
@@ -59,6 +69,8 @@ const nearbySpots = [
     location: "서울 강남구",
     travelMinutes: 30,
     travelTime: "차량 30분(예상)",
+    distanceKm: 6.4,
+    saves: 121,
     bestRoute: "가장 효율적: 차량",
     badges: ["흑백요리사", "검증 완료"],
     context: "출연 셰프 운영/협업 여부 확인 완료",
@@ -76,17 +88,21 @@ const trustEvidence = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko",
     verifiedAt: "2026-01-19",
-    scope: "공식 가이드 링크 확인"
+    scope: "공식 가이드 링크 확인",
+    icon: "michelin",
+    iconLabel: "MIC"
   },
   {
     title: "유명인 방문",
     caption: "방송/공식 SNS/인터뷰에서 동일 장소가 확인된 경우만 반영합니다.",
     badgeType: "유명인",
     level: 4,
-    sourceLabel: "공식 채널",
+    sourceLabel: "공식 유튜브",
     sourceUrl: "https://youtube.com/@sungsikyung",
     verifiedAt: "2026-01-19",
-    scope: "공식 채널 출처"
+    scope: "공식 채널 출처",
+    icon: "youtube",
+    iconLabel: "YT"
   },
   {
     title: "흑백요리사 출연진",
@@ -96,17 +112,21 @@ const trustEvidence = [
     sourceLabel: "예약 플랫폼",
     sourceUrl: "https://catchtable.co.kr",
     verifiedAt: "2026-01-19",
-    scope: "운영 여부 검증"
+    scope: "운영 여부 검증",
+    icon: "catchtable",
+    iconLabel: "CT"
   },
   {
     title: "정정/삭제 프로세스",
     caption: "오정보 신고 시 근거 재확인 후 즉시 갱신합니다.",
     badgeType: "운영 정책",
     level: 3,
-    sourceLabel: "내부 정책",
+    sourceLabel: "정책 공개",
     sourceUrl: "https://kpopeats.cc/privacy.html",
     verifiedAt: "2026-01-19",
-    scope: "정책 공개"
+    scope: "정책 공개",
+    icon: "policy",
+    iconLabel: "TR"
   }
 ];
 
@@ -119,7 +139,8 @@ const michelinSpots = [
     badgeType: "미쉐린 2스타",
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "밍글스 서울 강남구"
   },
   {
     name: "가온",
@@ -129,7 +150,8 @@ const michelinSpots = [
     badgeType: "미쉐린 3스타",
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaon",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "가온 서울 강남구"
   },
   {
     name: "옥동식",
@@ -139,7 +161,8 @@ const michelinSpots = [
     badgeType: "빕 구르망",
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/okdongsik",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "옥동식 서울 마포구"
   },
   {
     name: "정식당",
@@ -149,7 +172,8 @@ const michelinSpots = [
     badgeType: "미쉐린 2스타",
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungsik",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "정식당 서울 강남구"
   },
   {
     name: "고향칼국수",
@@ -159,7 +183,8 @@ const michelinSpots = [
     badgeType: "빕 구르망",
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gohyang-kalguksu",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "고향칼국수 서울 종로구"
   }
 ];
 
@@ -172,7 +197,8 @@ const celebritySpots = [
     badgeType: "성시경 먹을텐데",
     sourceLabel: "공식 유튜브",
     sourceUrl: "https://youtube.com/@sungsikyung",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "화양연화 서울 종로구"
   },
   {
     name: "금돼지식당",
@@ -182,7 +208,8 @@ const celebritySpots = [
     badgeType: "BTS 정국 방문",
     sourceLabel: "공식 인스타그램",
     sourceUrl: "https://www.google.com/search?q=https://instagram.com/goldpig1982",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "금돼지식당 서울 중구"
   },
   {
     name: "을지로보석",
@@ -192,7 +219,8 @@ const celebritySpots = [
     badgeType: "정용진 회장 추천",
     sourceLabel: "공식 인스타그램",
     sourceUrl: "https://instagram.com/euljiro_boseok",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "을지로보석 서울 중구"
   },
   {
     name: "사랑방칼국수",
@@ -202,7 +230,8 @@ const celebritySpots = [
     badgeType: "허영만 식객",
     sourceLabel: "네이버 검색",
     sourceUrl: "https://www.google.com/search?q=https://search.naver.com/search.naver%3Fquery%3D%EC%82%AC%EB%9E%91%EB%B0%A9%EC%B9%BC%EA%B5%AD%EC%88%98",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "사랑방칼국수 서울 중구"
   },
   {
     name: "잭슨피자",
@@ -212,7 +241,8 @@ const celebritySpots = [
     badgeType: "최자로드",
     sourceLabel: "공식 유튜브",
     sourceUrl: "https://www.google.com/search?q=https://youtube.com/%40the_m_show",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "잭슨피자 서울 용산구"
   }
 ];
 
@@ -225,7 +255,8 @@ const chefSpots = [
     badgeType: "윤남노 셰프",
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/deepin",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "디핀 서울 중구"
   },
   {
     name: "트리드",
@@ -235,7 +266,8 @@ const chefSpots = [
     badgeType: "강승원 셰프",
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/trid",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "트리드 서울 강남구"
   },
   {
     name: "비아 톨레도 파스타바",
@@ -245,7 +277,8 @@ const chefSpots = [
     badgeType: "권성준 셰프",
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/viatoledo",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "비아 톨레도 파스타바 서울 용산구"
   },
   {
     name: "레스토랑 네오",
@@ -255,7 +288,8 @@ const chefSpots = [
     badgeType: "윤남노 셰프",
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/restaurantneo",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "레스토랑 네오 서울 서초구"
   },
   {
     name: "리북방",
@@ -265,6 +299,7 @@ const chefSpots = [
     badgeType: "최강록 셰프",
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/leebukbang",
-    verifiedAt: "2026-01-19"
+    verifiedAt: "2026-01-19",
+    mapQuery: "리북방 서울 마포구"
   }
 ];
