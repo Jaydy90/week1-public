@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleLink = document.querySelector('.title-link');
     const heroButtons = document.querySelectorAll('.hero-actions button');
 
-    const idolList = document.getElementById('idol-list');
-    const chefList = document.getElementById('chef-list');
+    const nearbyList = document.getElementById('nearby-list');
+    const evidenceList = document.getElementById('evidence-list');
 
     const setActiveSection = (target) => {
         navButtons.forEach(button => {
@@ -21,73 +21,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (titleLink) {
-        titleLink.addEventListener('click', () => setActiveSection('idol'));
+        titleLink.addEventListener('click', () => setActiveSection('overview'));
     }
 
     heroButtons.forEach(button => {
         button.addEventListener('click', () => setActiveSection(button.dataset.target));
     });
 
-    const createSourceLink = (item) => {
-        if (!item.sourceUrl) {
-            return `<span class="card-source muted">${item.sourceLabel}</span>`;
-        }
-        return `<a class="card-source" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>`;
-    };
-
-    const renderCards = (items, container, type) => {
+    const renderNearbyCards = (items, container) => {
         if (!container) return;
         if (!items || items.length === 0) {
-            container.innerHTML = '<div class="empty-card">검증 완료된 항목이 준비 중입니다. 제보/제휴 메뉴에서 출처를 공유해 주세요.</div>';
+            container.innerHTML = '<div class="info-card">검증 완료된 항목이 준비 중입니다. 제보/제휴 메뉴에서 근거를 공유해 주세요.</div>';
             return;
         }
 
         container.innerHTML = items.map((item, index) => {
-            const badgeClass = item.status === '검증 완료' ? 'badge verified' : 'badge pending';
-            const badgeLabel = item.status === '검증 완료' ? '검증 완료' : '검증 중';
-
-            if (type === 'idol') {
-                return `
-                    <article class="info-card" style="--delay:${index * 0.08}s">
-                        <div class="card-header">
-                            <span class="card-title">${item.name}</span>
-                            <span class="${badgeClass}">${badgeLabel}</span>
-                        </div>
-                        <p class="card-location">${item.location}</p>
-                        <div class="card-meta">
-                            <span>아이돌: ${item.idol}</span>
-                            <span>메뉴: ${item.menu}</span>
-                        </div>
-                        <p class="card-context">${item.context}</p>
-                        <div class="card-footer">
-                            ${createSourceLink(item)}
-                            <span class="card-date">업데이트: ${item.updatedAt}</span>
-                        </div>
-                    </article>
-                `;
-            }
+            const badges = item.badges || [];
+            const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
+            const statusLabel = item.status || '검증 중';
 
             return `
                 <article class="info-card" style="--delay:${index * 0.08}s">
-                    <div class="card-header">
-                        <span class="card-title">${item.name}</span>
-                        <span class="${badgeClass}">${badgeLabel}</span>
-                    </div>
-                    <p class="card-location">${item.location}</p>
                     <div class="card-meta">
-                        <span>셰프: ${item.chef}</span>
-                        <span>시그니처: ${item.signature}</span>
+                        <span class="status-pill">${statusLabel}</span>
+                        <span>${item.travelTime}</span>
                     </div>
+                    <span class="card-title">${item.name}</span>
+                    <span class="card-location">${item.location}</span>
                     <p class="card-context">${item.context}</p>
+                    <div class="card-badges">${badgeMarkup}</div>
                     <div class="card-footer">
-                        ${createSourceLink(item)}
-                        <span class="card-date">업데이트: ${item.updatedAt}</span>
+                        <span>${item.bestRoute}</span>
+                        <span>업데이트: ${item.updatedAt}</span>
                     </div>
                 </article>
             `;
         }).join('');
     };
 
-    renderCards(idolEats, idolList, 'idol');
-    renderCards(chefSpots, chefList, 'chef');
+    const renderEvidenceCards = (items, container) => {
+        if (!container) return;
+        if (!items || items.length === 0) {
+            container.innerHTML = '<div class="evidence-card">신뢰 근거 카드가 준비 중입니다. 제보로 데이터를 채워주세요.</div>';
+            return;
+        }
+
+        container.innerHTML = items.map(item => {
+            return `
+                <article class="evidence-card">
+                    <h4>${item.title}</h4>
+                    <p>${item.caption}</p>
+                    <div class="card-footer">
+                        <span>${item.sourceLabel}</span>
+                        <span>확인일: ${item.verifiedAt}</span>
+                    </div>
+                </article>
+            `;
+        }).join('');
+    };
+
+    renderNearbyCards(nearbySpots, nearbyList);
+    renderEvidenceCards(trustEvidence, evidenceList);
 });
