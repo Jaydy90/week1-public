@@ -110,9 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         container.innerHTML = items.map((item, index) => {
             const mapQuery = encodeURIComponent(item.mapQuery || `${item.name} ${item.location}`);
-            const naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
-            const kakaoUrl = `https://map.kakao.com/?q=${mapQuery}`;
-            const routeUrl = `https://map.naver.com/v5/search/${mapQuery}`;
+            const hasCoords = Number.isFinite(item.lat) && Number.isFinite(item.lng);
+            const encodedName = encodeURIComponent(item.name);
+            const naverUrl = hasCoords
+                ? `nmap://route/public?dlat=${item.lat}&dlng=${item.lng}&dname=${encodedName}&appname=kpopeats.cc`
+                : `https://map.naver.com/v5/search/${mapQuery}`;
+            const kakaoUrl = hasCoords
+                ? `https://map.kakao.com/link/to/${encodedName},${item.lat},${item.lng}`
+                : `https://map.kakao.com/?q=${mapQuery}`;
+            const routeUrl = hasCoords ? naverUrl : `https://map.naver.com/v5/search/${mapQuery}`;
 
             return `
                 <article class="info-card" style="--delay:${index * 0.06}s">
@@ -129,8 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="map-actions">
                         <a class="map-button" href="${routeUrl}" target="_blank" rel="noopener">길찾기(최적)</a>
-                        <a class="map-button" href="${naverUrl}" target="_blank" rel="noopener">네이버 지도</a>
-                        <a class="map-button" href="${kakaoUrl}" target="_blank" rel="noopener">카카오 지도</a>
+                        <a class="map-button" href="${naverUrl}" target="_blank" rel="noopener">네이버 길찾기</a>
+                        <a class="map-button" href="${kakaoUrl}" target="_blank" rel="noopener">카카오 길찾기</a>
                     </div>
                 </article>
             `;

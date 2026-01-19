@@ -140,6 +140,8 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles",
     verifiedAt: "2026-01-19",
+    lat: 37.524815,
+    lng: 127.044955,
     mapQuery: "밍글스 서울 강남구"
   },
   {
@@ -151,6 +153,8 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaon",
     verifiedAt: "2026-01-19",
+    lat: 37.521323,
+    lng: 127.037281,
     mapQuery: "가온 서울 강남구"
   },
   {
@@ -162,6 +166,8 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/okdongsik",
     verifiedAt: "2026-01-19",
+    lat: 37.555355,
+    lng: 126.914614,
     mapQuery: "옥동식 서울 마포구"
   },
   {
@@ -173,6 +179,8 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungsik",
     verifiedAt: "2026-01-19",
+    lat: 37.525546,
+    lng: 127.040714,
     mapQuery: "정식당 서울 강남구"
   },
   {
@@ -184,6 +192,8 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gohyang-kalguksu",
     verifiedAt: "2026-01-19",
+    lat: 37.570138,
+    lng: 127.000612,
     mapQuery: "고향칼국수 서울 종로구"
   }
 ];
@@ -198,6 +208,8 @@ const celebritySpots = [
     sourceLabel: "공식 유튜브",
     sourceUrl: "https://youtube.com/@sungsikyung",
     verifiedAt: "2026-01-19",
+    lat: 37.579712,
+    lng: 126.985633,
     mapQuery: "화양연화 서울 종로구"
   },
   {
@@ -209,6 +221,8 @@ const celebritySpots = [
     sourceLabel: "공식 인스타그램",
     sourceUrl: "https://www.google.com/search?q=https://instagram.com/goldpig1982",
     verifiedAt: "2026-01-19",
+    lat: 37.557121,
+    lng: 127.013033,
     mapQuery: "금돼지식당 서울 중구"
   },
   {
@@ -220,6 +234,8 @@ const celebritySpots = [
     sourceLabel: "공식 인스타그램",
     sourceUrl: "https://instagram.com/euljiro_boseok",
     verifiedAt: "2026-01-19",
+    lat: 37.564412,
+    lng: 126.992811,
     mapQuery: "을지로보석 서울 중구"
   },
   {
@@ -231,6 +247,8 @@ const celebritySpots = [
     sourceLabel: "네이버 검색",
     sourceUrl: "https://www.google.com/search?q=https://search.naver.com/search.naver%3Fquery%3D%EC%82%AC%EB%9E%91%EB%B0%A9%EC%B9%BC%EA%B5%AD%EC%88%98",
     verifiedAt: "2026-01-19",
+    lat: 37.564532,
+    lng: 126.993355,
     mapQuery: "사랑방칼국수 서울 중구"
   },
   {
@@ -242,6 +260,8 @@ const celebritySpots = [
     sourceLabel: "공식 유튜브",
     sourceUrl: "https://www.google.com/search?q=https://youtube.com/%40the_m_show",
     verifiedAt: "2026-01-19",
+    lat: 37.534911,
+    lng: 127.008422,
     mapQuery: "잭슨피자 서울 용산구"
   }
 ];
@@ -256,6 +276,8 @@ const chefSpots = [
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/deepin",
     verifiedAt: "2026-01-19",
+    lat: 37.565211,
+    lng: 127.017122,
     mapQuery: "디핀 서울 중구"
   },
   {
@@ -267,6 +289,8 @@ const chefSpots = [
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/trid",
     verifiedAt: "2026-01-19",
+    lat: 37.523421,
+    lng: 127.041355,
     mapQuery: "트리드 서울 강남구"
   },
   {
@@ -278,6 +302,8 @@ const chefSpots = [
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/viatoledo",
     verifiedAt: "2026-01-19",
+    lat: 37.538522,
+    lng: 126.971811,
     mapQuery: "비아 톨레도 파스타바 서울 용산구"
   },
   {
@@ -289,6 +315,8 @@ const chefSpots = [
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/restaurantneo",
     verifiedAt: "2026-01-19",
+    lat: 37.491633,
+    lng: 127.011422,
     mapQuery: "레스토랑 네오 서울 서초구"
   },
   {
@@ -300,6 +328,8 @@ const chefSpots = [
     sourceLabel: "캐치테이블",
     sourceUrl: "https://catchtable.co.kr/leebukbang",
     verifiedAt: "2026-01-19",
+    lat: 37.541611,
+    lng: 126.945533,
     mapQuery: "리북방 서울 마포구"
   }
 ];
