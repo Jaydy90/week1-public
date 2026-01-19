@@ -287,10 +287,25 @@ document.addEventListener('DOMContentLoaded', () => {
         setActiveSection(initialSection);
     }
     updateNearbyView();
+    const renderMvpFromAll = () => {
+        const dataset = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
+        if (dataset.length === 0) return;
+        const seoulOnly = dataset.filter((item) => item.region === '서울');
+        const michelinItems = seoulOnly.filter((item) => item.group === 'michelin');
+        const celebrityItems = seoulOnly.filter((item) => item.group === 'celebrity');
+        const chefItems = seoulOnly.filter((item) => item.group === 'chef');
+
+        renderMvpCards(michelinItems, michelinList);
+        renderMvpCards(celebrityItems, celebrityList);
+        renderMvpCards(chefItems, chefList);
+        renderMvpCards(chefItems, chefOnlyList);
+    };
+
     renderEvidenceCards(trustEvidence, evidenceList);
     renderMvpCards(michelinSpots, michelinList);
     renderMvpCards(celebritySpots, celebrityList);
     renderMvpCards(chefSpots, chefList);
     renderMvpCards(chefSpots, chefOnlyList);
+    renderMvpFromAll();
     renderAllData();
 });
