@@ -27,7 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     navButtons.forEach(button => {
-        button.addEventListener('click', () => setActiveSection(button.dataset.target));
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const target = button.dataset.target;
+            setActiveSection(target);
+            if (target) {
+                history.replaceState(null, '', `#${target}`);
+            }
+        });
     });
 
     if (titleLink) {
@@ -35,7 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     heroButtons.forEach(button => {
-        button.addEventListener('click', () => setActiveSection(button.dataset.target));
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const target = button.dataset.target;
+            setActiveSection(target);
+            if (target) {
+                history.replaceState(null, '', `#${target}`);
+            }
+        });
     });
 
     const renderNearbyCards = (items, container) => {
@@ -186,6 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const initialSection = window.location.hash.replace('#', '');
+    if (initialSection) {
+        setActiveSection(initialSection);
+    }
     updateNearbyView();
     renderEvidenceCards(trustEvidence, evidenceList);
     renderMvpCards(michelinSpots, michelinList);

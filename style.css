@@ -107,6 +107,7 @@ footer {
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-decoration: none;
 }
 
 .nav-button:hover,
@@ -145,6 +146,10 @@ footer {
 }
 
 .page-section.is-active {
+  display: block;
+}
+
+.page-section:target {
   display: block;
 }
 
@@ -193,6 +198,10 @@ footer {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary-button {
