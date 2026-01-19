@@ -180,8 +180,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderAllData = () => {
-        if (!allDataList || !Array.isArray(allRestaurants)) return;
-        const filtered = applyAllFilters(allRestaurants);
+        const dataset = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
+        if (!allDataList) return;
+        if (dataset.length === 0) {
+            document.body.classList.remove('has-all-data');
+            if (countTotal) countTotal.textContent = '총 0개';
+            if (countVerified) countVerified.textContent = '검증 완료 0개';
+            if (countPending) countPending.textContent = '확인 중 0개';
+            allDataList.innerHTML = '';
+            return;
+        }
+        document.body.classList.add('has-all-data');
+        const filtered = applyAllFilters(dataset);
         const verifiedCount = filtered.filter((item) => getStatus(item) === 'verified').length;
         const pendingCount = filtered.length - verifiedCount;
 

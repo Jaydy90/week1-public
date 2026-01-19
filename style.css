@@ -796,7 +796,7 @@ body.js-enabled .page-section:target {
   margin-top: 1.5rem;
 }
 
-body.js-enabled .fallback-data {
+body.has-all-data .fallback-data {
   display: none;
 }
 
