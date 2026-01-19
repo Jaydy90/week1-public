@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const mapQuery = encodeURIComponent(item.mapQuery || `${item.name} ${item.location}`);
             const naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
             const kakaoUrl = `https://map.kakao.com/?q=${mapQuery}`;
+            const routeUrl = `https://map.naver.com/v5/search/${mapQuery}`;
 
             return `
                 <article class="info-card" style="--delay:${index * 0.06}s">
@@ -127,6 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>확인일: ${item.verifiedAt}</span>
                     </div>
                     <div class="map-actions">
+                        <a class="map-button" href="${routeUrl}" target="_blank" rel="noopener">길찾기(최적)</a>
                         <a class="map-button" href="${naverUrl}" target="_blank" rel="noopener">네이버 지도</a>
                         <a class="map-button" href="${kakaoUrl}" target="_blank" rel="noopener">카카오 지도</a>
                     </div>
