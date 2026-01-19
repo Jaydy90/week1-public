@@ -224,7 +224,65 @@
                 <button class="sort-pill" type="button" data-sort="speed">빠름</button>
                 <button class="sort-pill" type="button" data-sort="saves">저장 수</button>
             </div>
-            <div class="card-grid" id="nearby-list"></div>
+            <div class="card-grid" id="nearby-list">
+                <article class="info-card">
+                    <div class="card-meta">
+                        <span class="status-pill">검증 완료</span>
+                        <span>도보 12분(예상)</span>
+                        <span>거리 1.1km</span>
+                    </div>
+                    <span class="card-title">밍글스</span>
+                    <span class="card-location">서울 강남구</span>
+                    <p class="card-context">미쉐린 2스타 기준 선필터</p>
+                    <div class="card-badges">
+                        <span class="badge-chip">미쉐린 2스타</span>
+                        <span class="badge-chip">검증 완료</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>가장 효율적: 도보</span>
+                        <span>저장 284회</span>
+                        <span>업데이트: 2026-01-19</span>
+                    </div>
+                </article>
+                <article class="info-card">
+                    <div class="card-meta">
+                        <span class="status-pill">검증 완료</span>
+                        <span>대중교통 15분(예상)</span>
+                        <span>거리 2.2km</span>
+                    </div>
+                    <span class="card-title">옥동식</span>
+                    <span class="card-location">서울 마포구</span>
+                    <p class="card-context">미쉐린 빕 구르망 등재</p>
+                    <div class="card-badges">
+                        <span class="badge-chip">빕 구르망</span>
+                        <span class="badge-chip">검증 완료</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>가장 효율적: 대중교통</span>
+                        <span>저장 196회</span>
+                        <span>업데이트: 2026-01-19</span>
+                    </div>
+                </article>
+                <article class="info-card">
+                    <div class="card-meta">
+                        <span class="status-pill">검증 완료</span>
+                        <span>차량 22분(예상)</span>
+                        <span>거리 4.6km</span>
+                    </div>
+                    <span class="card-title">금돼지식당</span>
+                    <span class="card-location">서울 중구</span>
+                    <p class="card-context">공식 계정 출처 기반 검증</p>
+                    <div class="card-badges">
+                        <span class="badge-chip">유명인 방문</span>
+                        <span class="badge-chip">검증 완료</span>
+                    </div>
+                    <div class="card-footer">
+                        <span>가장 효율적: 차량</span>
+                        <span>저장 317회</span>
+                        <span>업데이트: 2026-01-19</span>
+                    </div>
+                </article>
+            </div>
             <p class="section-note">가장 효율적인 이동수단을 기본값으로 제안하며, 지도 앱 딥링크로 즉시 전환됩니다.</p>
         </section>
 
@@ -258,7 +316,62 @@
                     </article>
                 </div>
             </div>
-            <div class="evidence-grid" id="evidence-list"></div>
+            <div class="evidence-grid" id="evidence-list">
+                <article class="evidence-card">
+                    <div class="evidence-header">
+                        <div class="evidence-title">
+                            <span class="evidence-icon evidence-icon--michelin">MIC</span>
+                            <h4>미쉐린 가이드 등재</h4>
+                        </div>
+                        <span class="evidence-badge">레벨 5</span>
+                    </div>
+                    <p>가이드 등재 연도와 등급을 카드에 표기합니다.</p>
+                    <div class="evidence-meta">
+                        <span>미쉐린</span>
+                        <span>2026-01-19</span>
+                    </div>
+                    <div class="evidence-meta">
+                        <a class="evidence-link" href="https://guide.michelin.com/kr/ko" target="_blank" rel="noopener">미쉐린 가이드</a>
+                        <span>공식 가이드 링크 확인</span>
+                    </div>
+                </article>
+                <article class="evidence-card">
+                    <div class="evidence-header">
+                        <div class="evidence-title">
+                            <span class="evidence-icon evidence-icon--youtube">YT</span>
+                            <h4>유명인 방문</h4>
+                        </div>
+                        <span class="evidence-badge">레벨 4</span>
+                    </div>
+                    <p>방송/공식 SNS/인터뷰에서 동일 장소가 확인된 경우만 반영합니다.</p>
+                    <div class="evidence-meta">
+                        <span>유명인</span>
+                        <span>2026-01-19</span>
+                    </div>
+                    <div class="evidence-meta">
+                        <a class="evidence-link" href="https://youtube.com/@sungsikyung" target="_blank" rel="noopener">공식 유튜브</a>
+                        <span>공식 채널 출처</span>
+                    </div>
+                </article>
+                <article class="evidence-card">
+                    <div class="evidence-header">
+                        <div class="evidence-title">
+                            <span class="evidence-icon evidence-icon--catchtable">CT</span>
+                            <h4>흑백요리사 출연진</h4>
+                        </div>
+                        <span class="evidence-badge">레벨 4</span>
+                    </div>
+                    <p>출연 셰프의 운영/협업 매장을 구분해 표기합니다.</p>
+                    <div class="evidence-meta">
+                        <span>흑백요리사</span>
+                        <span>2026-01-19</span>
+                    </div>
+                    <div class="evidence-meta">
+                        <a class="evidence-link" href="https://catchtable.co.kr" target="_blank" rel="noopener">예약 플랫폼</a>
+                        <span>운영 여부 검증</span>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <section class="page-section" id="chef" data-section="chef">
@@ -426,15 +539,213 @@
             </div>
             <div class="mvp-section">
                 <h3>미쉐린 가이드</h3>
-                <div class="card-grid" id="michelin-list"></div>
+                <div class="card-grid" id="michelin-list">
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">미쉐린 2스타</span>
+                            <span>이노베이티브</span>
+                        </div>
+                        <span class="card-title">밍글스</span>
+                        <span class="card-location">서울 강남구</span>
+                        <p class="card-context">대표 메뉴: 멸치 국수와 전복</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles" target="_blank" rel="noopener">미쉐린 가이드</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">미쉐린 3스타</span>
+                            <span>한식</span>
+                        </div>
+                        <span class="card-title">가온</span>
+                        <span class="card-location">서울 강남구</span>
+                        <p class="card-context">대표 메뉴: 온날 코스</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gaon" target="_blank" rel="noopener">미쉐린 가이드</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">빕 구르망</span>
+                            <span>돼지국밥</span>
+                        </div>
+                        <span class="card-title">옥동식</span>
+                        <span class="card-location">서울 마포구</span>
+                        <p class="card-context">대표 메뉴: 돼지곰탕</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/okdongsik" target="_blank" rel="noopener">미쉐린 가이드</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">미쉐린 2스타</span>
+                            <span>뉴 코리안</span>
+                        </div>
+                        <span class="card-title">정식당</span>
+                        <span class="card-location">서울 강남구</span>
+                        <p class="card-context">대표 메뉴: 맛있는 김밥</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/jungsik" target="_blank" rel="noopener">미쉐린 가이드</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">빕 구르망</span>
+                            <span>칼국수</span>
+                        </div>
+                        <span class="card-title">고향칼국수</span>
+                        <span class="card-location">서울 종로구</span>
+                        <p class="card-context">대표 메뉴: 손칼국수</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/gohyang-kalguksu" target="_blank" rel="noopener">미쉐린 가이드</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                </div>
             </div>
             <div class="mvp-section">
                 <h3>유명인 추천/방문</h3>
-                <div class="card-grid" id="celebrity-list"></div>
+                <div class="card-grid" id="celebrity-list">
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">성시경 먹을텐데</span>
+                            <span>태국 음식</span>
+                        </div>
+                        <span class="card-title">화양연화</span>
+                        <span class="card-location">서울 종로구</span>
+                        <p class="card-context">대표 메뉴: 팟타이</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://youtube.com/@sungsikyung" target="_blank" rel="noopener">공식 유튜브</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">BTS 정국 방문</span>
+                            <span>돼지고기 구이</span>
+                        </div>
+                        <span class="card-title">금돼지식당</span>
+                        <span class="card-location">서울 중구</span>
+                        <p class="card-context">대표 메뉴: 본삼겹</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://instagram.com/goldpig1982" target="_blank" rel="noopener">공식 인스타그램</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">정용진 회장 추천</span>
+                            <span>한식 주점</span>
+                        </div>
+                        <span class="card-title">을지로보석</span>
+                        <span class="card-location">서울 중구</span>
+                        <p class="card-context">대표 메뉴: 들기름 낙지젓 카펠리니</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://instagram.com/euljiro_boseok" target="_blank" rel="noopener">공식 인스타그램</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">허영만 식객</span>
+                            <span>백숙</span>
+                        </div>
+                        <span class="card-title">사랑방칼국수</span>
+                        <span class="card-location">서울 중구</span>
+                        <p class="card-context">대표 메뉴: 백숙 백반</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://search.naver.com/search.naver%3Fquery%3D%EC%82%AC%EB%9E%91%EB%B0%A9%EC%B9%BC%EA%B5%AD%EC%88%98" target="_blank" rel="noopener">네이버 검색</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">최자로드</span>
+                            <span>피자</span>
+                        </div>
+                        <span class="card-title">잭슨피자</span>
+                        <span class="card-location">서울 용산구</span>
+                        <p class="card-context">대표 메뉴: 슈퍼 잭슨</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://www.google.com/search?q=https://youtube.com/%40the_m_show" target="_blank" rel="noopener">공식 유튜브</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                </div>
             </div>
             <div class="mvp-section">
                 <h3>흑백요리사 출연진</h3>
-                <div class="card-grid" id="chef-list"></div>
+                <div class="card-grid" id="chef-list">
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">윤남노 셰프</span>
+                            <span>프렌치 에스닉</span>
+                        </div>
+                        <span class="card-title">디핀</span>
+                        <span class="card-location">서울 중구</span>
+                        <p class="card-context">대표 메뉴: 머쉬룸 타르트</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://catchtable.co.kr/deepin" target="_blank" rel="noopener">캐치테이블</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">강승원 셰프</span>
+                            <span>이노베이티브</span>
+                        </div>
+                        <span class="card-title">트리드</span>
+                        <span class="card-location">서울 강남구</span>
+                        <p class="card-context">대표 메뉴: 트러플 슈</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://catchtable.co.kr/trid" target="_blank" rel="noopener">캐치테이블</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">권성준 셰프</span>
+                            <span>이탈리안</span>
+                        </div>
+                        <span class="card-title">비아 톨레도 파스타바</span>
+                        <span class="card-location">서울 용산구</span>
+                        <p class="card-context">대표 메뉴: 할머니의 라자냐</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://catchtable.co.kr/viatoledo" target="_blank" rel="noopener">캐치테이블</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">윤남노 셰프</span>
+                            <span>일식 다이닝</span>
+                        </div>
+                        <span class="card-title">레스토랑 네오</span>
+                        <span class="card-location">서울 서초구</span>
+                        <p class="card-context">대표 메뉴: 닭 날개 만두</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://catchtable.co.kr/restaurantneo" target="_blank" rel="noopener">캐치테이블</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                    <article class="info-card">
+                        <div class="card-meta">
+                            <span class="status-pill">최강록 셰프</span>
+                            <span>이북음식 오마카세</span>
+                        </div>
+                        <span class="card-title">리북방</span>
+                        <span class="card-location">서울 마포구</span>
+                        <p class="card-context">대표 메뉴: 순대 플래터</p>
+                        <div class="card-footer">
+                            <a class="evidence-link" href="https://catchtable.co.kr/leebukbang" target="_blank" rel="noopener">캐치테이블</a>
+                            <span>확인일: 2026-01-19</span>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('js-enabled');
     const navButtons = document.querySelectorAll('.nav-button');
     const sections = document.querySelectorAll('.page-section');
     const titleLink = document.querySelector('.title-link');
