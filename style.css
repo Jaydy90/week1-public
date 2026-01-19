@@ -411,6 +411,10 @@ footer {
   animation-delay: var(--delay, 0s);
 }
 
+.page-section.is-active .info-card {
+  opacity: 1;
+}
+
 .card-title {
   font-weight: 600;
   font-size: 1.1rem;
