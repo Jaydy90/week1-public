@@ -15,11 +15,36 @@ const AuthModule = {
       return;
     }
 
+    console.log('AuthModule initializing...');
+    console.log('Current URL:', window.location.href);
+    console.log('Hash fragment:', window.location.hash);
+
+    // OAuth 리다이렉트 후 hash에서 토큰 확인
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      console.log('OAuth callback detected, processing tokens...');
+
+      // Supabase가 자동으로 hash를 처리할 시간을 줌
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
     // 현재 세션 확인
-    const { data: { session } } = await supabase.auth.getSession();
+    const { data: { session }, error } = await supabase.auth.getSession();
+
+    console.log('Session check:', {
+      hasSession: !!session,
+      error: error,
+      user: session?.user?.email
+    });
+
     if (session) {
       this.currentUser = session.user;
       this.onAuthStateChange(session.user);
+
+      // hash fragment 제거 (깨끗한 URL로 만들기)
+      if (window.location.hash.includes('access_token')) {
+        console.log('Cleaning up URL hash...');
+        window.history.replaceState(null, '', window.location.pathname + '#home');
+      }
     } else {
       // 세션이 없으면 로그아웃 상태 UI 표시
       this.onAuthStateChange(null);
@@ -27,9 +52,15 @@ const AuthModule = {
 
     // 인증 상태 변경 리스너
     supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event);
+      console.log('Auth state changed:', event, 'User:', session?.user?.email);
       this.currentUser = session?.user || null;
       this.onAuthStateChange(this.currentUser);
+
+      // 로그인 성공 시 hash 정리
+      if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
+        console.log('Sign in successful, cleaning URL...');
+        window.history.replaceState(null, '', window.location.pathname + '#home');
+      }
     });
   },
 

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test - Trust Route</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .primary-button {
+            background: #e45a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modal Test</h1>
+    <p>Status: <span id="status">Not initialized</span></p>
+
+    <button onclick="handleUserMenuClick()">로그인/회원가입 (Global Function)</button>
+    <button onclick="testLoginModal()">Test Login Modal</button>
+    <button onclick="testSignupModal()">Test Signup Modal</button>
+
+    <!-- 로그인 모달 -->
+    <div class="modal-overlay" id="login-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>로그인</h2>
+                <button class="modal-close" id="login-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>로그인 모달이 열렸습니다!</p>
+                <button class="primary-button" onclick="document.getElementById('login-modal').style.display='none'">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회원가입 모달 -->
+    <div class="modal-overlay" id="signup-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>회원가입</h2>
+                <button class="modal-close" id="signup-modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>회원가입 모달이 열렸습니다!</p>
+                <button class="primary-button" onclick="document.getElementById('signup-modal').style.display='none'">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate the structure from main.js
+        window.ModalController = null;
+
+        const ModalController = {
+            init() {
+                console.log('ModalController.init() called');
+                this.setupLoginModal();
+                this.setupSignupModal();
+                console.log('ModalController initialized successfully');
+            },
+
+            setupLoginModal() {
+                const modal = document.getElementById('login-modal');
+                const closeBtn = document.getElementById('login-modal-close');
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                    });
+                }
+
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                }
+            },
+
+            setupSignupModal() {
+                const modal = document.getElementById('signup-modal');
+                const closeBtn = document.getElementById('signup-modal-close');
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                    });
+                }
+
+                if (modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.style.display = 'none';
+                        }
+                    });
+                }
+            },
+
+            openLoginModal() {
+                console.log('openLoginModal called');
+                const modal = document.getElementById('login-modal');
+                console.log('Login modal element:', modal);
+
+                if (modal) {
+                    modal.style.display = 'flex';
+                    console.log('Login modal display set to flex');
+                } else {
+                    console.error('login-modal element not found!');
+                }
+            },
+
+            openSignupModal() {
+                console.log('openSignupModal called');
+                const modal = document.getElementById('signup-modal');
+                console.log('Signup modal element:', modal);
+
+                if (modal) {
+                    modal.style.display = 'flex';
+                    console.log('Signup modal display set to flex');
+                } else {
+                    console.error('signup-modal element not found!');
+                }
+            }
+        };
+
+        window.testLoginModal = function() {
+            console.log('Testing login modal...');
+            if (window.ModalController) {
+                window.ModalController.openLoginModal();
+            } else {
+                alert('ModalController not ready yet');
+            }
+        };
+
+        window.testSignupModal = function() {
+            console.log('Testing signup modal...');
+            if (window.ModalController) {
+                window.ModalController.openSignupModal();
+            } else {
+                alert('ModalController not ready yet');
+            }
+        };
+
+        window.handleUserMenuClick = function() {
+            console.log('Global handleUserMenuClick called');
+            if (!window.ModalController) {
+                console.error('ModalController not loaded yet!');
+                alert('잠시 후 다시 시도해주세요.');
+                return;
+            }
+
+            console.log('Opening login modal...');
+            window.ModalController.openLoginModal();
+        };
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded');
+            try {
+                ModalController.init();
+                window.ModalController = ModalController;
+                console.log('ModalController exposed globally');
+                document.getElementById('status').textContent = 'Initialized ✅';
+                document.getElementById('status').style.color = 'green';
+            } catch (err) {
+                console.error('Initialization failed:', err);
+                document.getElementById('status').textContent = 'Failed ❌';
+                document.getElementById('status').style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

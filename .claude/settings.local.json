@@ -15,7 +15,11 @@
       "Bash(git push:*)",
       "Bash(start test.html)",
       "Bash(start index.html)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(start test-modal.html)",
+      "Bash(timeout /t 120 /nobreak)",
+      "WebFetch(domain:kpopeats.cc)",
+      "Bash(node -c:*)"
     ]
   }
 }
