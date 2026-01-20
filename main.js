@@ -282,7 +282,7 @@ const HomeScreen = {
     });
   },
 
-  // 인라인 상세 정보 표시 (카드 아래 펼치기)
+  // 인라인 상세 정보 표시 (그리드 밖 컨테이너에)
   showInlineDetail(restaurantId, clickedCard) {
     // 레스토랑 데이터 찾기
     let restaurant = nearbySpots.find(r => r.id === restaurantId);
@@ -295,8 +295,12 @@ const HomeScreen = {
       return;
     }
 
+    // 상세 정보 컨테이너
+    const detailContainer = document.getElementById('inline-detail-container');
+    if (!detailContainer) return;
+
     // 이전에 열린 상세 정보 제거
-    const existingDetail = document.querySelector('.inline-detail');
+    const existingDetail = detailContainer.querySelector('.inline-detail');
     if (existingDetail) {
       // 같은 카드를 다시 클릭한 경우 닫기
       if (existingDetail.dataset.restaurantId === restaurantId) {
@@ -309,30 +313,22 @@ const HomeScreen = {
     // 상세 정보 HTML 생성
     const detailHTML = this.createInlineDetailHTML(restaurant);
 
-    // 카드 그리드 컨테이너
-    const gridContainer = document.getElementById('home-preview-list');
-    if (!gridContainer) return;
-
-    // 클릭한 카드의 다음 위치에 삽입
+    // 상세 정보 div 생성
     const detailDiv = document.createElement('div');
     detailDiv.className = 'inline-detail';
     detailDiv.dataset.restaurantId = restaurantId;
     detailDiv.innerHTML = detailHTML;
 
-    // 카드 다음에 삽입
-    if (clickedCard.nextSibling) {
-      gridContainer.insertBefore(detailDiv, clickedCard.nextSibling);
-    } else {
-      gridContainer.appendChild(detailDiv);
-    }
+    // 컨테이너에 삽입
+    detailContainer.appendChild(detailDiv);
 
     // 이벤트 리스너 설정
     this.setupInlineDetailListeners(restaurant, detailDiv);
 
     // 상세 정보로 스크롤
     setTimeout(() => {
-      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   },
 
   // 인라인 상세 정보 HTML 생성
@@ -615,8 +611,12 @@ const ListScreen = {
       return;
     }
 
+    // 상세 정보 컨테이너
+    const detailContainer = document.getElementById('list-inline-detail-container');
+    if (!detailContainer) return;
+
     // 이전에 열린 상세 정보 제거
-    const existingDetail = document.querySelector('.inline-detail');
+    const existingDetail = detailContainer.querySelector('.inline-detail');
     if (existingDetail) {
       if (existingDetail.dataset.restaurantId === restaurantId) {
         existingDetail.remove();
@@ -628,30 +628,22 @@ const ListScreen = {
     // 상세 정보 HTML 생성
     const detailHTML = HomeScreen.createInlineDetailHTML(restaurant);
 
-    // 카드 그리드 컨테이너
-    const gridContainer = document.getElementById('list-grid');
-    if (!gridContainer) return;
-
     // 상세 정보 div 생성
     const detailDiv = document.createElement('div');
     detailDiv.className = 'inline-detail';
     detailDiv.dataset.restaurantId = restaurantId;
     detailDiv.innerHTML = detailHTML;
 
-    // 카드 다음에 삽입
-    if (clickedCard.nextSibling) {
-      gridContainer.insertBefore(detailDiv, clickedCard.nextSibling);
-    } else {
-      gridContainer.appendChild(detailDiv);
-    }
+    // 컨테이너에 삽입
+    detailContainer.appendChild(detailDiv);
 
     // 이벤트 리스너 설정
     HomeScreen.setupInlineDetailListeners(restaurant, detailDiv);
 
     // 상세 정보로 스크롤
     setTimeout(() => {
-      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   }
 };
 
