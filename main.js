@@ -954,10 +954,13 @@ const MypageScreen = {
   },
 
   setupEventListeners() {
-    // 로그아웃 버튼
-    const logoutBtn = document.getElementById('logout-button');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', async () => {
+    // 로그아웃 버튼 (이벤트 리스너 중복 방지를 위해 버튼 복제)
+    const oldBtn = document.getElementById('logout-button');
+    if (oldBtn) {
+      const newBtn = oldBtn.cloneNode(true);
+      oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+
+      newBtn.addEventListener('click', async () => {
         if (confirm('로그아웃하시겠습니까?')) {
           try {
             await AuthModule.signOut();
@@ -967,7 +970,7 @@ const MypageScreen = {
             alert('로그아웃에 실패했습니다.');
           }
         }
-      });
+      }, { once: true });
     }
   },
 
