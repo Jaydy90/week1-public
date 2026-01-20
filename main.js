@@ -277,8 +277,210 @@ const HomeScreen = {
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const restaurantId = card.dataset.restaurantId;
-        Router.navigateTo('detail', { restaurantId });
+        this.showInlineDetail(restaurantId, card);
       });
+    });
+  },
+
+  // 인라인 상세 정보 표시 (카드 아래 펼치기)
+  showInlineDetail(restaurantId, clickedCard) {
+    // 레스토랑 데이터 찾기
+    let restaurant = nearbySpots.find(r => r.id === restaurantId);
+    if (!restaurant && window.allRestaurants) {
+      restaurant = window.allRestaurants.find(r => r.id === restaurantId);
+    }
+
+    if (!restaurant) {
+      console.error('Restaurant not found:', restaurantId);
+      return;
+    }
+
+    // 이전에 열린 상세 정보 제거
+    const existingDetail = document.querySelector('.inline-detail');
+    if (existingDetail) {
+      // 같은 카드를 다시 클릭한 경우 닫기
+      if (existingDetail.dataset.restaurantId === restaurantId) {
+        existingDetail.remove();
+        return;
+      }
+      existingDetail.remove();
+    }
+
+    // 상세 정보 HTML 생성
+    const detailHTML = this.createInlineDetailHTML(restaurant);
+
+    // 카드 그리드 컨테이너
+    const gridContainer = document.getElementById('home-preview-list');
+    if (!gridContainer) return;
+
+    // 클릭한 카드의 다음 위치에 삽입
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'inline-detail';
+    detailDiv.dataset.restaurantId = restaurantId;
+    detailDiv.innerHTML = detailHTML;
+
+    // 카드 다음에 삽입
+    if (clickedCard.nextSibling) {
+      gridContainer.insertBefore(detailDiv, clickedCard.nextSibling);
+    } else {
+      gridContainer.appendChild(detailDiv);
+    }
+
+    // 이벤트 리스너 설정
+    this.setupInlineDetailListeners(restaurant, detailDiv);
+
+    // 상세 정보로 스크롤
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  },
+
+  // 인라인 상세 정보 HTML 생성
+  createInlineDetailHTML(r) {
+    const badgeHTML = r.badgeType ? `<span class="badge-chip">${r.badgeType}</span>` : '';
+
+    return `
+      <div class="inline-detail-header">
+        <div class="inline-detail-title-section">
+          <h2 class="inline-detail-title">${r.name}</h2>
+          <p class="inline-detail-location">${r.location || `${r.region} ${r.area}`}</p>
+        </div>
+        <button class="inline-detail-close" id="inline-detail-close">✕ 닫기</button>
+      </div>
+
+      <div class="inline-detail-content">
+        <div class="inline-detail-main-info">
+          <p class="inline-detail-category">${r.category || r.badgeType || ''} ${badgeHTML}</p>
+          <p class="inline-detail-menu"><strong>대표 메뉴:</strong> ${r.mainMenu || '정보 없음'}</p>
+          ${r.address ? `<p class="inline-detail-address"><strong>주소:</strong> ${r.address}</p>` : ''}
+        </div>
+
+        <div class="inline-trust-evidence">
+          <h3>신뢰 근거</h3>
+          <p>${r.context || r.category || '신뢰할 수 있는 출처에서 확인되었습니다.'}</p>
+          ${r.sourceUrl && r.sourceLabel ? `
+            <div class="evidence-meta">
+              <a class="evidence-link" href="${r.sourceUrl}" target="_blank" rel="noopener">${r.sourceLabel}</a>
+            </div>
+          ` : ''}
+          ${r.verifiedAt ? `
+            <div class="evidence-meta">
+              <span>확인일: ${r.verifiedAt}</span>
+            </div>
+          ` : ''}
+        </div>
+
+        <div class="inline-detail-actions">
+          <button class="inline-action-button" id="inline-save-btn">
+            <span>💾</span> 저장
+          </button>
+          <button class="inline-action-button" id="inline-share-btn">
+            <span>🔗</span> 공유
+          </button>
+          <button class="inline-action-button primary" id="inline-directions-btn">
+            <span>🗺️</span> 바로 길찾기
+          </button>
+        </div>
+      </div>
+    `;
+  },
+
+  // 인라인 상세 정보 이벤트 리스너 설정
+  setupInlineDetailListeners(restaurant, detailDiv) {
+    // 닫기 버튼
+    const closeBtn = detailDiv.querySelector('#inline-detail-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        detailDiv.remove();
+      });
+    }
+
+    // 저장 버튼
+    const saveBtn = detailDiv.querySelector('#inline-save-btn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.handleInlineSave(restaurant);
+      });
+    }
+
+    // 공유 버튼
+    const shareBtn = detailDiv.querySelector('#inline-share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.handleInlineShare(restaurant);
+      });
+    }
+
+    // 길찾기 버튼
+    const directionsBtn = detailDiv.querySelector('#inline-directions-btn');
+    if (directionsBtn) {
+      directionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        Router.navigateTo('directions', { restaurantId: restaurant.id });
+      });
+    }
+  },
+
+  // 인라인 저장 기능
+  handleInlineSave(restaurant) {
+    let savedList = [];
+    try {
+      const saved = localStorage.getItem('savedRestaurants');
+      savedList = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('저장된 목록을 불러올 수 없습니다:', e);
+    }
+
+    const index = savedList.findIndex(item => item.id === restaurant.id);
+
+    if (index !== -1) {
+      savedList.splice(index, 1);
+      localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
+      alert(`${restaurant.name}을(를) 저장 목록에서 제거했습니다.`);
+    } else {
+      savedList.push({
+        id: restaurant.id,
+        name: restaurant.name,
+        location: restaurant.location || `${restaurant.region} ${restaurant.area}`,
+        savedAt: new Date().toISOString()
+      });
+      localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
+      alert(`${restaurant.name}을(를) 저장했습니다.`);
+    }
+  },
+
+  // 인라인 공유 기능
+  async handleInlineShare(restaurant) {
+    const shareData = {
+      title: `KPopEats - ${restaurant.name}`,
+      text: `${restaurant.name} (${restaurant.location || restaurant.region}) - 신뢰할 수 있는 맛집 정보`,
+      url: `${window.location.origin}/#home`
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log('공유 성공');
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('공유 실패:', err);
+          this.fallbackShare(shareData);
+        }
+      }
+    } else {
+      this.fallbackShare(shareData);
+    }
+  },
+
+  fallbackShare(shareData) {
+    const url = shareData.url;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('링크가 클립보드에 복사되었습니다.');
+    }).catch(() => {
+      alert(`링크를 복사해주세요: ${url}`);
     });
   }
 };
@@ -395,9 +597,61 @@ const ListScreen = {
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const restaurantId = card.dataset.restaurantId;
-        Router.navigateTo('detail', { restaurantId });
+        this.showInlineDetail(restaurantId, card);
       });
     });
+  },
+
+  // 인라인 상세 정보 표시
+  showInlineDetail(restaurantId, clickedCard) {
+    // HomeScreen의 메서드 재사용
+    let restaurant = window.allRestaurants ? window.allRestaurants.find(r => r.id === restaurantId) : null;
+    if (!restaurant) {
+      restaurant = nearbySpots.find(r => r.id === restaurantId);
+    }
+
+    if (!restaurant) {
+      console.error('Restaurant not found:', restaurantId);
+      return;
+    }
+
+    // 이전에 열린 상세 정보 제거
+    const existingDetail = document.querySelector('.inline-detail');
+    if (existingDetail) {
+      if (existingDetail.dataset.restaurantId === restaurantId) {
+        existingDetail.remove();
+        return;
+      }
+      existingDetail.remove();
+    }
+
+    // 상세 정보 HTML 생성
+    const detailHTML = HomeScreen.createInlineDetailHTML(restaurant);
+
+    // 카드 그리드 컨테이너
+    const gridContainer = document.getElementById('list-grid');
+    if (!gridContainer) return;
+
+    // 상세 정보 div 생성
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'inline-detail';
+    detailDiv.dataset.restaurantId = restaurantId;
+    detailDiv.innerHTML = detailHTML;
+
+    // 카드 다음에 삽입
+    if (clickedCard.nextSibling) {
+      gridContainer.insertBefore(detailDiv, clickedCard.nextSibling);
+    } else {
+      gridContainer.appendChild(detailDiv);
+    }
+
+    // 이벤트 리스너 설정
+    HomeScreen.setupInlineDetailListeners(restaurant, detailDiv);
+
+    // 상세 정보로 스크롤
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
   }
 };
 
