@@ -1,176 +1,412 @@
-# CLAUDE.md — Trust Route (Web SaaS)
-# Stack: Next.js + TypeScript / Supabase(Auth+Postgres) / Stripe(Subcription via Checkout) / Deploy: GitHub→Cloudflare Pages→Domain
+# CLAUDE.md
 
-## 0) Product North Star (read first)
-- **본질**: 검색을 넘어선 "결정 + 이동 완결 UX"
-- **한 문장**: 내 위치에서 "신뢰 근거가 명확한 맛집"만 골라, 가장 효율적인 이동 동선으로 즉시 안내하는 신뢰 기반 공간데이터 플랫폼
-- **차별화 자산**: 신뢰 기준(미쉐린/유명인/흑백요리사 등) + 근거 카드(출처/확인일/근거유형) 시각화
-- **우선순위**: 정보량 경쟁 X → 결정 시간 단축 + 길찾기 전환 극대화 O
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 1) MVP scope (0~30일: 출시 가능한 최소 단위)
-- **화면 4종**: 홈 / 리스트 / 상세 / 길찾기
-- **홈**: 지도 중심 + 내 위치 기반 "내 주변 10/15/30분" + 신뢰 탭(미쉐린/유명인/흑백요리사)
-- **리스트**: 거리/소요시간/영업중/가격대 필터 + 정렬(가까움/빠름/저장순)
-- **상세**: 신뢰 근거 카드(출처/확인일/캡션/링크) + 대표메뉴 + 예상 이동시간 + "바로 길찾기"
-- **길찾기**: 도보/대중교통/차량 3탭 + 최적 기본값 + 지도앱 딥링크(네이버/카카오)
-- **저장**: 북마크 + 최근 본 + 공유 링크(코스 공유는 V1.5 이후)
-- **피드백**: 오정보 신고/정정 최소 기능
+---
 
-## 2) Metrics (build instrumentation around these)
-- **가치 지표(핵심)**:
-  - 길찾기 앱 전환율(딥링크 클릭률)
-  - 사용자당 저장 횟수
-  - 사용자당 공유 횟수
-  - 1인당 평균 탐색 시간(짧을수록 "결정 UX" 성공)
-- **리텐션**: 7일/30일 재방문률, 저장 컬렉션 재사용률
-- **수익**: 제휴 전환율, B2B 파일럿 유료 전환율, 구독 전환율(후순위)
+# Trust Route — Static Web App with Supabase Auth
 
-## 3) Trust policy (브랜드 생명줄: 반드시 지킨다)
-- **배지 판매 금지**: 돈 내면 상단/배지 부여 같은 신뢰 훼손 행위 금지
-- **근거 카드 필수 필드**: 출처 링크 + 확인일 + 근거 유형 + 캡션
-- **갱신 원칙**: 월 단위 갱신 정책(또는 정책 확정 전까지 "확인일 기준 노출")
-- **정정/삭제 프로세스**: 신고 → 검수 → 반영(속도와 투명성이 신뢰를 지킨다)
-- **저작권/약관 리스크 방어**: 원문 복제보다 "출처 링크 + 메타데이터 + UX" 중심
+**Stack**: Vanilla JS (Static SPA) / Supabase (Auth + Postgres) / Cloudflare Pages
+**Domains**: kpopeats.cc (production), week1-public.pages.dev (dev)
+**Repository**: https://github.com/Jaydy90/week1-public
 
-## 4) Business model constraints (초기 과욕 금지)
-- **1단계**: 제휴 전환 수수료(예약/웨이팅/주문/배달 등)로 빠른 검증
-- **2단계**: B2B는 "노출 판매"가 아니라 "전환 도구" 판매(프로필 고도화/전환 랜딩/공지 등)
-- **3단계**: 개인 구독은 "시간 절약 + 실패 회피(결정 자동화)"로만 설득
-- **구독 출시 시점**: 재방문·저장·공유가 충분히 형성된 뒤(지표 기반)
+## Architecture Overview
 
-## 5) SaaS rules (Auth + Subscription)
-- **로그인**: 이메일/비밀번호 + Google OAuth
-- **구독 모델**: 개인 단일 구독(유저 1명 = 활성 구독 최대 1개)
-- **클라이언트 신뢰 금지**: 구독 상태/권한을 클라이언트 콜백만으로 반영하지 않는다
-- **진실의 원천**: Stripe Webhook → DB 기록 → 앱은 DB 상태로 권한/기능 제어
+This is a **static single-page application (SPA)** without a build step. All JavaScript runs client-side.
 
-## 6) Stripe subscription flow (Checkout standard)
-- **Start subscription**: Stripe Checkout(Subscription mode)로 시작한다
-- **Post-checkout**: 성공 리다이렉트는 "UX용"일 뿐, 권한 부여는 웹훅/DB 기준
-- **Webhooks (must implement safely)**:
-  - 서명 검증(Stripe signature)
-  - idempotency(이벤트 중복 처리 방지: `stripe_event_id` 저장 후 재처리 금지)
-  - canonical 상태 업데이트(구독/고객/플랜/기간/상태)
-- **Recommended webhook events** (최소):
-  - `checkout.session.completed`
-  - `customer.subscription.created`
-  - `customer.subscription.updated`
-  - `customer.subscription.deleted`
-  - `invoice.payment_succeeded`
-  - `invoice.payment_failed`
+### Core Files Structure
 
-## 7) Supabase (Auth + Postgres) rules
-- 클라이언트는 **anon key만** 사용
-- 서버/웹훅은 **service role key** 사용(절대 클라이언트로 노출 금지)
-- RLS 기본 ON 가정(정책은 "내 데이터만" 원칙)
-- 스키마/마이그레이션은 추적 가능해야 함(임의 변경 금지)
+```
+index.html          # Single HTML file with all 6 screens (sections)
+├─ config.js        # Supabase connection config (URL + anon key)
+├─ auth.js          # Authentication module (email/password + Google OAuth)
+├─ comments.js      # Comments CRUD module
+├─ data.js          # Restaurant data (nearbySpots, allRestaurants arrays)
+├─ main.js          # SPA router, screen controllers, modals
+└─ style.css        # All styles (no preprocessor)
+```
 
-## 8) Data model (minimum recommended tables)
-> Exact schema can evolve, but these concepts must exist.
+### SPA Router Pattern
 
-- `profiles`
-  - `id (uuid, = auth.users.id)`
-  - `created_at`
-  - `display_name`
-  - (optional) `home_area`, `preferences`
-- `restaurants`
-  - `id`, `name`, `address`, `lat`, `lng`, `category`, `price_range`, `hours`, `phone`, `menus(...)`
-- `trust_evidence` (근거 카드)
-  - `id`, `restaurant_id`
-  - `source_type` (michelin/celebrity/tv/chef/etc)
-  - `source_url`, `caption`
-  - `verified_at` (확인일)
-  - `trust_level` (1~5)
-- `bookmarks`
-  - `user_id`, `restaurant_id`, `created_at`
-- `reports` (오정보 신고)
-  - `user_id`, `restaurant_id`, `type`, `message`, `status`, `created_at`
-- `subscriptions` (Stripe canonical)
-  - `user_id`
-  - `stripe_customer_id`
-  - `stripe_subscription_id`
-  - `status` (active/trialing/past_due/canceled/unpaid/etc)
-  - `current_period_end`
-  - `cancel_at_period_end`
-  - `price_id` (or plan identifier)
-  - `updated_at`
-- `stripe_events` (idempotency)
-  - `stripe_event_id`, `type`, `received_at`
+**Hash-based routing** (`#home`, `#list`, `#detail`, `#directions`, `#faq`, `#partner`)
 
-## 9) Access control (feature gating)
-- Free(기본): 탐색(리스트/상세/길찾기 기본)
-- Paid(프리미엄: "결정 자동화"):
-  - 내 기준 자동 필터(개인화)
-  - 코스 자동 생성(2~3곳 동선)
-  - 관심 지역 신규 맛집 알림
-  - 저장 컬렉션 무제한 / 고급 정렬
-- Gating rule: UI 숨김만 하지 말고 **서버/API에서 강제**한다
+```javascript
+Router.navigateTo(screen, data = {})
+  → Hides all .page-section elements
+  → Shows section with [data-section="screen"]
+  → Calls initScreen(screen, data)
+  → Updates hash and nav button states
+```
 
-## 10) UI/UX rules (STRICT)
-- 모든 화면: Loading / Empty / Error 상태 필수
-- 접근성 기본: label, keyboard nav, focus 관리, 접근 가능한 에러 메시지
-- "결정 UX" 우선:
-  - 신뢰 근거 카드가 결정을 빠르게 끝내도록 구성(출처/확인일이 즉시 보이게)
-  - "바로 길찾기"는 최상단 CTA로 유지
+**Screen Controllers**:
+- `HomeScreen` - Preview cards, trust tabs
+- `ListScreen` - Full restaurant list with filters
+- `DetailScreen` - Restaurant details, trust evidence cards, comments
+- `DirectionsScreen` - Naver Maps deeplink
+- `ModalController` - Login/signup modals
 
-## 11) Performance rules
-- 큰 리스트는 서버/쿼리 기준으로 페이지네이션/필터 우선
-- 무거운 화면/컴포넌트 lazy-load
-- 이미지 최적화(사이즈/포맷/로딩)
+### Authentication Flow
 
-## 12) Cloudflare Pages + GitHub contract
-- GitHub `main`은 항상 배포 가능 상태 유지(위험 작업은 브랜치)
-- 런타임 제약이 있을 수 있으니 Node 전용 API는 신중히(호환 확인 후 사용)
-- 환경변수:
-  - 로컬: `.env.local` (커밋 금지)
-  - 배포: Cloudflare Pages 프로젝트 설정
-  - 저장소: `.env.example` (가짜 값만)
+**Supabase Auth** via CDN (`@supabase/supabase-js@2`):
 
-## 13) Env vars (standard names)
-- Supabase (public)
-  - `NEXT_PUBLIC_SUPABASE_URL=...`
-  - `NEXT_PUBLIC_SUPABASE_ANON_KEY=...`
-- Supabase (server only)
-  - `SUPABASE_SERVICE_ROLE_KEY=...`
-- Stripe (public)
-  - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=...`
-- Stripe (server only)
-  - `STRIPE_SECRET_KEY=...`
-  - `STRIPE_WEBHOOK_SECRET=...`
-- App
-  - `APP_URL=https://your-domain.com`
+1. User clicks "로그인/회원가입" → Opens modal
+2. Email/password or Google OAuth
+3. `AuthModule.signIn()` or `AuthModule.signInWithGoogle()`
+4. `onAuthStateChange()` updates UI (shows user name, enables comment form)
+5. `AuthModule.currentUser` stores session
 
-## 14) Engineering process (STRICT)
-### Testing
-- 기능/버그 수정 = 테스트 1개 이상 필수(unit/integration/e2e 중 택1)
-- auth/billing/webhook/권한 경계는 integration/e2e 우선
-- 예외 시: 사유 + 수동 체크리스트 필수
+**Key principle**: Check `AuthModule.isAuthenticated()` before auth-required actions.
 
-### UI evidence
-- UI 변경 시 Before/After 스크린샷(또는 영상) + UX 의도 1~2줄 필수
+### Database Schema (Supabase)
 
-### Size limits
-- 함수 <= 60줄 / 컴포넌트 <= 200줄 / 파일 <= 400줄 (예외는 이유 코멘트)
+**Current tables**:
+- `comments` - Restaurant reviews
+  - RLS policies: Anyone read, authenticated users create, users edit/delete own
+  - Triggers: `updated_at` auto-update
 
-### Comments (language)
-- 코드 주석: 한국어, Why/주의점/트레이드오프 중심
-- TODO: `TODO(이니셜|YYYY-MM-DD): 내용`
+**Data flow**:
+- Restaurant data: Static arrays in `data.js` (no DB yet)
+- Comments: Supabase Postgres with RLS
+- User auth: Supabase Auth (`auth.users` table)
 
-### Dependencies
-- 새 의존성은 보수적으로
-- 추가 시 "왜 필요한지 + 대안 1개"를 기록
+### Key Technical Constraints
 
-## 15) Git conventions
-- Branch: `feat/...`, `fix/...`, `chore/...`
-- Commit: `feat: ...`, `fix: ...`, `chore: ...`
-- Merge 전 체크: build OK / tests OK / lint OK
+1. **No build step** - Pure HTML/CSS/JS, no bundler
+2. **Client-side only** - No server-side rendering
+3. **Supabase anon key** - Safe to expose in client code (RLS protects data)
+4. **Event listener memory leaks** - Use button cloning technique:
+   ```javascript
+   const newBtn = oldBtn.cloneNode(true);
+   oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+   newBtn.addEventListener('click', handler);
+   ```
 
-## 16) Definition of done
-- 대표 시나리오가 완결된다:
-  - "내 주변 15분" → 신뢰 배지 식당 → 선택 → 길찾기 실행
-  - "흑백요리사 탭" → 지역 → 출연자별 매장 → 저장/공유
-  - "미쉐린 탭" → 필터 → 오늘 갈 곳 확정 → 길찾기
-- 핵심 지표 측정이 된다(길찾기 클릭/저장/공유)
-- 신뢰 정책을 위반하지 않는다(배지 판매 금지/출처+확인일)
-- 구독 플로우는 Stripe Checkout + 웹훅 기반으로 안전하게 동작한다
-- 배포가 Cloudflare Pages에서 재현 가능하다
+## Development Commands
+
+### Deploy
+```bash
+git add -A
+git commit -m "feat: description"
+git push origin main
+# Cloudflare Pages auto-deploys from main branch (1-2 min)
+```
+
+### Test Locally
+```bash
+# Open index.html in browser (no local server needed for basic testing)
+# For testing Supabase auth redirects, use a local server:
+npx serve .
+# or
+python -m http.server 8000
+```
+
+### Supabase Management
+```bash
+# Apply schema changes:
+# 1. Edit schema.sql
+# 2. Copy SQL to Supabase Dashboard > SQL Editor
+# 3. Run query
+```
+
+**Supabase Dashboard**: https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd
+
+## Product Principles (Critical Context)
+
+### North Star
+"결정 + 이동 완결 UX" - Complete decision and navigation in one flow, not just search.
+
+### Trust Policy (Non-negotiable)
+- **Never sell badges** - No pay-to-rank, trust integrity is brand survival
+- **Always show evidence** - sourceUrl, verifiedAt, sourceLabel required
+- **Transparent corrections** - Fast response to 오정보 신고
+
+### Decision UX Priority
+- Trust evidence cards must be immediately visible (not buried)
+- "바로 길찾기" CTA always prominent
+- Minimize exploration time (not maximize engagement time)
+
+### Metrics That Matter
+- Deeplink click rate (길찾기 전환율)
+- Saves per user
+- Shares per user
+- Average decision time (shorter = better)
+
+## Authentication & Security
+
+### Supabase Configuration
+
+**config.js** contains:
+- `SUPABASE_CONFIG.url` - Project URL
+- `SUPABASE_CONFIG.anonKey` - Public anon key (safe for client)
+
+**Never commit**:
+- Service role key (server-only, not used in this static app)
+- User credentials
+
+### Google OAuth Setup
+
+See `SUPABASE_SETUP.md` for step-by-step guide.
+
+**Required settings**:
+1. Google Cloud Console OAuth client
+2. Authorized redirect URI: `https://djmadubptsajvdvzpdvd.supabase.co/auth/v1/callback`
+3. Supabase Provider config with Client ID/Secret
+
+### Row Level Security (RLS)
+
+All Supabase tables must have RLS enabled. Current policies:
+
+**comments table**:
+- SELECT: `true` (anyone can read)
+- INSERT: `auth.uid() = user_id` (authenticated only)
+- UPDATE: `auth.uid() = user_id` (own comments only)
+- DELETE: `auth.uid() = user_id` (own comments only)
+
+## Data Management
+
+### Restaurant Data
+
+**Current**: Static arrays in `data.js`
+- `nearbySpots[]` - Featured restaurants for home screen
+- `allRestaurants[]` - Full list parsed from CSV-like format
+
+**Each restaurant must have**:
+- `id` - Unique identifier (e.g., "rest-001")
+- `name`, `location`, `category`
+- `sourceUrl`, `sourceLabel` - Trust evidence
+- `verifiedAt` - Confirmation date
+
+### Adding New Restaurants
+
+1. Edit `data.js`
+2. Add to `nearbySpots` (featured) or `allRestaurantsRaw` (full list)
+3. Ensure unique ID
+4. Include trust evidence fields
+
+### Comments CRUD
+
+**Module**: `comments.js` (`CommentsModule`)
+
+```javascript
+// Read
+await CommentsModule.getComments(restaurantId)
+
+// Create
+await CommentsModule.createComment(restaurantId, content)
+
+// Update
+await CommentsModule.updateComment(commentId, newContent)
+
+// Delete
+await CommentsModule.deleteComment(commentId)
+```
+
+**Security**: All mutations check `AuthModule.isAuthenticated()` and user_id ownership.
+
+## UI/UX Implementation Rules
+
+### State Management
+Each screen must handle:
+- **Loading state** - Show during async operations
+- **Empty state** - No data available
+- **Error state** - Operation failed
+
+### Modal Management
+
+**ModalController** handles login/signup modals:
+```javascript
+ModalController.openLoginModal()
+ModalController.openSignupModal()
+```
+
+**Close conditions**:
+- Close button click
+- Overlay click (outside modal)
+- ESC key (TODO: not implemented yet)
+
+### Comments Section
+
+**Display logic**:
+- If authenticated: Show comment form + comments list
+- If not authenticated: Show login prompt + comments list (read-only)
+
+**Update after mutations**:
+```javascript
+await CommentsModule.createComment(...)
+DetailScreen.loadComments() // Refresh list
+```
+
+## Deployment & Environment
+
+### Cloudflare Pages
+
+**Auto-deploy**: Push to `main` branch triggers build
+
+**Build settings**:
+- Build command: (none - static site)
+- Build output directory: `/`
+- Root directory: `/`
+
+**Environment variables**: Not needed (Supabase keys in code are public anon keys)
+
+### Domain Configuration
+
+**Primary**: kpopeats.cc
+**Dev**: week1-public.pages.dev
+
+**Redirect logic** (in `index.html`):
+```javascript
+if (window.location.hostname === 'week1-public.pages.dev') {
+  window.location.replace('https://kpopeats.cc' + ...)
+}
+```
+
+### Analytics
+
+**Enabled**:
+- Google Analytics (GA4): G-NT8PV02XX4
+- Microsoft Clarity: v30gcak7fj
+
+**Track key events**:
+- 길찾기 버튼 클릭
+- 저장 버튼 클릭
+- 공유 버튼 클릭
+
+## Common Patterns & Anti-Patterns
+
+### ✅ DO
+
+**Event listeners**: Clone button to prevent duplicates
+```javascript
+const replaceButton = (id, handler) => {
+  const oldBtn = document.getElementById(id);
+  const newBtn = oldBtn.cloneNode(true);
+  oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+  newBtn.addEventListener('click', handler);
+};
+```
+
+**Auth checks**: Always verify before protected actions
+```javascript
+if (!AuthModule.isAuthenticated()) {
+  ModalController.openLoginModal();
+  return;
+}
+```
+
+**Error handling**: Try-catch with user-friendly messages
+```javascript
+try {
+  await CommentsModule.createComment(...);
+  alert('후기가 등록되었습니다!');
+} catch (err) {
+  alert(err.message || '후기 등록에 실패했습니다.');
+}
+```
+
+### ❌ DON'T
+
+**Don't add event listeners without cleanup**:
+```javascript
+// BAD: Creates duplicate listeners on screen navigation
+btn.addEventListener('click', handler);
+
+// GOOD: Use replaceButton() pattern
+```
+
+**Don't trust client-side auth alone**:
+```javascript
+// BAD: Only checking UI state
+if (commentForm.style.display === 'block') { ... }
+
+// GOOD: Check actual auth state
+if (AuthModule.isAuthenticated()) { ... }
+```
+
+**Don't expose service role key**:
+```javascript
+// NEVER in config.js or any client code
+const key = 'service_role_key_xxx' // ❌
+```
+
+## Git Workflow
+
+### Commit Convention
+```
+feat: Add Google OAuth login
+fix: Prevent comment form duplicate submissions
+chore: Update Supabase schema documentation
+```
+
+### Commit Process
+All commits should be:
+1. Pushed to `origin/main` (no feature branches currently)
+2. Co-authored with Claude:
+   ```
+   Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
+   ```
+
+### Before Committing
+- Test in browser (especially auth flows)
+- Check console for errors
+- Verify no sensitive data in code
+
+## Future Architecture Notes
+
+### Planned Tables (Not Yet Implemented)
+- `profiles` - User display names, preferences
+- `restaurants` - Move from static arrays to DB
+- `trust_evidence` - Separate trust evidence from restaurants
+- `bookmarks` - User-saved restaurants (currently localStorage)
+- `reports` - 오정보 신고 tracking
+
+### Planned Features
+- Stripe subscription (payments)
+- Server-side API (Edge Functions or Cloudflare Workers)
+- Real-time updates (Supabase Realtime)
+- Image uploads for user-generated content
+
+### Migration Path
+When moving to Next.js:
+1. Keep existing URL structure (hash-based routing can map to Next.js routes)
+2. Move `data.js` arrays to Postgres
+3. Add API routes for server-side logic
+4. Implement Stripe webhooks in Edge Functions
+
+## Troubleshooting
+
+### "Supabase client not available"
+- Check `config.js` has correct URL and anon key
+- Verify Supabase CDN script loaded (`window.supabase` exists)
+- Check browser console for script loading errors
+
+### Google Login redirects to error page
+- Verify redirect URI in Google Cloud Console matches Supabase
+- Check Supabase Provider has correct Client ID/Secret
+- Ensure user is in "Test users" list (if app in testing mode)
+
+### Comments not saving
+- Check browser console for RLS policy errors
+- Verify user is authenticated (`AuthModule.currentUser` not null)
+- Check Supabase Dashboard > Authentication > Users for logged-in user
+- Verify `comments` table exists and RLS is enabled
+
+### Event handlers firing multiple times
+- Use button cloning pattern (see ✅ DO section above)
+- Check if screen init is being called multiple times
+
+## Reference Documents
+
+- `SUPABASE_SETUP.md` - Complete Supabase setup guide
+- `schema.sql` - Database schema with RLS policies
+- `.env.example` - Environment variable template (currently unused)
+
+## Definition of Done
+
+A feature is complete when:
+1. User flow works end-to-end (e.g., home → detail → 길찾기 → deeplink)
+2. Authenticated and unauthenticated states both handled
+3. Loading/empty/error states implemented
+4. No console errors
+5. Tested on mobile viewport (responsive)
+6. Committed with clear message and pushed to main
