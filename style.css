@@ -1377,3 +1377,241 @@ textarea {
     min-width: 100%;
   }
 }
+
+/* ========================================
+   사용자 메뉴 및 로그인 모달
+   ======================================== */
+
+/* 사용자 메뉴 버튼 */
+.user-menu {
+  display: flex;
+  align-items: center;
+}
+
+.user-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(15, 107, 102, 0.1);
+  border: 1px solid rgba(15, 107, 102, 0.2);
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.user-menu-btn:hover {
+  background: rgba(15, 107, 102, 0.15);
+  transform: translateY(-1px);
+}
+
+.user-icon {
+  font-size: 1.2rem;
+}
+
+/* 모달 오버레이 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--dark);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--dark);
+}
+
+.modal-body {
+  padding: 2rem 1.5rem;
+}
+
+/* 구글 로그인 버튼 */
+.google-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background: white;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #3c4043;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.google-login-btn:hover {
+  background: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 구분선 */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.divider span {
+  padding: 0 1rem;
+}
+
+/* 폼 필드 */
+.form-field {
+  margin-bottom: 1.2rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.form-field input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-field input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(228, 90, 43, 0.1);
+}
+
+/* 전체 너비 버튼 */
+.full-width {
+  width: 100%;
+}
+
+/* 모달 하단 텍스트 */
+.modal-footer-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.link-button:hover {
+  color: var(--dark);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .user-menu {
+    margin-left: auto;
+  }
+
+  .user-menu-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .modal-content {
+    width: 95%;
+    border-radius: 16px;
+  }
+
+  .modal-header {
+    padding: 1.2rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem 1.2rem;
+  }
+}

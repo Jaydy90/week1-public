@@ -509,16 +509,16 @@ const DetailScreen = {
     const submitCommentBtn = document.getElementById('submit-comment-btn');
     const cancelCommentBtn = document.getElementById('cancel-comment-btn');
 
-    // 로그인 버튼 (임시)
+    // 로그인 버튼 - 모달 열기
     if (loginBtn) {
       loginBtn.addEventListener('click', () => {
-        alert('로그인 기능은 곧 제공됩니다. (Supabase Auth 연동 예정)');
+        ModalController.openLoginModal();
       });
     }
 
     // 댓글 작성 버튼
     if (submitCommentBtn) {
-      submitCommentBtn.addEventListener('click', () => {
+      submitCommentBtn.addEventListener('click', async () => {
         const commentInput = document.getElementById('comment-input');
         const content = commentInput?.value.trim();
 
@@ -527,9 +527,14 @@ const DetailScreen = {
           return;
         }
 
-        // TODO: Supabase에 댓글 저장
-        alert('댓글 저장 기능은 곧 제공됩니다.');
-        commentInput.value = '';
+        try {
+          await CommentsModule.createComment(this.currentRestaurant.id, content);
+          commentInput.value = '';
+          this.loadComments(); // 새로고침
+          alert('후기가 등록되었습니다!');
+        } catch (err) {
+          alert(err.message || '후기 등록에 실패했습니다.');
+        }
       });
     }
 
@@ -541,18 +546,72 @@ const DetailScreen = {
       });
     }
 
-    // 댓글 목록 로드 (임시 - 나중에 Supabase에서 가져오기)
+    // 댓글 목록 로드
     this.loadComments();
   },
 
-  // 댓글 로드 (임시 데이터)
-  loadComments() {
+  // 댓글 로드
+  async loadComments() {
     const commentsList = document.getElementById('comments-list');
     if (!commentsList) return;
 
-    // TODO: Supabase에서 댓글 데이터 가져오기
-    // 현재는 빈 상태 표시
-    commentsList.innerHTML = '<p class="empty-comments">아직 작성된 후기가 없습니다. 첫 번째 후기를 남겨보세요!</p>';
+    try {
+      const comments = await CommentsModule.getComments(this.currentRestaurant.id);
+
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<p class="empty-comments">아직 작성된 후기가 없습니다. 첫 번째 후기를 남겨보세요!</p>';
+      } else {
+        commentsList.innerHTML = comments.map(comment =>
+          CommentsModule.renderCommentHTML(comment)
+        ).join('');
+
+        // 수정/삭제 버튼 이벤트 핸들러
+        this.attachCommentActionHandlers();
+      }
+    } catch (err) {
+      console.error('Failed to load comments:', err);
+      commentsList.innerHTML = '<p class="empty-comments">후기를 불러올 수 없습니다.</p>';
+    }
+  },
+
+  // 댓글 수정/삭제 핸들러
+  attachCommentActionHandlers() {
+    // 수정 버튼
+    document.querySelectorAll('.comment-edit-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const commentId = e.target.dataset.commentId;
+        const commentItem = e.target.closest('.comment-item');
+        const currentContent = commentItem.querySelector('.comment-content').textContent;
+
+        const newContent = prompt('수정할 내용을 입력하세요:', currentContent);
+        if (newContent && newContent.trim() !== currentContent) {
+          try {
+            await CommentsModule.updateComment(commentId, newContent);
+            this.loadComments();
+            alert('후기가 수정되었습니다.');
+          } catch (err) {
+            alert(err.message || '수정에 실패했습니다.');
+          }
+        }
+      });
+    });
+
+    // 삭제 버튼
+    document.querySelectorAll('.comment-delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const commentId = e.target.dataset.commentId;
+
+        if (confirm('정말 삭제하시겠습니까?')) {
+          try {
+            await CommentsModule.deleteComment(commentId);
+            this.loadComments();
+            alert('후기가 삭제되었습니다.');
+          } catch (err) {
+            alert(err.message || '삭제에 실패했습니다.');
+          }
+        }
+      });
+    });
   }
 };
 
@@ -643,11 +702,186 @@ const DirectionsScreen = {
 };
 
 // ========================================
+// 모달 컨트롤러 (로그인/회원가입)
+// ========================================
+const ModalController = {
+  init() {
+    this.setupLoginModal();
+    this.setupSignupModal();
+    this.setupUserMenu();
+  },
+
+  // 로그인 모달 설정
+  setupLoginModal() {
+    const modal = document.getElementById('login-modal');
+    const closeBtn = document.getElementById('login-modal-close');
+    const form = document.getElementById('email-login-form');
+    const googleBtn = document.getElementById('google-login-btn');
+    const showSignupBtn = document.getElementById('show-signup-btn');
+
+    // 닫기 버튼
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    // 오버레이 클릭 시 닫기
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // 이메일 로그인 폼
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        try {
+          await AuthModule.signIn(email, password);
+          modal.style.display = 'none';
+          form.reset();
+          alert('로그인되었습니다!');
+        } catch (err) {
+          alert(err.message || '로그인에 실패했습니다.');
+        }
+      });
+    }
+
+    // 구글 로그인
+    if (googleBtn) {
+      googleBtn.addEventListener('click', async () => {
+        try {
+          await AuthModule.signInWithGoogle();
+        } catch (err) {
+          alert(err.message || '구글 로그인에 실패했습니다.');
+        }
+      });
+    }
+
+    // 회원가입 모달로 전환
+    if (showSignupBtn) {
+      showSignupBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        this.openSignupModal();
+      });
+    }
+  },
+
+  // 회원가입 모달 설정
+  setupSignupModal() {
+    const modal = document.getElementById('signup-modal');
+    const closeBtn = document.getElementById('signup-modal-close');
+    const form = document.getElementById('email-signup-form');
+    const googleBtn = document.getElementById('google-signup-btn');
+    const showLoginBtn = document.getElementById('show-login-btn');
+
+    // 닫기 버튼
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    // 오버레이 클릭 시 닫기
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // 이메일 회원가입 폼
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+
+        try {
+          await AuthModule.signUp(email, password);
+          modal.style.display = 'none';
+          form.reset();
+          alert('가입이 완료되었습니다! 이메일을 확인해주세요.');
+        } catch (err) {
+          alert(err.message || '회원가입에 실패했습니다.');
+        }
+      });
+    }
+
+    // 구글 회원가입 (로그인과 동일)
+    if (googleBtn) {
+      googleBtn.addEventListener('click', async () => {
+        try {
+          await AuthModule.signInWithGoogle();
+        } catch (err) {
+          alert(err.message || '구글 가입에 실패했습니다.');
+        }
+      });
+    }
+
+    // 로그인 모달로 전환
+    if (showLoginBtn) {
+      showLoginBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        this.openLoginModal();
+      });
+    }
+  },
+
+  // 사용자 메뉴 설정
+  setupUserMenu() {
+    const userMenuBtn = document.getElementById('user-menu-btn');
+    if (userMenuBtn) {
+      userMenuBtn.addEventListener('click', () => {
+        if (AuthModule.isAuthenticated()) {
+          // 로그인 상태 - 드롭다운 메뉴 또는 로그아웃
+          if (confirm('로그아웃하시겠습니까?')) {
+            AuthModule.signOut().then(() => {
+              alert('로그아웃되었습니다.');
+            }).catch(err => {
+              alert('로그아웃에 실패했습니다.');
+            });
+          }
+        } else {
+          // 비로그인 상태 - 로그인 모달 열기
+          this.openLoginModal();
+        }
+      });
+    }
+  },
+
+  // 로그인 모달 열기
+  openLoginModal() {
+    const modal = document.getElementById('login-modal');
+    if (modal) modal.style.display = 'flex';
+  },
+
+  // 회원가입 모달 열기
+  openSignupModal() {
+    const modal = document.getElementById('signup-modal');
+    if (modal) modal.style.display = 'flex';
+  }
+};
+
+// ========================================
 // 전역 초기화
 // ========================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   console.log('Trust Route App Initialized');
   document.body.classList.add('js-enabled');
+
+  // 인증 시스템 초기화
+  await AuthModule.init();
+
+  // 모달 컨트롤러 초기화
+  ModalController.init();
 
   // 라우터 초기화
   Router.init();
