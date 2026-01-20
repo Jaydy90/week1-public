@@ -719,11 +719,14 @@ const DirectionsScreen = {
 // 모달 컨트롤러 (로그인/회원가입)
 // ========================================
 const ModalController = {
+  initialized: false,
+
   init() {
+    if (this.initialized) return; // 중복 초기화 방지
     console.log('ModalController.init() called');
     this.setupLoginModal();
     this.setupSignupModal();
-    // user-menu는 inline onclick으로 처리
+    this.initialized = true;
     console.log('ModalController initialized successfully');
   },
 
@@ -880,11 +883,14 @@ const ModalController = {
   }
 };
 
+// ModalController를 즉시 전역으로 노출
+// 이렇게 하면 DOMContentLoaded를 기다리지 않고도 사용 가능
+window.ModalController = ModalController;
+console.log('ModalController exposed globally (before DOMContentLoaded)');
+
 // ========================================
 // 전역 초기화
 // ========================================
-// ModalController를 전역으로 노출
-window.ModalController = null;
 
 // 디버깅용 전역 함수
 window.testLoginModal = function() {
@@ -951,13 +957,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Continuing without auth...');
   }
 
-  // 모달 컨트롤러 초기화 (인증과 무관하게 작동해야 함)
+  // 모달 컨트롤러 초기화 (이벤트 리스너 설정)
+  // ModalController는 이미 전역으로 노출되어 있음
   try {
-    console.log('Initializing ModalController...');
+    console.log('Initializing ModalController event listeners...');
     ModalController.init();
-    // 전역으로 노출
-    window.ModalController = ModalController;
-    console.log('ModalController initialized and exposed globally');
+    console.log('ModalController initialized');
   } catch (err) {
     console.error('ModalController initialization failed:', err);
   }
