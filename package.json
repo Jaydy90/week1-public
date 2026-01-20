@@ -1,0 +1,32 @@
+{
+  "name": "kpopeats-trust-route",
+  "version": "1.0.0",
+  "description": "신뢰 기반 맛집 발견 플랫폼 - 결정 + 이동 완결 UX",
+  "type": "module",
+  "scripts": {
+    "dev": "python -m http.server 3000",
+    "lint": "eslint *.js",
+    "test": "echo \"Tests not implemented yet\" && exit 0",
+    "format": "prettier --write \"**/*.{js,json,md}\"",
+    "prepare": "cd functions && npm install"
+  },
+  "keywords": [
+    "restaurant",
+    "trust",
+    "saas",
+    "cloudflare-pages"
+  ],
+  "author": "KPopEats Team",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "stripe": "^14.11.0",
+    "@supabase/supabase-js": "^2.39.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

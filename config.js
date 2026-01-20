@@ -17,6 +17,17 @@ const APP_CONFIG = {
   name: 'KPopEats'
 };
 
+// Stripe 설정
+const STRIPE_CONFIG = {
+  // TODO: 실제 Stripe publishable key로 교체 필요
+  // 테스트: pk_test_... / 프로덕션: pk_live_...
+  publishableKey: 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY',
+
+  // TODO: Stripe Dashboard에서 생성한 Price ID로 교체
+  // 예: price_1234567890abcdef (KPopEats Premium - ₩9,900/월)
+  priceId: 'price_YOUR_PRICE_ID'
+};
+
 // Supabase 클라이언트 초기화
 let supabaseClient = null;
 

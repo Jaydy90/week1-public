@@ -19,7 +19,13 @@
       "Bash(start test-modal.html)",
       "Bash(timeout /t 120 /nobreak)",
       "WebFetch(domain:kpopeats.cc)",
-      "Bash(node -c:*)"
+      "Bash(node -c:*)",
+      "WebSearch",
+      "Bash(if not exist .claudecommands mkdir .claudecommands)",
+      "Bash(chmod +x \"C:\\\\Users\\\\jdy2\\\\Desktop\\\\KEats \\(Trust Route\\)\\\\.claude\\\\commands\"\"*.sh)",
+      "Bash(chmod:*)",
+      "Bash(wc:*)",
+      "Bash(tail:*)"
     ]
   }
 }

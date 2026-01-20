@@ -1145,7 +1145,7 @@ const MypageScreen = {
     this.renderStats();
   },
 
-  renderProfile() {
+  async renderProfile() {
     const user = AuthModule.currentUser;
     if (!user) return;
 
@@ -1154,6 +1154,79 @@ const MypageScreen = {
 
     document.getElementById('profile-name').textContent = displayName;
     document.getElementById('profile-email').textContent = email;
+
+    // 구독 상태 표시
+    await this.renderSubscriptionStatus();
+  },
+
+  async renderSubscriptionStatus() {
+    const container = document.getElementById('subscription-status');
+    if (!container) {
+      console.warn('subscription-status 요소를 찾을 수 없습니다. index.html에 추가 필요.');
+      return;
+    }
+
+    // 로딩 상태
+    container.innerHTML = '<p class="loading">구독 정보 확인 중...</p>';
+
+    try {
+      const subscription = await SubscriptionModule.getSubscription();
+
+      if (!subscription || !['active', 'trialing'].includes(subscription.status)) {
+        // 비구독 상태
+        container.innerHTML = `
+          <div class="subscription-card free">
+            <h3>🆓 무료 플랜</h3>
+            <p class="subscription-description">기본 기능을 무료로 이용 중입니다.</p>
+            <button class="primary-button" id="start-subscription-btn">
+              프리미엄으로 업그레이드 ✨
+            </button>
+            <p class="subscription-benefits">
+              프리미엄 혜택:<br>
+              ✓ 개인화 자동 필터<br>
+              ✓ 코스 자동 생성<br>
+              ✓ 신규 맛집 알림<br>
+              ✓ 무제한 저장 컬렉션
+            </p>
+          </div>
+        `;
+
+        // 구독 시작 버튼 이벤트
+        const startBtn = document.getElementById('start-subscription-btn');
+        if (startBtn) {
+          startBtn.addEventListener('click', () => {
+            SubscriptionModule.startCheckout();
+          });
+        }
+      } else {
+        // 구독 중
+        const endDate = new Date(subscription.current_period_end).toLocaleDateString('ko-KR');
+        const statusText = subscription.status === 'trialing' ? '체험 중' : '활성';
+
+        container.innerHTML = `
+          <div class="subscription-card premium">
+            <h3>⭐ 프리미엄 플랜</h3>
+            <p class="subscription-status">상태: <strong>${statusText}</strong></p>
+            <p class="subscription-period">다음 결제일: ${endDate}</p>
+            ${subscription.cancel_at_period_end ? '<p class="subscription-cancel-notice">⚠️ 구독이 ${endDate}에 종료됩니다.</p>' : ''}
+            <button class="secondary-button" id="manage-subscription-btn">
+              구독 관리
+            </button>
+          </div>
+        `;
+
+        // 구독 관리 버튼 이벤트
+        const manageBtn = document.getElementById('manage-subscription-btn');
+        if (manageBtn) {
+          manageBtn.addEventListener('click', () => {
+            SubscriptionModule.cancelSubscription();
+          });
+        }
+      }
+    } catch (err) {
+      console.error('구독 상태 렌더링 오류:', err);
+      container.innerHTML = '<p class="error">구독 정보를 불러올 수 없습니다.</p>';
+    }
   },
 
   renderSavedRestaurants() {
@@ -1597,6 +1670,132 @@ console.log('ModalController exposed globally (before DOMContentLoaded)');
 // ========================================
 // 전역 초기화
 // ========================================
+
+// ========================================
+// Subscription Module (구독 관리)
+// ========================================
+const SubscriptionModule = {
+  /**
+   * 사용자의 활성 구독 확인
+   */
+  async hasActiveSubscription() {
+    try {
+      const supabase = getSupabaseClient();
+      const user = await supabase.auth.getUser();
+
+      if (!user.data.user) {
+        return false;
+      }
+
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', user.data.user.id)
+        .in('status', ['active', 'trialing'])
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('구독 확인 오류:', error);
+        return false;
+      }
+
+      // 구독이 있고 만료 전이면 활성
+      if (data && new Date(data.current_period_end) > new Date()) {
+        return true;
+      }
+
+      return false;
+    } catch (err) {
+      console.error('구독 확인 실패:', err);
+      return false;
+    }
+  },
+
+  /**
+   * 구독 정보 가져오기
+   */
+  async getSubscription() {
+    try {
+      const supabase = getSupabaseClient();
+      const user = await supabase.auth.getUser();
+
+      if (!user.data.user) {
+        return null;
+      }
+
+      const { data, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', user.data.user.id)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('구독 정보 조회 오류:', error);
+        return null;
+      }
+
+      return data;
+    } catch (err) {
+      console.error('구독 정보 조회 실패:', err);
+      return null;
+    }
+  },
+
+  /**
+   * Stripe Checkout Session 생성 및 리다이렉트
+   */
+  async startCheckout() {
+    try {
+      // 로그인 확인
+      const user = AuthModule.currentUser;
+      if (!user) {
+        alert('로그인이 필요합니다.');
+        return;
+      }
+
+      // 이미 구독 중인지 확인
+      const hasActive = await this.hasActiveSubscription();
+      if (hasActive) {
+        alert('이미 구독 중입니다.');
+        return;
+      }
+
+      // Checkout Session 생성 API 호출
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          priceId: STRIPE_CONFIG.priceId,
+          userId: user.id,
+          successUrl: `${APP_CONFIG.url}/#mypage?checkout=success`,
+          cancelUrl: `${APP_CONFIG.url}/#mypage?checkout=cancel`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Checkout Session 생성 실패');
+      }
+
+      const { url } = await response.json();
+
+      // Stripe Checkout 페이지로 리다이렉트
+      window.location.href = url;
+    } catch (err) {
+      console.error('구독 시작 오류:', err);
+      alert('구독 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    }
+  },
+
+  /**
+   * 구독 취소 (Stripe Customer Portal로 리다이렉트)
+   */
+  async cancelSubscription() {
+    alert('구독 관리는 Stripe Customer Portal에서 가능합니다.\n\n추후 업데이트 예정입니다.');
+    // TODO: Stripe Customer Portal Session 생성 API 구현
+  },
+};
 
 // 디버깅용 전역 함수
 window.testLoginModal = function() {

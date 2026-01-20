@@ -1929,6 +1929,99 @@ textarea {
   }
 }
 
+/* ========================================
+   구독 카드 스타일
+   ======================================== */
+.subscription-section {
+  margin-top: 2rem;
+}
+
+.subscription-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fff9f5 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.05),
+    0 8px 16px rgba(228, 90, 43, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.subscription-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.subscription-card.premium::before {
+  background: linear-gradient(90deg, #ffd700 0%, #ffed4e 100%);
+}
+
+.subscription-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+}
+
+.subscription-status,
+.subscription-period {
+  margin: 0.5rem 0;
+  color: var(--text-body);
+  font-size: 0.95rem;
+}
+
+.subscription-status strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.subscription-cancel-notice {
+  background: #fff3cd;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
+.subscription-description {
+  color: var(--text-body);
+  margin: 0.5rem 0 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.subscription-benefits {
+  background: rgba(228, 90, 43, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-body);
+}
+
+.subscription-card .primary-button,
+.subscription-card .secondary-button {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.subscription-card .loading,
+.subscription-card .error {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.subscription-card .error {
+  color: #dc3545;
+}
+
 @media (max-width: 480px) {
   .map-container {
     height: 350px;

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://schema.claudecode.com/mcp.json",
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      },
+      "description": "GitHub integration for repository operations, issues, and PRs"
+    },
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp-server"],
+      "env": {
+        "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+      },
+      "description": "Stripe integration for subscription and payment management"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
+      "env": {
+        "POSTGRES_CONNECTION_STRING": "${SUPABASE_DB_URL}"
+      },
+      "description": "PostgreSQL/Supabase database operations"
+    }
+  },
+  "integrations": {
+    "sentry": {
+      "enabled": false,
+      "dsn": "${SENTRY_DSN}",
+      "environment": "production",
+      "tracesSampleRate": 1.0,
+      "description": "Error tracking and performance monitoring (optional)"
+    },
+    "posthog": {
+      "enabled": false,
+      "apiKey": "${POSTHOG_API_KEY}",
+      "host": "https://app.posthog.com",
+      "description": "Product analytics and feature flags (optional)"
+    }
+  },
+  "project": {
+    "name": "KPopEats (Trust Route)",
+    "type": "saas",
+    "stack": ["html", "css", "javascript", "supabase", "stripe"],
+    "guidelines": "CLAUDE.md",
+    "deployTarget": "cloudflare-pages"
+  }
+}
