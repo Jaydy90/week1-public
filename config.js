@@ -10,7 +10,10 @@ const SUPABASE_CONFIG = {
 
 // 앱 설정
 const APP_CONFIG = {
-  url: window.location.origin,
+  // 프로덕션 URL을 명시적으로 설정 (localhost 방지)
+  url: window.location.hostname === 'localhost'
+    ? 'http://localhost:3000'
+    : 'https://kpopeats.cc',
   name: 'Trust Route'
 };
 
