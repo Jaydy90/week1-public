@@ -120,7 +120,7 @@ const AuthModule = {
       email,
       password,
       options: {
-        emailRedirectTo: `${APP_CONFIG.url}/#home`
+        emailRedirectTo: APP_CONFIG.url
       }
     });
 
@@ -150,7 +150,7 @@ const AuthModule = {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${APP_CONFIG.url}/#home`
+        redirectTo: APP_CONFIG.url
       }
     });
 
