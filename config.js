@@ -3,10 +3,9 @@
 // ========================================
 
 // Supabase 설정
-// 실제 배포 시에는 환경변수로 관리하거나 Cloudflare Pages 환경변수 사용
 const SUPABASE_CONFIG = {
-  url: 'https://your-project.supabase.co', // TODO: 실제 Supabase URL로 교체
-  anonKey: 'your-anon-key-here' // TODO: 실제 Supabase Anon Key로 교체
+  url: 'https://djmadubptsajvdvzpdvd.supabase.co',
+  anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqbWFkdWJwdHNhanZkdnpwZHZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg4OTU5NjAsImV4cCI6MjA4NDQ3MTk2MH0.vdYR60_4woWbTHZIL2K9idfhfQ0BOr6ZWr5iQvth2cQ'
 };
 
 // 앱 설정
