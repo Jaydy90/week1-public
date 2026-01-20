@@ -508,6 +508,17 @@ const DetailScreen = {
     const loginBtn = document.getElementById('login-btn');
     const submitCommentBtn = document.getElementById('submit-comment-btn');
     const cancelCommentBtn = document.getElementById('cancel-comment-btn');
+    const loginPrompt = document.getElementById('login-prompt');
+    const commentForm = document.getElementById('comment-form');
+
+    // 초기 상태 설정 (로그인 여부에 따라)
+    if (AuthModule.isAuthenticated()) {
+      if (loginPrompt) loginPrompt.style.display = 'none';
+      if (commentForm) commentForm.style.display = 'block';
+    } else {
+      if (loginPrompt) loginPrompt.style.display = 'block';
+      if (commentForm) commentForm.style.display = 'none';
+    }
 
     // 로그인 버튼 - 모달 열기
     if (loginBtn) {

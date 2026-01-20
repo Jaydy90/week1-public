@@ -1615,3 +1615,46 @@ textarea {
     padding: 1.5rem 1.2rem;
   }
 }
+
+/* 댓글 액션 버튼 */
+.comment-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.comment-edit-btn,
+.comment-delete-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.comment-edit-btn:hover {
+  background: rgba(15, 107, 102, 0.1);
+  border-color: var(--secondary);
+}
+
+.comment-delete-btn:hover {
+  background: rgba(228, 90, 43, 0.1);
+  border-color: var(--primary);
+}
+
+/* Ghost 버튼 */
+.ghost-button {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghost-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}

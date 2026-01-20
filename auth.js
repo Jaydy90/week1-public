@@ -10,6 +10,8 @@ const AuthModule = {
     const supabase = getSupabaseClient();
     if (!supabase) {
       console.warn('Supabase client not available');
+      // Supabase가 없어도 초기 UI 상태는 설정
+      this.onAuthStateChange(null);
       return;
     }
 
@@ -18,6 +20,9 @@ const AuthModule = {
     if (session) {
       this.currentUser = session.user;
       this.onAuthStateChange(session.user);
+    } else {
+      // 세션이 없으면 로그아웃 상태 UI 표시
+      this.onAuthStateChange(null);
     }
 
     // 인증 상태 변경 리스너
@@ -69,7 +74,7 @@ const AuthModule = {
         const displayName = user.email.split('@')[0];
         userNameEl.textContent = displayName;
       } else {
-        userNameEl.textContent = '로그인';
+        userNameEl.textContent = '로그인/회원가입';
       }
     }
     console.log('User display updated:', user?.email || 'Guest');
