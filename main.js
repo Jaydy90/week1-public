@@ -848,26 +848,6 @@ const ModalController = {
     }
   },
 
-  // 사용자 메뉴 클릭 핸들러 (inline onclick에서 호출됨)
-  handleUserMenuClick() {
-    console.log('handleUserMenuClick called, authenticated:', AuthModule.isAuthenticated());
-
-    if (AuthModule.isAuthenticated()) {
-      // 로그인 상태 - 로그아웃
-      if (confirm('로그아웃하시겠습니까?')) {
-        AuthModule.signOut().then(() => {
-          alert('로그아웃되었습니다.');
-        }).catch(err => {
-          alert('로그아웃에 실패했습니다.');
-        });
-      }
-    } else {
-      // 비로그인 상태 - 로그인 모달 열기
-      console.log('Opening login modal...');
-      this.openLoginModal();
-    }
-  },
-
   // 로그인 모달 열기
   openLoginModal() {
     console.log('openLoginModal called');
@@ -900,15 +880,58 @@ const ModalController = {
 // ========================================
 // 전역 초기화
 // ========================================
+// ModalController를 전역으로 노출
+window.ModalController = null;
+
 // 디버깅용 전역 함수
 window.testLoginModal = function() {
   console.log('Testing login modal...');
-  ModalController.openLoginModal();
+  if (window.ModalController) {
+    window.ModalController.openLoginModal();
+  } else {
+    alert('ModalController not ready yet');
+  }
 };
 
 window.testSignupModal = function() {
   console.log('Testing signup modal...');
-  ModalController.openSignupModal();
+  if (window.ModalController) {
+    window.ModalController.openSignupModal();
+  } else {
+    alert('ModalController not ready yet');
+  }
+};
+
+// 버튼 클릭 핸들러 (전역 함수)
+window.handleUserMenuClick = function() {
+  console.log('Global handleUserMenuClick called');
+  if (!window.ModalController) {
+    console.error('ModalController not loaded yet!');
+    alert('잠시 후 다시 시도해주세요.');
+    return;
+  }
+
+  // AuthModule이 로드되지 않았을 경우 대비
+  const isAuth = (typeof AuthModule !== 'undefined' && AuthModule.isAuthenticated && AuthModule.isAuthenticated()) || false;
+
+  console.log('Authenticated:', isAuth);
+
+  if (isAuth) {
+    // 로그인 상태 - 로그아웃
+    if (confirm('로그아웃하시겠습니까?')) {
+      if (typeof AuthModule !== 'undefined' && AuthModule.signOut) {
+        AuthModule.signOut().then(() => {
+          alert('로그아웃되었습니다.');
+        }).catch(err => {
+          alert('로그아웃에 실패했습니다.');
+        });
+      }
+    }
+  } else {
+    // 비로그인 상태 - 로그인 모달 열기
+    console.log('Opening login modal...');
+    window.ModalController.openLoginModal();
+  }
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -929,7 +952,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     console.log('Initializing ModalController...');
     ModalController.init();
-    console.log('ModalController initialized');
+    // 전역으로 노출
+    window.ModalController = ModalController;
+    console.log('ModalController initialized and exposed globally');
   } catch (err) {
     console.error('ModalController initialization failed:', err);
   }
