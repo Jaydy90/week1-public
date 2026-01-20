@@ -421,6 +421,79 @@
             </div>
         </section>
 
+        <!-- MYPAGE: 마이페이지 (신규) -->
+        <section class="page-section" id="mypage" data-section="mypage">
+            <div class="mypage-header">
+                <h1>마이페이지</h1>
+                <p class="mypage-desc">내 맛집 활동을 한눈에 확인하세요</p>
+            </div>
+
+            <!-- 프로필 정보 -->
+            <div class="profile-section">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        <span class="avatar-icon">👤</span>
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="profile-name" id="profile-name">사용자</h2>
+                        <p class="profile-email" id="profile-email">email@example.com</p>
+                    </div>
+                    <button class="logout-button" id="logout-button">로그아웃</button>
+                </div>
+            </div>
+
+            <!-- 저장한 맛집 -->
+            <div class="mypage-section">
+                <div class="section-header">
+                    <h2>저장한 맛집</h2>
+                    <span class="section-count" id="saved-count">0개</span>
+                </div>
+                <div class="saved-list" id="saved-restaurants-list">
+                    <p class="empty-state">저장한 맛집이 없습니다.</p>
+                </div>
+            </div>
+
+            <!-- 최근 본 맛집 -->
+            <div class="mypage-section">
+                <div class="section-header">
+                    <h2>최근 본 맛집</h2>
+                    <span class="section-count" id="recent-count">0개</span>
+                </div>
+                <div class="recent-list" id="recent-restaurants-list">
+                    <p class="empty-state">최근 본 맛집이 없습니다.</p>
+                </div>
+            </div>
+
+            <!-- 내가 작성한 후기 -->
+            <div class="mypage-section">
+                <div class="section-header">
+                    <h2>내가 작성한 후기</h2>
+                    <span class="section-count" id="comments-count">0개</span>
+                </div>
+                <div class="my-comments-list" id="my-comments-list">
+                    <p class="empty-state">작성한 후기가 없습니다.</p>
+                </div>
+            </div>
+
+            <!-- 활동 통계 -->
+            <div class="mypage-section">
+                <h2>활동 통계</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-saved">0</span>
+                        <span class="stat-label">저장한 맛집</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-comments">0</span>
+                        <span class="stat-label">작성한 후기</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="stat-visits">0</span>
+                        <span class="stat-label">방문한 맛집</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="page-section" id="faq" data-section="faq">
             <div class="faq-container">
@@ -509,11 +582,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- App Scripts -->
-    <script src="config.js?v=4"></script>
-    <script src="auth.js?v=4"></script>
-    <script src="comments.js?v=4"></script>
-    <script src="data.js?v=4"></script>
-    <script src="main.js?v=4"></script>
+    <script src="config.js?v=5"></script>
+    <script src="auth.js?v=5"></script>
+    <script src="comments.js?v=5"></script>
+    <script src="data.js?v=5"></script>
+    <script src="main.js?v=5"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>

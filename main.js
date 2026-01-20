@@ -72,6 +72,9 @@ const Router = {
       case 'directions':
         DirectionsScreen.init(data.restaurantId);
         break;
+      case 'mypage':
+        MypageScreen.init();
+        break;
       case 'faq':
       case 'partner':
         // 정적 페이지, 별도 초기화 불필요
@@ -296,8 +299,38 @@ const DetailScreen = {
       return;
     }
 
+    // 최근 본 목록에 추가
+    this.addToRecentViewed(this.currentRestaurant);
+
     this.render();
     this.setupEventListeners();
+  },
+
+  // 최근 본 목록에 추가
+  addToRecentViewed(restaurant) {
+    try {
+      let recentList = [];
+      const recent = localStorage.getItem('recentRestaurants');
+      recentList = recent ? JSON.parse(recent) : [];
+
+      // 이미 있으면 제거 (최신으로 다시 추가하기 위해)
+      recentList = recentList.filter(item => item.id !== restaurant.id);
+
+      // 맨 앞에 추가
+      recentList.unshift({
+        id: restaurant.id,
+        name: restaurant.name,
+        location: restaurant.location || `${restaurant.region} ${restaurant.area}`,
+        viewedAt: new Date().toISOString()
+      });
+
+      // 최대 20개까지만 유지
+      recentList = recentList.slice(0, 20);
+
+      localStorage.setItem('recentRestaurants', JSON.stringify(recentList));
+    } catch (e) {
+      console.error('최근 본 목록 추가 실패:', e);
+    }
   },
 
   findRestaurant(id) {
@@ -716,6 +749,310 @@ const DirectionsScreen = {
 };
 
 // ========================================
+// 마이페이지 화면
+// ========================================
+const MypageScreen = {
+  init() {
+    console.log('Mypage screen initialized');
+
+    // 로그인 확인
+    if (!AuthModule.isAuthenticated()) {
+      alert('로그인이 필요합니다.');
+      Router.navigateTo('home');
+      return;
+    }
+
+    this.render();
+    this.setupEventListeners();
+  },
+
+  render() {
+    // 프로필 정보 렌더링
+    this.renderProfile();
+    // 저장한 맛집 렌더링
+    this.renderSavedRestaurants();
+    // 최근 본 맛집 렌더링
+    this.renderRecentRestaurants();
+    // 내 후기 렌더링
+    this.renderMyComments();
+    // 통계 렌더링
+    this.renderStats();
+  },
+
+  renderProfile() {
+    const user = AuthModule.currentUser;
+    if (!user) return;
+
+    const displayName = user.user_metadata?.full_name || user.email.split('@')[0];
+    const email = user.email;
+
+    document.getElementById('profile-name').textContent = displayName;
+    document.getElementById('profile-email').textContent = email;
+  },
+
+  renderSavedRestaurants() {
+    const container = document.getElementById('saved-restaurants-list');
+    const countEl = document.getElementById('saved-count');
+
+    // localStorage에서 저장 목록 가져오기
+    let savedList = [];
+    try {
+      const saved = localStorage.getItem('savedRestaurants');
+      savedList = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('저장 목록을 불러올 수 없습니다:', e);
+    }
+
+    countEl.textContent = `${savedList.length}개`;
+
+    if (savedList.length === 0) {
+      container.innerHTML = '<p class="empty-state">저장한 맛집이 없습니다.</p>';
+      return;
+    }
+
+    container.innerHTML = savedList.map(item => `
+      <div class="saved-item" data-restaurant-id="${item.id}">
+        <div class="saved-item-info">
+          <p class="saved-item-name">${item.name}</p>
+          <p class="saved-item-location">${item.location}</p>
+        </div>
+        <div class="saved-item-meta">
+          <span class="saved-item-date">${this.formatDate(item.savedAt)}</span>
+          <button class="remove-saved-btn" data-restaurant-id="${item.id}">삭제</button>
+        </div>
+      </div>
+    `).join('');
+
+    // 저장 아이템 클릭 이벤트
+    container.querySelectorAll('.saved-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        // 삭제 버튼 클릭 시에는 이동하지 않음
+        if (e.target.classList.contains('remove-saved-btn')) return;
+
+        const restaurantId = item.dataset.restaurantId;
+        Router.navigateTo('detail', { restaurantId });
+      });
+    });
+
+    // 삭제 버튼 이벤트
+    container.querySelectorAll('.remove-saved-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const restaurantId = btn.dataset.restaurantId;
+        this.removeSaved(restaurantId);
+      });
+    });
+  },
+
+  renderRecentRestaurants() {
+    const container = document.getElementById('recent-restaurants-list');
+    const countEl = document.getElementById('recent-count');
+
+    // localStorage에서 최근 본 목록 가져오기
+    let recentList = [];
+    try {
+      const recent = localStorage.getItem('recentRestaurants');
+      recentList = recent ? JSON.parse(recent) : [];
+    } catch (e) {
+      console.error('최근 본 목록을 불러올 수 없습니다:', e);
+    }
+
+    // 최신순으로 최대 10개만 표시
+    recentList = recentList.slice(0, 10);
+    countEl.textContent = `${recentList.length}개`;
+
+    if (recentList.length === 0) {
+      container.innerHTML = '<p class="empty-state">최근 본 맛집이 없습니다.</p>';
+      return;
+    }
+
+    container.innerHTML = recentList.map(item => `
+      <div class="recent-item" data-restaurant-id="${item.id}">
+        <div class="recent-item-info">
+          <p class="recent-item-name">${item.name}</p>
+          <p class="recent-item-location">${item.location}</p>
+        </div>
+        <span class="recent-item-date">${this.formatDate(item.viewedAt)}</span>
+      </div>
+    `).join('');
+
+    // 최근 아이템 클릭 이벤트
+    container.querySelectorAll('.recent-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const restaurantId = item.dataset.restaurantId;
+        Router.navigateTo('detail', { restaurantId });
+      });
+    });
+  },
+
+  async renderMyComments() {
+    const container = document.getElementById('my-comments-list');
+    const countEl = document.getElementById('comments-count');
+
+    try {
+      const userId = AuthModule.getUserId();
+      if (!userId) {
+        container.innerHTML = '<p class="empty-state">로그인이 필요합니다.</p>';
+        return;
+      }
+
+      const comments = await CommentsModule.getUserComments(userId);
+      countEl.textContent = `${comments.length}개`;
+
+      if (comments.length === 0) {
+        container.innerHTML = '<p class="empty-state">작성한 후기가 없습니다.</p>';
+        return;
+      }
+
+      container.innerHTML = comments.map(comment => `
+        <div class="my-comment-item">
+          <p class="my-comment-restaurant">${comment.restaurant_name || '식당 정보 없음'}</p>
+          <p class="my-comment-content">${comment.content}</p>
+          <div class="my-comment-meta">
+            <span class="my-comment-date">${this.formatDate(comment.created_at)}</span>
+            <div class="my-comment-actions">
+              <button class="comment-edit-btn" data-comment-id="${comment.id}">수정</button>
+              <button class="comment-delete-btn" data-comment-id="${comment.id}">삭제</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // 수정/삭제 버튼 핸들러
+      this.attachCommentHandlers();
+    } catch (err) {
+      console.error('후기 목록을 불러올 수 없습니다:', err);
+      container.innerHTML = '<p class="empty-state">후기를 불러올 수 없습니다.</p>';
+    }
+  },
+
+  renderStats() {
+    // 저장한 맛집 수
+    let savedCount = 0;
+    try {
+      const saved = localStorage.getItem('savedRestaurants');
+      savedCount = saved ? JSON.parse(saved).length : 0;
+    } catch (e) {}
+
+    document.getElementById('stat-saved').textContent = savedCount;
+
+    // 작성한 후기 수는 비동기로 업데이트
+    CommentsModule.getUserComments(AuthModule.getUserId()).then(comments => {
+      document.getElementById('stat-comments').textContent = comments.length;
+    }).catch(() => {
+      document.getElementById('stat-comments').textContent = '0';
+    });
+
+    // 방문한 맛집은 최근 본 목록 기준
+    let visitCount = 0;
+    try {
+      const recent = localStorage.getItem('recentRestaurants');
+      visitCount = recent ? JSON.parse(recent).length : 0;
+    } catch (e) {}
+
+    document.getElementById('stat-visits').textContent = visitCount;
+  },
+
+  setupEventListeners() {
+    // 로그아웃 버튼
+    const logoutBtn = document.getElementById('logout-button');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        if (confirm('로그아웃하시겠습니까?')) {
+          try {
+            await AuthModule.signOut();
+            alert('로그아웃되었습니다.');
+            Router.navigateTo('home');
+          } catch (err) {
+            alert('로그아웃에 실패했습니다.');
+          }
+        }
+      });
+    }
+  },
+
+  attachCommentHandlers() {
+    // 수정 버튼
+    document.querySelectorAll('#my-comments-list .comment-edit-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const commentId = e.target.dataset.commentId;
+        const commentItem = e.target.closest('.my-comment-item');
+        const currentContent = commentItem.querySelector('.my-comment-content').textContent;
+
+        const newContent = prompt('수정할 내용을 입력하세요:', currentContent);
+        if (newContent && newContent.trim() !== currentContent) {
+          try {
+            await CommentsModule.updateComment(commentId, newContent);
+            this.renderMyComments();
+            alert('후기가 수정되었습니다.');
+          } catch (err) {
+            alert(err.message || '수정에 실패했습니다.');
+          }
+        }
+      });
+    });
+
+    // 삭제 버튼
+    document.querySelectorAll('#my-comments-list .comment-delete-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const commentId = e.target.dataset.commentId;
+
+        if (confirm('정말 삭제하시겠습니까?')) {
+          try {
+            await CommentsModule.deleteComment(commentId);
+            this.renderMyComments();
+            this.renderStats(); // 통계 업데이트
+            alert('후기가 삭제되었습니다.');
+          } catch (err) {
+            alert(err.message || '삭제에 실패했습니다.');
+          }
+        }
+      });
+    });
+  },
+
+  removeSaved(restaurantId) {
+    try {
+      let savedList = [];
+      const saved = localStorage.getItem('savedRestaurants');
+      savedList = saved ? JSON.parse(saved) : [];
+
+      savedList = savedList.filter(item => item.id !== restaurantId);
+      localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
+
+      // 다시 렌더링
+      this.renderSavedRestaurants();
+      this.renderStats();
+    } catch (e) {
+      console.error('저장 목록 삭제 실패:', e);
+      alert('삭제에 실패했습니다.');
+    }
+  },
+
+  formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now - date;
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 7) {
+      return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+    } else if (days > 0) {
+      return `${days}일 전`;
+    } else if (hours > 0) {
+      return `${hours}시간 전`;
+    } else if (minutes > 0) {
+      return `${minutes}분 전`;
+    } else {
+      return '방금 전';
+    }
+  }
+};
+
+// ========================================
 // 모달 컨트롤러 (로그인/회원가입)
 // ========================================
 const ModalController = {
@@ -926,16 +1263,9 @@ window.handleUserMenuClick = function() {
   console.log('Authenticated:', isAuth);
 
   if (isAuth) {
-    // 로그인 상태 - 로그아웃
-    if (confirm('로그아웃하시겠습니까?')) {
-      if (typeof AuthModule !== 'undefined' && AuthModule.signOut) {
-        AuthModule.signOut().then(() => {
-          alert('로그아웃되었습니다.');
-        }).catch(err => {
-          alert('로그아웃에 실패했습니다.');
-        });
-      }
-    }
+    // 로그인 상태 - 마이페이지로 이동
+    console.log('Navigating to mypage...');
+    Router.navigateTo('mypage');
   } else {
     // 비로그인 상태 - 로그인 모달 열기
     console.log('Opening login modal...');

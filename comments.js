@@ -112,6 +112,31 @@ const CommentsModule = {
     }
   },
 
+  // 사용자의 모든 댓글 가져오기 (마이페이지용)
+  async getUserComments(userId) {
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      console.warn('Supabase client not available');
+      return [];
+    }
+
+    if (!userId) return [];
+
+    try {
+      const { data, error } = await supabase
+        .from('comments')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (err) {
+      console.error('Failed to load user comments:', err);
+      return [];
+    }
+  },
+
   // 댓글 HTML 렌더링
   renderCommentHTML(comment) {
     const isOwner = AuthModule.isAuthenticated() && AuthModule.getUserId() === comment.user_id;
