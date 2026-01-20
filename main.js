@@ -10,6 +10,7 @@ console.log('Trust Route main.js loaded - Version 2.1');
 const AppState = {
   currentScreen: 'home',
   currentRestaurant: null,
+  userLocation: null, // { lat, lng }
   filters: {
     timeMinutes: 15,
     trustTab: 'all',
@@ -104,8 +105,65 @@ const Router = {
 const HomeScreen = {
   init() {
     console.log('Home screen initialized');
+    this.updateMapLocation();
     this.renderPreviewList();
     this.setupEventListeners();
+  },
+
+  // 지도 위치 업데이트
+  updateMapLocation() {
+    const mapIframe = document.getElementById('naver-map-iframe');
+    if (!mapIframe) return;
+
+    // 사용자 위치가 있으면 해당 위치로, 없으면 서울 중심으로
+    if (AppState.userLocation) {
+      const { lat, lng } = AppState.userLocation;
+      mapIframe.src = `https://map.naver.com/v5/?c=${lng},${lat},15,0,0,0,dh`;
+    } else {
+      // 기본: 서울 강남역
+      mapIframe.src = 'https://map.naver.com/v5/?c=127.0276,37.4979,13,0,0,0,dh';
+    }
+  },
+
+  // 위치 가져오기
+  getUserLocation() {
+    const statusEl = document.getElementById('location-status');
+    const locationBtn = document.getElementById('get-location-btn');
+
+    if (!navigator.geolocation) {
+      if (statusEl) statusEl.textContent = '위치 서비스를 지원하지 않는 브라우저입니다.';
+      return;
+    }
+
+    if (locationBtn) locationBtn.disabled = true;
+    if (statusEl) statusEl.textContent = '위치를 가져오는 중...';
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        AppState.userLocation = { lat, lng };
+
+        if (statusEl) statusEl.textContent = `현재 위치: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+        if (locationBtn) locationBtn.disabled = false;
+
+        // 지도 업데이트
+        this.updateMapLocation();
+
+        console.log('User location:', AppState.userLocation);
+      },
+      (error) => {
+        console.error('Geolocation error:', error);
+        if (statusEl) statusEl.textContent = '위치를 가져올 수 없습니다. 위치 권한을 확인하세요.';
+        if (locationBtn) locationBtn.disabled = false;
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+      }
+    );
   },
 
   renderPreviewList() {
@@ -142,6 +200,26 @@ const HomeScreen = {
   },
 
   setupEventListeners() {
+    // 위치 버튼
+    const locationBtn = document.getElementById('get-location-btn');
+    if (locationBtn) {
+      locationBtn.addEventListener('click', () => {
+        this.getUserLocation();
+      });
+    }
+
+    // 시간 필터
+    const timeFilters = document.querySelectorAll('.time-filter .filter-pill');
+    timeFilters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        const timeValue = parseInt(filter.dataset.time);
+        AppState.filters.timeMinutes = timeValue;
+        timeFilters.forEach(f => f.classList.remove('is-active'));
+        filter.classList.add('is-active');
+        this.renderPreviewList();
+      });
+    });
+
     // 신뢰 탭
     const trustTabs = document.querySelectorAll('.trust-tab');
     trustTabs.forEach(tab => {
@@ -702,59 +780,59 @@ const DirectionsScreen = {
     document.getElementById('directions-title').textContent = r.name;
     document.getElementById('directions-location').textContent = r.location || `${r.region} ${r.area}`;
 
-    // 경로 정보
-    this.updateRouteInfo();
+    // 네이버 길찾기 iframe 설정
+    this.setupNaverDirectionsIframe();
 
-    // 딥링크 생성
-    this.setupDeeplinks();
+    // 새 창 링크 설정
+    this.setupNewWindowLink();
   },
 
-  updateRouteInfo() {
+  setupNaverDirectionsIframe() {
     const r = this.currentRestaurant;
-    const routeDesc = document.getElementById('route-description');
+    const iframe = document.getElementById('naver-directions-iframe');
+    if (!iframe) return;
 
-    if (r.travelTime) {
-      routeDesc.textContent = `${r.travelTime} 소요 예상`;
-    } else {
-      routeDesc.textContent = '경로를 계산할 수 없습니다.';
-    }
-  },
-
-  setupDeeplinks() {
-    const r = this.currentRestaurant;
-
-    // 좌표 또는 주소 기반 URL 생성
-    const hasCoords = r.lat && r.lng;
-    const encodedName = encodeURIComponent(r.name);
+    // 네이버 길찾기 URL 생성
     const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
 
-    // 네이버 지도 딥링크 (카카오맵 제거, 네이버만 사용)
-    const naverLink = document.getElementById('naver-deeplink');
-    if (naverLink) {
-      if (hasCoords) {
-        naverLink.href = `https://map.naver.com/v5/directions/-/${r.lng},${r.lat},${encodedName},,/-/car`;
-      } else {
-        naverLink.href = `https://map.naver.com/v5/search/${mapQuery}`;
-      }
+    // 좌표가 있으면 좌표 기반, 없으면 검색 기반
+    let naverUrl;
+    if (r.lat && r.lng) {
+      const encodedName = encodeURIComponent(r.name);
+      // 목적지만 설정 (출발지는 사용자가 직접 설정)
+      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${r.lng},${r.lat},${encodedName},,/-/transit`;
+    } else {
+      // 검색 결과 페이지
+      naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
+    }
+
+    iframe.src = naverUrl;
+    console.log('Naver directions iframe URL:', naverUrl);
+  },
+
+  setupNewWindowLink() {
+    const r = this.currentRestaurant;
+    const link = document.getElementById('naver-deeplink-new-window');
+    if (!link) return;
+
+    const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
+
+    if (r.lat && r.lng) {
+      const encodedName = encodeURIComponent(r.name);
+      link.href = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${r.lng},${r.lat},${encodedName},,/-/transit`;
+    } else {
+      link.href = `https://map.naver.com/v5/search/${mapQuery}`;
     }
   },
 
   setupEventListeners() {
     // 뒤로 버튼
-    document.getElementById('directions-back-btn').addEventListener('click', () => {
-      Router.navigateTo('detail', { restaurantId: this.currentRestaurant.id });
-    });
-
-    // 이동수단 탭
-    const transportTabs = document.querySelectorAll('.transport-tab');
-    transportTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        this.currentTransport = tab.dataset.transport;
-        transportTabs.forEach(t => t.classList.remove('is-active'));
-        tab.classList.add('is-active');
-        this.updateRouteInfo();
+    const backBtn = document.getElementById('directions-back-btn');
+    if (backBtn) {
+      backBtn.addEventListener('click', () => {
+        Router.navigateTo('detail', { restaurantId: this.currentRestaurant.id });
       });
-    });
+    }
   }
 };
 

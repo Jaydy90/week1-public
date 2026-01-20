@@ -242,6 +242,38 @@
                 <p class="hero-desc">신뢰 근거가 명확한 맛집만 추려 빠르게 결정하고, 네이버 지도로 즉시 이동하세요.</p>
             </div>
 
+            <!-- 지도 섹션 -->
+            <div class="map-section">
+                <div class="map-controls">
+                    <button class="location-button" id="get-location-btn" type="button">
+                        📍 내 위치 찾기
+                    </button>
+                    <div class="location-status" id="location-status"></div>
+                </div>
+
+                <!-- 네이버 지도 iframe -->
+                <div class="map-container">
+                    <iframe
+                        id="naver-map-iframe"
+                        src="https://map.naver.com/v5/"
+                        frameborder="0"
+                        allowfullscreen
+                        class="naver-map-embed"
+                        title="네이버 지도">
+                    </iframe>
+                </div>
+
+                <!-- 시간 필터 -->
+                <div class="time-filter-section">
+                    <h3>내 주변 맛집</h3>
+                    <div class="time-filter">
+                        <button class="filter-pill" type="button" data-time="10">10분 내</button>
+                        <button class="filter-pill is-active" type="button" data-time="15">15분 내</button>
+                        <button class="filter-pill" type="button" data-time="30">30분 내</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- 신뢰 탭 -->
             <div class="trust-tabs">
                 <button class="trust-tab is-active" type="button" data-tab="all">전체</button>
@@ -428,37 +460,29 @@
                 <div class="detail-location" id="directions-location">목적지</div>
             </div>
 
-            <!-- 이동수단 탭 -->
-            <div class="transport-tabs">
-                <button class="transport-tab is-active" type="button" data-transport="walk">
-                    <span class="transport-icon">🚶</span>
-                    <span>도보</span>
-                </button>
-                <button class="transport-tab" type="button" data-transport="transit">
-                    <span class="transport-icon">🚇</span>
-                    <span>대중교통</span>
-                </button>
-                <button class="transport-tab" type="button" data-transport="car">
-                    <span class="transport-icon">🚗</span>
-                    <span>차량</span>
-                </button>
-            </div>
-
-            <!-- 경로 정보 -->
-            <div class="route-info" id="route-info">
-                <div class="route-card">
-                    <h3>추천 경로</h3>
-                    <p id="route-description">경로를 계산중입니다...</p>
+            <!-- 네이버 길찾기 iframe -->
+            <div class="directions-container">
+                <div class="directions-notice">
+                    <p>아래 네이버 길찾기에서 출발지와 목적지를 설정하세요.</p>
                 </div>
-            </div>
+                <div class="directions-iframe-wrapper">
+                    <iframe
+                        id="naver-directions-iframe"
+                        src=""
+                        frameborder="0"
+                        allowfullscreen
+                        class="naver-directions-embed"
+                        title="네이버 길찾기">
+                    </iframe>
+                </div>
 
-            <!-- 딥링크 버튼 -->
-            <div class="deeplink-buttons">
-                <h3>네이버 지도로 이동</h3>
-                <a class="deeplink-button naver full-width" id="naver-deeplink" href="#" target="_blank" rel="noopener">
-                    <span class="deeplink-icon">N</span>
-                    <span>네이버 지도에서 길찾기</span>
-                </a>
+                <!-- 새 창에서 열기 버튼 (fallback) -->
+                <div class="deeplink-buttons">
+                    <a class="deeplink-button naver full-width" id="naver-deeplink-new-window" href="#" target="_blank" rel="noopener">
+                        <span class="deeplink-icon">N</span>
+                        <span>새 창에서 네이버 지도 열기</span>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -623,11 +647,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- App Scripts -->
-    <script src="config.js?v=7"></script>
-    <script src="auth.js?v=7"></script>
-    <script src="comments.js?v=7"></script>
-    <script src="data.js?v=7"></script>
-    <script src="main.js?v=7"></script>
+    <script src="config.js?v=8"></script>
+    <script src="auth.js?v=8"></script>
+    <script src="comments.js?v=8"></script>
+    <script src="data.js?v=8"></script>
+    <script src="main.js?v=8"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>

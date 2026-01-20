@@ -926,7 +926,7 @@ textarea {
   padding: 4rem 2rem;
   background: linear-gradient(120deg, rgba(228, 90, 43, 0.08), rgba(15, 107, 102, 0.1));
   border-radius: var(--radius);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .hero-simple h1 {
@@ -945,6 +945,76 @@ textarea {
   margin: 0 auto;
   line-height: 1.7;
   font-weight: 400;
+}
+
+/* 지도 섹션 */
+.map-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.map-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.location-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(228, 90, 43, 0.3);
+}
+
+.location-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(228, 90, 43, 0.4);
+}
+
+.location-status {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  font-weight: 500;
+}
+
+.map-container {
+  width: 100%;
+  height: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5rem;
+}
+
+.naver-map-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.time-filter-section {
+  margin-top: 2rem;
+}
+
+.time-filter-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--ink);
 }
 
 /* 신뢰 탭 */
@@ -1225,6 +1295,45 @@ textarea {
 }
 
 /* 길찾기 화면 */
+.directions-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
+}
+
+.directions-notice {
+  background: rgba(15, 107, 102, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--secondary);
+}
+
+.directions-notice p {
+  margin: 0;
+  color: var(--secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.directions-iframe-wrapper {
+  width: 100%;
+  height: 600px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1.5rem;
+}
+
+.naver-directions-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 .transport-tabs {
   display: flex;
   gap: 0.8rem;
@@ -1512,7 +1621,20 @@ textarea {
 
 @media (max-width: 480px) {
   .map-container {
-    height: 300px;
+    height: 350px;
+  }
+
+  .directions-iframe-wrapper {
+    height: 450px;
+  }
+
+  .map-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .location-button {
+    width: 100%;
   }
 
   .detail-actions {
