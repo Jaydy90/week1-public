@@ -1063,7 +1063,8 @@ textarea {
 
 /* 트러스트 루트 서비스 섹션 */
 .trust-route-service {
-  margin-top: 4rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
   background: rgba(255, 255, 255, 0.95);
   border-radius: var(--radius);
   padding: clamp(2rem, 4vw, 3.5rem);
