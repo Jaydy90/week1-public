@@ -274,6 +274,32 @@
                 <div class="detail-cta">
                     <button class="primary-button large" id="detail-directions-btn">바로 길찾기</button>
                 </div>
+
+                <!-- 댓글 시스템 (자체 구현) -->
+                <div class="comments-section">
+                    <h2>방문 후기</h2>
+                    <p class="comments-notice">로그인 후 후기를 작성할 수 있습니다.</p>
+
+                    <!-- 댓글 작성 폼 (로그인 필요) -->
+                    <div class="comment-form" id="comment-form" style="display:none;">
+                        <textarea id="comment-input" placeholder="이 식당에 대한 솔직한 후기를 남겨주세요..." rows="4"></textarea>
+                        <div class="comment-form-actions">
+                            <button class="primary-button" id="submit-comment-btn">후기 작성</button>
+                            <button class="ghost-button" id="cancel-comment-btn">취소</button>
+                        </div>
+                    </div>
+
+                    <!-- 댓글 목록 -->
+                    <div class="comments-list" id="comments-list">
+                        <p class="empty-comments">아직 작성된 후기가 없습니다. 첫 번째 후기를 남겨보세요!</p>
+                    </div>
+
+                    <!-- 로그인 안내 -->
+                    <div class="login-prompt" id="login-prompt">
+                        <p>후기를 작성하려면 로그인이 필요합니다.</p>
+                        <button class="primary-button" id="login-btn">로그인</button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -311,17 +337,11 @@
 
             <!-- 딥링크 버튼 -->
             <div class="deeplink-buttons">
-                <h3>지도 앱으로 이동</h3>
-                <div class="deeplink-grid">
-                    <a class="deeplink-button naver" id="naver-deeplink" href="#" target="_blank" rel="noopener">
-                        <span class="deeplink-icon">N</span>
-                        <span>네이버 지도</span>
-                    </a>
-                    <a class="deeplink-button kakao" id="kakao-deeplink" href="#" target="_blank" rel="noopener">
-                        <span class="deeplink-icon">K</span>
-                        <span>카카오맵</span>
-                    </a>
-                </div>
+                <h3>네이버 지도로 이동</h3>
+                <a class="deeplink-button naver full-width" id="naver-deeplink" href="#" target="_blank" rel="noopener">
+                    <span class="deeplink-icon">N</span>
+                    <span>네이버 지도에서 길찾기</span>
+                </a>
             </div>
         </section>
 
@@ -409,22 +429,11 @@
         <p><a class="footer-link" href="privacy.html">개인정보처리방침</a></p>
     </footer>
 
+    <!-- 네이버 지도 SDK -->
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID"></script>
+
     <script src="data.js"></script>
     <script src="main.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
-    <div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-    this.page.url = 'https://kpopeats.cc/';
-    this.page.identifier = 'kpopeats-trust-route';
-    };
-    (function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://week1-2.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </body>
 </html>

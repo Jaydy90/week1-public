@@ -96,10 +96,70 @@ const Router = {
 // 홈 화면
 // ========================================
 const HomeScreen = {
+  map: null,
+  markers: [],
+
   init() {
     console.log('Home screen initialized');
+    this.initMap();
     this.renderPreviewList();
     this.setupEventListeners();
+  },
+
+  // 네이버 지도 초기화
+  initMap() {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return;
+
+    // 네이버 지도 API가 로드되었는지 확인
+    if (typeof naver === 'undefined' || !naver.maps) {
+      console.warn('네이버 지도 API가 로드되지 않았습니다. API 키를 확인해주세요.');
+      mapContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#666;">지도를 불러올 수 없습니다. 네이버 지도 API 키가 필요합니다.</div>';
+      return;
+    }
+
+    // 서울 시청 기본 위치
+    const defaultCenter = new naver.maps.LatLng(37.5665, 126.9780);
+
+    // 지도 생성
+    this.map = new naver.maps.Map(mapContainer, {
+      center: defaultCenter,
+      zoom: 13,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT
+      }
+    });
+
+    // 마커 표시
+    this.renderMarkers();
+  },
+
+  // 식당 마커 렌더링
+  renderMarkers() {
+    if (!this.map) return;
+
+    // 기존 마커 제거
+    this.markers.forEach(marker => marker.setMap(null));
+    this.markers = [];
+
+    // nearbySpots에서 좌표가 있는 식당만 마커 표시
+    nearbySpots.forEach(restaurant => {
+      if (restaurant.lat && restaurant.lng) {
+        const marker = new naver.maps.Marker({
+          position: new naver.maps.LatLng(restaurant.lat, restaurant.lng),
+          map: this.map,
+          title: restaurant.name
+        });
+
+        // 마커 클릭 이벤트
+        naver.maps.Event.addListener(marker, 'click', () => {
+          Router.navigateTo('detail', { restaurantId: restaurant.id });
+        });
+
+        this.markers.push(marker);
+      }
+    });
   },
 
   renderPreviewList() {
@@ -136,6 +196,14 @@ const HomeScreen = {
   },
 
   setupEventListeners() {
+    // 내 위치 버튼
+    const myLocationBtn = document.getElementById('my-location-btn');
+    if (myLocationBtn) {
+      myLocationBtn.addEventListener('click', () => {
+        this.moveToMyLocation();
+      });
+    }
+
     // 시간 필터
     const filterPills = document.querySelectorAll('#home .filter-pill');
     filterPills.forEach(pill => {
@@ -164,6 +232,40 @@ const HomeScreen = {
       listBtn.addEventListener('click', () => {
         Router.navigateTo('list');
       });
+    }
+  },
+
+  // 내 위치로 이동
+  moveToMyLocation() {
+    if (!this.map) return;
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const myLocation = new naver.maps.LatLng(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+          this.map.setCenter(myLocation);
+          this.map.setZoom(15);
+
+          // 내 위치 마커 추가
+          new naver.maps.Marker({
+            position: myLocation,
+            map: this.map,
+            icon: {
+              content: '<div style="background:#e45a2b;width:20px;height:20px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
+              anchor: new naver.maps.Point(10, 10)
+            }
+          });
+        },
+        (error) => {
+          console.error('위치 정보를 가져올 수 없습니다:', error);
+          alert('위치 정보를 가져올 수 없습니다. 브라우저 설정을 확인해주세요.');
+        }
+      );
+    } else {
+      alert('이 브라우저는 위치 정보를 지원하지 않습니다.');
     }
   },
 
@@ -415,6 +517,61 @@ const DetailScreen = {
         document.getElementById('contact-form-container')?.scrollIntoView({ behavior: 'smooth' });
       }, 300);
     });
+
+    // 댓글 시스템 (기본 UI, 로그인은 Phase 6에서 Supabase Auth로 구현)
+    this.setupComments();
+  },
+
+  // 댓글 시스템 초기화
+  setupComments() {
+    const loginBtn = document.getElementById('login-btn');
+    const submitCommentBtn = document.getElementById('submit-comment-btn');
+    const cancelCommentBtn = document.getElementById('cancel-comment-btn');
+
+    // 로그인 버튼 (임시)
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        alert('로그인 기능은 곧 제공됩니다. (Supabase Auth 연동 예정)');
+      });
+    }
+
+    // 댓글 작성 버튼
+    if (submitCommentBtn) {
+      submitCommentBtn.addEventListener('click', () => {
+        const commentInput = document.getElementById('comment-input');
+        const content = commentInput?.value.trim();
+
+        if (!content) {
+          alert('후기 내용을 입력해주세요.');
+          return;
+        }
+
+        // TODO: Supabase에 댓글 저장
+        alert('댓글 저장 기능은 곧 제공됩니다.');
+        commentInput.value = '';
+      });
+    }
+
+    // 취소 버튼
+    if (cancelCommentBtn) {
+      cancelCommentBtn.addEventListener('click', () => {
+        const commentInput = document.getElementById('comment-input');
+        if (commentInput) commentInput.value = '';
+      });
+    }
+
+    // 댓글 목록 로드 (임시 - 나중에 Supabase에서 가져오기)
+    this.loadComments();
+  },
+
+  // 댓글 로드 (임시 데이터)
+  loadComments() {
+    const commentsList = document.getElementById('comments-list');
+    if (!commentsList) return;
+
+    // TODO: Supabase에서 댓글 데이터 가져오기
+    // 현재는 빈 상태 표시
+    commentsList.innerHTML = '<p class="empty-comments">아직 작성된 후기가 없습니다. 첫 번째 후기를 남겨보세요!</p>';
   }
 };
 
@@ -474,20 +631,14 @@ const DirectionsScreen = {
     const encodedName = encodeURIComponent(r.name);
     const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
 
-    // 네이버 지도 딥링크
+    // 네이버 지도 딥링크 (카카오맵 제거, 네이버만 사용)
     const naverLink = document.getElementById('naver-deeplink');
-    if (hasCoords) {
-      naverLink.href = `https://map.naver.com/v5/directions/-/${r.lng},${r.lat},${encodedName},,/-/car`;
-    } else {
-      naverLink.href = `https://map.naver.com/v5/search/${mapQuery}`;
-    }
-
-    // 카카오맵 딥링크
-    const kakaoLink = document.getElementById('kakao-deeplink');
-    if (hasCoords) {
-      kakaoLink.href = `https://map.kakao.com/link/to/${encodedName},${r.lat},${r.lng}`;
-    } else {
-      kakaoLink.href = `https://map.kakao.com/link/search/${mapQuery}`;
+    if (naverLink) {
+      if (hasCoords) {
+        naverLink.href = `https://map.naver.com/v5/directions/-/${r.lng},${r.lat},${encodedName},,/-/car`;
+      } else {
+        naverLink.href = `https://map.naver.com/v5/search/${mapQuery}`;
+      }
     }
   },
 
