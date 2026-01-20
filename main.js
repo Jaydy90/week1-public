@@ -720,7 +720,7 @@ const ModalController = {
     console.log('ModalController.init() called');
     this.setupLoginModal();
     this.setupSignupModal();
-    this.setupUserMenu();
+    // user-menu는 inline onclick으로 처리
     console.log('ModalController initialized successfully');
   },
 
@@ -848,32 +848,23 @@ const ModalController = {
     }
   },
 
-  // 사용자 메뉴 설정
-  setupUserMenu() {
-    const userMenuBtn = document.getElementById('user-menu-btn');
-    console.log('Setup user menu:', userMenuBtn ? 'Found' : 'Not found');
+  // 사용자 메뉴 클릭 핸들러 (inline onclick에서 호출됨)
+  handleUserMenuClick() {
+    console.log('handleUserMenuClick called, authenticated:', AuthModule.isAuthenticated());
 
-    if (userMenuBtn) {
-      userMenuBtn.addEventListener('click', () => {
-        console.log('User menu clicked, authenticated:', AuthModule.isAuthenticated());
-
-        if (AuthModule.isAuthenticated()) {
-          // 로그인 상태 - 드롭다운 메뉴 또는 로그아웃
-          if (confirm('로그아웃하시겠습니까?')) {
-            AuthModule.signOut().then(() => {
-              alert('로그아웃되었습니다.');
-            }).catch(err => {
-              alert('로그아웃에 실패했습니다.');
-            });
-          }
-        } else {
-          // 비로그인 상태 - 로그인 모달 열기
-          console.log('Opening login modal...');
-          this.openLoginModal();
-        }
-      });
+    if (AuthModule.isAuthenticated()) {
+      // 로그인 상태 - 로그아웃
+      if (confirm('로그아웃하시겠습니까?')) {
+        AuthModule.signOut().then(() => {
+          alert('로그아웃되었습니다.');
+        }).catch(err => {
+          alert('로그아웃에 실패했습니다.');
+        });
+      }
     } else {
-      console.error('user-menu-btn not found!');
+      // 비로그인 상태 - 로그인 모달 열기
+      console.log('Opening login modal...');
+      this.openLoginModal();
     }
   },
 
