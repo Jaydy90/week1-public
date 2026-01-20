@@ -1,5 +1,6 @@
 const nearbySpots = [
   {
+    id: "rest-001",
     name: "밍글스",
     location: "서울 강남구",
     travelMinutes: 12,
@@ -13,6 +14,7 @@ const nearbySpots = [
     updatedAt: "2026-01-19"
   },
   {
+    id: "rest-002",
     name: "옥동식",
     location: "서울 마포구",
     travelMinutes: 15,
@@ -26,6 +28,7 @@ const nearbySpots = [
     updatedAt: "2026-01-19"
   },
   {
+    id: "rest-003",
     name: "을지로보석",
     location: "서울 중구",
     travelMinutes: 18,
@@ -39,6 +42,7 @@ const nearbySpots = [
     updatedAt: "2026-01-19"
   },
   {
+    id: "rest-004",
     name: "금돼지식당",
     location: "서울 중구",
     travelMinutes: 22,
@@ -52,6 +56,7 @@ const nearbySpots = [
     updatedAt: "2026-01-19"
   },
   {
+    id: "rest-005",
     name: "비아 톨레도 파스타바",
     location: "서울 용산구",
     travelMinutes: 25,
@@ -65,6 +70,7 @@ const nearbySpots = [
     updatedAt: "2026-01-19"
   },
   {
+    id: "rest-006",
     name: "트리드",
     location: "서울 강남구",
     travelMinutes: 30,
@@ -427,7 +433,7 @@ const allRestaurantsRaw = [
   "온지음 | 서울 | 종로구 | 한식 공방 | 조은희 셰프 | 제철 반상 | 출처 확인 중 | 2026-01-19 | chef |"
 ];
 
-const allRestaurants = allRestaurantsRaw.map((line) => {
+const allRestaurants = allRestaurantsRaw.map((line, index) => {
   const [
     name,
     region,
@@ -441,7 +447,11 @@ const allRestaurants = allRestaurantsRaw.map((line) => {
     sourceUrl
   ] = line.split(" | ").map((part) => part.trim());
 
+  // ID 생성: 고유한 식당 ID (rest-xxx 형식)
+  const id = `rest-${String(index + 1).padStart(3, '0')}`;
+
   return {
+    id,
     name,
     region,
     area,

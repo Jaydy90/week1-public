@@ -1,306 +1,550 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('js-enabled');
-    const navButtons = document.querySelectorAll('.nav-button');
+// ========================================
+// Trust Route - Main JavaScript
+// Phase 1: SPA Router + 4-Screen Layout
+// ========================================
+
+// 전역 상태
+const AppState = {
+  currentScreen: 'home',
+  currentRestaurant: null,
+  filters: {
+    timeMinutes: 15,
+    trustTab: 'all',
+    status: 'all',
+    price: 'all',
+    badge: 'all'
+  },
+  sort: 'distance'
+};
+
+// ========================================
+// SPA 라우터
+// ========================================
+const Router = {
+  // 화면 전환 함수
+  navigateTo(screen, data = {}) {
+    console.log(`Navigating to: ${screen}`, data);
+
+    // 현재 화면 상태 저장
+    AppState.currentScreen = screen;
+
+    // 모든 섹션 숨기기
     const sections = document.querySelectorAll('.page-section');
-    const titleLink = document.querySelector('.title-link');
-    const heroButtons = document.querySelectorAll('.hero-actions button');
-
-    const nearbyList = document.getElementById('nearby-list');
-    const evidenceList = document.getElementById('evidence-list');
-    const nearbyTitle = document.querySelector('[data-section="nearby"] h2');
-    const filterPills = document.querySelectorAll('.filter-pill');
-    const sortPills = document.querySelectorAll('.sort-pill');
-    const michelinList = document.getElementById('michelin-list');
-    const celebrityList = document.getElementById('celebrity-list');
-    const chefList = document.getElementById('chef-list');
-    const chefOnlyList = document.getElementById('chef-only-list');
-    const allDataList = document.getElementById('all-data-list');
-    const filterButtons = document.querySelectorAll('.filter-button[data-filter]');
-    const countTotal = document.querySelector('[data-count="total"]');
-    const countVerified = document.querySelector('[data-count="verified"]');
-    const countPending = document.querySelector('[data-count="pending"]');
-    const initialMinutes = Number(document.querySelector('.filter-pill.is-active')?.dataset.minutes || 15);
-    let activeMinutes = initialMinutes;
-    let activeSort = 'distance';
-    const activeFilters = { region: 'all', group: 'all', status: 'all' };
-
-    const setActiveSection = (target) => {
-        navButtons.forEach(button => {
-            button.classList.toggle('is-active', button.dataset.target === target);
-        });
-        sections.forEach(section => {
-            section.classList.toggle('is-active', section.dataset.section === target);
-        });
-    };
-
-    navButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            const target = button.dataset.target;
-            setActiveSection(target);
-            if (target) {
-                history.replaceState(null, '', `#${target}`);
-            }
-        });
+    sections.forEach(section => {
+      section.classList.remove('is-active');
     });
 
-    if (titleLink) {
-        titleLink.addEventListener('click', () => setActiveSection('overview'));
+    // 대상 섹션 표시
+    const targetSection = document.querySelector(`[data-section="${screen}"]`);
+    if (targetSection) {
+      targetSection.classList.add('is-active');
+      window.scrollTo(0, 0);
     }
 
-    heroButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            const target = button.dataset.target;
-            setActiveSection(target);
-            if (target) {
-                history.replaceState(null, '', `#${target}`);
-            }
-        });
+    // 네비게이션 버튼 활성화 상태 업데이트
+    const navButtons = document.querySelectorAll('.nav-button');
+    navButtons.forEach(btn => {
+      btn.classList.toggle('is-active', btn.dataset.target === screen);
     });
 
-    const renderNearbyCards = (items, container) => {
-        if (!container) return;
-        if (!items || items.length === 0) {
-            container.innerHTML = '<div class="info-card">검증 완료된 항목이 준비 중입니다. 제보/제휴 메뉴에서 근거를 공유해 주세요.</div>';
-            return;
-        }
+    // 해시 업데이트
+    history.replaceState(null, '', `#${screen}`);
 
-        container.innerHTML = items.map((item, index) => {
-            const badges = item.badges || [];
-            const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
-            const statusLabel = item.status || '검증 중';
-            const distanceLabel = item.distanceKm ? `거리 ${item.distanceKm}km` : '';
+    // 화면별 초기화 로직 실행
+    this.initScreen(screen, data);
+  },
 
-            return `
-                <article class="info-card" style="--delay:${index * 0.08}s">
-                    <div class="card-meta">
-                        <span class="status-pill">${statusLabel}</span>
-                        <span>${item.travelTime}</span>
-                        ${distanceLabel ? `<span>${distanceLabel}</span>` : ''}
-                    </div>
-                    <span class="card-title">${item.name}</span>
-                    <span class="card-location">${item.location}</span>
-                    <p class="card-context">${item.context}</p>
-                    <div class="card-badges">${badgeMarkup}</div>
-                    <div class="card-footer">
-                        <span>${item.bestRoute}</span>
-                        <span>저장 ${item.saves}회</span>
-                        <span>업데이트: ${item.updatedAt}</span>
-                    </div>
-                </article>
-            `;
-        }).join('');
-    };
+  // 화면별 초기화
+  initScreen(screen, data) {
+    switch(screen) {
+      case 'home':
+        HomeScreen.init();
+        break;
+      case 'list':
+        ListScreen.init();
+        break;
+      case 'detail':
+        DetailScreen.init(data.restaurantId);
+        break;
+      case 'directions':
+        DirectionsScreen.init(data.restaurantId);
+        break;
+      case 'faq':
+      case 'partner':
+        // 정적 페이지, 별도 초기화 불필요
+        break;
+    }
+  },
 
-    const renderEvidenceCards = (items, container) => {
-        if (!container) return;
-        if (!items || items.length === 0) {
-            container.innerHTML = '<div class="evidence-card">신뢰 근거 카드가 준비 중입니다. 제보로 데이터를 채워주세요.</div>';
-            return;
-        }
+  // 초기 라우팅 (페이지 로드 시)
+  init() {
+    const hash = window.location.hash.replace('#', '');
+    const initialScreen = hash || 'home';
+    this.navigateTo(initialScreen);
 
-        container.innerHTML = items.map(item => {
-            return `
-                <article class="evidence-card">
-                    <div class="evidence-header">
-                        <div class="evidence-title">
-                            <span class="evidence-icon evidence-icon--${item.icon}">${item.iconLabel}</span>
-                            <h4>${item.title}</h4>
-                        </div>
-                        <span class="evidence-badge">레벨 ${item.level}</span>
-                    </div>
-                    <p>${item.caption}</p>
-                    <div class="evidence-meta">
-                        <span>${item.badgeType}</span>
-                        <span>${item.verifiedAt}</span>
-                    </div>
-                    <div class="evidence-meta">
-                        <a class="evidence-link" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>
-                        <span>${item.scope}</span>
-                    </div>
-                </article>
-            `;
-        }).join('');
-    };
+    // 해시 변경 이벤트 리스너
+    window.addEventListener('hashchange', () => {
+      const newHash = window.location.hash.replace('#', '');
+      if (newHash && newHash !== AppState.currentScreen) {
+        this.navigateTo(newHash);
+      }
+    });
+  }
+};
 
-    const renderMvpCards = (items, container) => {
-        if (!container) return;
-        if (!items || items.length === 0) {
-            container.innerHTML = '<div class="info-card">데이터 준비 중입니다.</div>';
-            return;
-        }
+// ========================================
+// 홈 화면
+// ========================================
+const HomeScreen = {
+  init() {
+    console.log('Home screen initialized');
+    this.renderPreviewList();
+    this.setupEventListeners();
+  },
 
-        container.innerHTML = items.map((item, index) => {
-            const mapQuery = encodeURIComponent(item.mapQuery || `${item.name} ${item.location}`);
-            const hasCoords = Number.isFinite(item.lat) && Number.isFinite(item.lng);
-            const encodedName = encodeURIComponent(item.name);
-            const naverDirections = hasCoords
-                ? `https://map.naver.com/v5/directions/-/${item.lng},${item.lat},${encodedName},,/-/car`
-                : `https://map.naver.com/v5/search/${mapQuery}`;
-            const routeUrl = naverDirections;
+  renderPreviewList() {
+    const container = document.getElementById('home-preview-list');
+    if (!container) return;
 
-            return `
-                <article class="info-card" style="--delay:${index * 0.06}s">
-                    <div class="card-meta">
-                        <span class="status-pill">${item.badgeType}</span>
-                        <span>${item.category}</span>
-                    </div>
-                    <span class="card-title">${item.name}</span>
-                    <span class="card-location">${item.location}</span>
-                    <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
-                    ${item.address ? `<p class="card-context">주소: ${item.address}</p>` : ''}
-                    <div class="card-footer">
-                        <a class="evidence-link" href="${item.sourceUrl}" target="_blank" rel="noopener">${item.sourceLabel}</a>
-                        <span>확인일: ${item.verifiedAt}</span>
-                    </div>
-                    <div class="map-actions">
-                        <a class="map-button" href="${routeUrl}" target="_blank" rel="noopener">네이버 길찾기(최적)</a>
-                    </div>
-                </article>
-            `;
-        }).join('');
-    };
+    // nearbySpots에서 처음 6개만 표시
+    const items = nearbySpots.slice(0, 6);
 
-    const getStatus = (item) => (item.sourceUrl ? 'verified' : 'pending');
+    container.innerHTML = items.map((item, index) => {
+      const badges = item.badges || [];
+      const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
 
-    const applyAllFilters = (items) => {
-        return items.filter((item) => {
-            const status = getStatus(item);
-            const regionOk = activeFilters.region === 'all' || item.region === activeFilters.region;
-            const groupOk = activeFilters.group === 'all' || item.group === activeFilters.group;
-            const statusOk = activeFilters.status === 'all' || status === activeFilters.status;
-            return regionOk && groupOk && statusOk;
-        });
-    };
+      return `
+        <article class="info-card" style="--delay:${index * 0.08}s" data-restaurant-id="${item.id}">
+          <div class="card-meta">
+            <span class="status-pill">${item.status || '검증 중'}</span>
+            <span>${item.travelTime}</span>
+          </div>
+          <span class="card-title">${item.name}</span>
+          <span class="card-location">${item.location}</span>
+          <p class="card-context">${item.context}</p>
+          <div class="card-badges">${badgeMarkup}</div>
+          <div class="card-footer">
+            <span>${item.bestRoute}</span>
+            <span>저장 ${item.saves}회</span>
+          </div>
+        </article>
+      `;
+    }).join('');
 
-    const renderAllData = () => {
-        const dataset = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
-        if (!allDataList) return;
-        if (dataset.length === 0) {
-            document.body.classList.remove('has-all-data');
-            if (countTotal) countTotal.textContent = '총 0개';
-            if (countVerified) countVerified.textContent = '검증 완료 0개';
-            if (countPending) countPending.textContent = '확인 중 0개';
-            allDataList.innerHTML = '';
-            return;
-        }
-        document.body.classList.add('has-all-data');
-        const filtered = applyAllFilters(dataset);
-        const verifiedCount = filtered.filter((item) => getStatus(item) === 'verified').length;
-        const pendingCount = filtered.length - verifiedCount;
+    // 카드 클릭 이벤트
+    this.attachCardClickHandlers();
+  },
 
-        if (countTotal) countTotal.textContent = `총 ${filtered.length}개`;
-        if (countVerified) countVerified.textContent = `검증 완료 ${verifiedCount}개`;
-        if (countPending) countPending.textContent = `확인 중 ${pendingCount}개`;
-
-        const regionOrder = ['서울', '경기', '제주', '기타'];
-        const grouped = filtered.reduce((acc, item) => {
-            const regionKey = regionOrder.includes(item.region) ? item.region : '기타';
-            if (!acc[regionKey]) acc[regionKey] = [];
-            acc[regionKey].push(item);
-            return acc;
-        }, {});
-
-        const sectionMarkup = regionOrder.map((region) => {
-            const items = grouped[region] || [];
-            if (items.length === 0) return '';
-            const itemsMarkup = items.map((item) => {
-                const status = getStatus(item);
-                const badgeClass = status === 'verified' ? 'data-badge--verified' : 'data-badge--pending';
-                const sourceMarkup = item.sourceUrl
-                    ? `<a class=\"evidence-link\" href=\"${item.sourceUrl}\" target=\"_blank\" rel=\"noopener\">${item.sourceLabel}</a>`
-                    : `<span>${item.sourceLabel}</span>`;
-                const location = `${item.region} ${item.area}`;
-                const meta = `${location} · ${item.category} · ${item.badgeType} · 대표 메뉴: ${item.mainMenu}`;
-
-                return `\n<li class=\"data-item\">\n  <div><span class=\"data-name\">${item.name}</span></div>\n  <div class=\"data-meta\">${meta}</div>\n  <div class=\"data-status\">\n    <span class=\"data-badge ${badgeClass}\">${status === 'verified' ? '검증 완료' : '확인 중'}</span>\n    ${sourceMarkup}\n    <span>${item.verifiedAt}</span>\n  </div>\n</li>`;
-            }).join('');
-
-            return `\n<div class=\"region-section\">\n  <h3>${region}</h3>\n  <ul class=\"data-list\">${itemsMarkup}</ul>\n</div>`;
-        }).join('');
-
-        allDataList.innerHTML = sectionMarkup || '<div class=\"info-card\">선택한 조건에 해당하는 데이터가 없습니다.</div>';
-    };
-
-    const sortNearbyItems = (items) => {
-        const sorted = [...items];
-        if (activeSort === 'saves') {
-            return sorted.sort((a, b) => (b.saves || 0) - (a.saves || 0));
-        }
-        if (activeSort === 'speed') {
-            return sorted.sort((a, b) => (a.travelMinutes || 0) - (b.travelMinutes || 0));
-        }
-        return sorted.sort((a, b) => {
-            const aDistance = a.distanceKm ?? a.travelMinutes ?? 0;
-            const bDistance = b.distanceKm ?? b.travelMinutes ?? 0;
-            return aDistance - bDistance;
-        });
-    };
-
-    const updateNearbyView = () => {
-        const filtered = nearbySpots.filter(item => item.travelMinutes <= activeMinutes);
-        const sorted = sortNearbyItems(filtered);
-        renderNearbyCards(sorted, nearbyList);
-        if (nearbyTitle) {
-            nearbyTitle.textContent = `내 주변 ${activeMinutes}분 후보`;
-        }
-    };
-
+  setupEventListeners() {
+    // 시간 필터
+    const filterPills = document.querySelectorAll('#home .filter-pill');
     filterPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            activeMinutes = Number(pill.dataset.minutes);
-            filterPills.forEach(btn => btn.classList.toggle('is-active', btn === pill));
-            updateNearbyView();
-        });
+      pill.addEventListener('click', () => {
+        AppState.filters.timeMinutes = Number(pill.dataset.minutes);
+        filterPills.forEach(p => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+        this.renderPreviewList();
+      });
     });
 
-    sortPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            activeSort = pill.dataset.sort;
-            sortPills.forEach(btn => btn.classList.toggle('is-active', btn === pill));
-            updateNearbyView();
-        });
+    // 신뢰 탭
+    const trustTabs = document.querySelectorAll('.trust-tab');
+    trustTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        AppState.filters.trustTab = tab.dataset.tab;
+        trustTabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        this.renderPreviewList();
+      });
     });
 
-    filterButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const filterKey = button.dataset.filter;
-            const filterValue = button.dataset.value;
-            activeFilters[filterKey] = filterValue;
-            filterButtons.forEach((btn) => {
-                if (btn.dataset.filter === filterKey) {
-                    btn.classList.toggle('is-active', btn === button);
-                }
-            });
-            renderAllData();
-        });
-    });
-
-    const initialSection = window.location.hash.replace('#', '');
-    if (initialSection) {
-        setActiveSection(initialSection);
+    // 전체 리스트 보기 버튼
+    const listBtn = document.querySelector('.home-cta .primary-button');
+    if (listBtn) {
+      listBtn.addEventListener('click', () => {
+        Router.navigateTo('list');
+      });
     }
-    updateNearbyView();
-    const renderMvpFromAll = () => {
-        const dataset = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
-        if (dataset.length === 0) return;
-        const seoulOnly = dataset.filter((item) => item.region === '서울');
-        const michelinItems = seoulOnly.filter((item) => item.group === 'michelin');
-        const celebrityItems = seoulOnly.filter((item) => item.group === 'celebrity');
-        const chefItems = seoulOnly.filter((item) => item.group === 'chef');
+  },
 
-        renderMvpCards(michelinItems, michelinList);
-        renderMvpCards(celebrityItems, celebrityList);
-        renderMvpCards(chefItems, chefList);
-        renderMvpCards(chefItems, chefOnlyList);
-    };
+  attachCardClickHandlers() {
+    const cards = document.querySelectorAll('#home-preview-list .info-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.dataset.restaurantId;
+        Router.navigateTo('detail', { restaurantId });
+      });
+    });
+  }
+};
 
-    renderEvidenceCards(trustEvidence, evidenceList);
-    renderMvpCards(michelinSpots, michelinList);
-    renderMvpCards(celebritySpots, celebrityList);
-    renderMvpCards(chefSpots, chefList);
-    renderMvpCards(chefSpots, chefOnlyList);
-    renderMvpFromAll();
-    renderAllData();
+// ========================================
+// 리스트 화면
+// ========================================
+const ListScreen = {
+  init() {
+    console.log('List screen initialized');
+    this.renderList();
+    this.setupEventListeners();
+  },
+
+  renderList() {
+    const container = document.getElementById('list-grid');
+    if (!container) return;
+
+    // allRestaurants에서 필터링된 데이터 가져오기
+    let items = this.getFilteredRestaurants();
+
+    // 정렬
+    items = this.sortRestaurants(items);
+
+    // 카운트 업데이트
+    const countText = document.getElementById('list-count-text');
+    if (countText) {
+      countText.textContent = `전체 ${items.length}개`;
+    }
+
+    // 렌더링
+    container.innerHTML = items.map((item, index) => {
+      return `
+        <article class="info-card" style="--delay:${index * 0.05}s" data-restaurant-id="${item.id}">
+          <div class="card-meta">
+            <span class="status-pill">${item.badgeType}</span>
+            <span>${item.category}</span>
+          </div>
+          <span class="card-title">${item.name}</span>
+          <span class="card-location">${item.region} ${item.area}</span>
+          <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
+          <div class="card-footer">
+            <span>${item.sourceLabel}</span>
+            <span>확인일: ${item.verifiedAt}</span>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    // 카드 클릭 이벤트
+    this.attachCardClickHandlers();
+  },
+
+  getFilteredRestaurants() {
+    let items = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
+
+    // 배지 필터
+    if (AppState.filters.badge !== 'all') {
+      items = items.filter(item => item.group === AppState.filters.badge);
+    }
+
+    return items;
+  },
+
+  sortRestaurants(items) {
+    // 현재는 기본 정렬만 구현
+    return items;
+  },
+
+  setupEventListeners() {
+    // 필터 버튼
+    const filterButtons = document.querySelectorAll('#list .filter-button');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filterType = btn.dataset.filter;
+        const filterValue = btn.dataset.value;
+        AppState.filters[filterType] = filterValue;
+
+        // 같은 그룹의 버튼들 비활성화
+        filterButtons.forEach(b => {
+          if (b.dataset.filter === filterType) {
+            b.classList.toggle('is-active', b === btn);
+          }
+        });
+
+        this.renderList();
+      });
+    });
+
+    // 정렬 버튼
+    const sortPills = document.querySelectorAll('#list .sort-pill');
+    sortPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        AppState.sort = pill.dataset.sort;
+        sortPills.forEach(p => p.classList.remove('is-active'));
+        pill.classList.add('is-active');
+        this.renderList();
+      });
+    });
+  },
+
+  attachCardClickHandlers() {
+    const cards = document.querySelectorAll('#list-grid .info-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.dataset.restaurantId;
+        Router.navigateTo('detail', { restaurantId });
+      });
+    });
+  }
+};
+
+// ========================================
+// 상세 화면
+// ========================================
+const DetailScreen = {
+  currentRestaurant: null,
+
+  init(restaurantId) {
+    console.log('Detail screen initialized for:', restaurantId);
+
+    // 레스토랑 데이터 찾기
+    this.currentRestaurant = this.findRestaurant(restaurantId);
+
+    if (!this.currentRestaurant) {
+      console.error('Restaurant not found:', restaurantId);
+      Router.navigateTo('home');
+      return;
+    }
+
+    this.render();
+    this.setupEventListeners();
+  },
+
+  findRestaurant(id) {
+    // nearbySpots에서 먼저 찾기
+    let restaurant = nearbySpots.find(r => r.id === id);
+
+    // allRestaurants에서 찾기
+    if (!restaurant && window.allRestaurants) {
+      restaurant = window.allRestaurants.find(r => r.id === id);
+    }
+
+    return restaurant;
+  },
+
+  render() {
+    const r = this.currentRestaurant;
+
+    // 제목과 위치
+    document.getElementById('detail-title').textContent = r.name;
+    document.getElementById('detail-location').textContent = r.location || `${r.region} ${r.area}`;
+
+    // 카테고리와 메뉴
+    document.getElementById('detail-category').textContent = r.category || r.badgeType || '';
+    document.getElementById('detail-menu').innerHTML = `<strong>대표 메뉴:</strong> ${r.mainMenu || '정보 없음'}`;
+
+    // 주소
+    const addressEl = document.getElementById('detail-address');
+    if (r.address) {
+      addressEl.textContent = `주소: ${r.address}`;
+      addressEl.style.display = 'block';
+    } else {
+      addressEl.style.display = 'none';
+    }
+
+    // 신뢰 근거 카드 렌더링
+    this.renderTrustCards();
+
+    // 이동 시간
+    const travelTimeEl = document.getElementById('detail-travel-time');
+    if (r.travelTime) {
+      travelTimeEl.textContent = r.travelTime;
+    } else {
+      travelTimeEl.textContent = '정보 없음';
+    }
+  },
+
+  renderTrustCards() {
+    const container = document.getElementById('detail-trust-cards');
+    if (!container) return;
+
+    const r = this.currentRestaurant;
+
+    // 신뢰 근거 카드 생성 (sourceUrl과 sourceLabel 기반)
+    if (r.sourceUrl && r.sourceLabel) {
+      container.innerHTML = `
+        <article class="evidence-card">
+          <div class="evidence-header">
+            <div class="evidence-title">
+              <span class="evidence-icon evidence-icon--michelin">TR</span>
+              <h4>${r.badgeType || '신뢰 근거'}</h4>
+            </div>
+            <span class="evidence-badge">검증 완료</span>
+          </div>
+          <p>${r.context || r.category || '신뢰할 수 있는 출처에서 확인되었습니다.'}</p>
+          <div class="evidence-meta">
+            <span>확인일: ${r.verifiedAt || r.updatedAt || '2026-01-19'}</span>
+          </div>
+          <div class="evidence-meta">
+            <a class="evidence-link" href="${r.sourceUrl}" target="_blank" rel="noopener">${r.sourceLabel}</a>
+          </div>
+        </article>
+      `;
+    } else {
+      container.innerHTML = `
+        <article class="evidence-card">
+          <p>신뢰 근거를 확인 중입니다.</p>
+        </article>
+      `;
+    }
+  },
+
+  setupEventListeners() {
+    // 뒤로 버튼
+    document.getElementById('detail-back-btn').addEventListener('click', () => {
+      Router.navigateTo('list');
+    });
+
+    // 길찾기 버튼
+    document.getElementById('detail-directions-btn').addEventListener('click', () => {
+      Router.navigateTo('directions', { restaurantId: this.currentRestaurant.id });
+    });
+
+    // 저장 버튼 (Phase 6에서 구현)
+    document.getElementById('detail-save-btn').addEventListener('click', () => {
+      alert('저장 기능은 곧 제공됩니다.');
+    });
+
+    // 공유 버튼 (Phase 6에서 구현)
+    document.getElementById('detail-share-btn').addEventListener('click', () => {
+      alert('공유 기능은 곧 제공됩니다.');
+    });
+
+    // 오정보 신고 버튼
+    document.getElementById('detail-report-btn').addEventListener('click', () => {
+      Router.navigateTo('partner');
+      setTimeout(() => {
+        document.getElementById('contact-form-container')?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+    });
+  }
+};
+
+// ========================================
+// 길찾기 화면
+// ========================================
+const DirectionsScreen = {
+  currentRestaurant: null,
+  currentTransport: 'walk',
+
+  init(restaurantId) {
+    console.log('Directions screen initialized for:', restaurantId);
+
+    // 레스토랑 데이터 찾기
+    this.currentRestaurant = DetailScreen.findRestaurant(restaurantId);
+
+    if (!this.currentRestaurant) {
+      console.error('Restaurant not found:', restaurantId);
+      Router.navigateTo('home');
+      return;
+    }
+
+    this.render();
+    this.setupEventListeners();
+  },
+
+  render() {
+    const r = this.currentRestaurant;
+
+    // 제목과 위치
+    document.getElementById('directions-title').textContent = r.name;
+    document.getElementById('directions-location').textContent = r.location || `${r.region} ${r.area}`;
+
+    // 경로 정보
+    this.updateRouteInfo();
+
+    // 딥링크 생성
+    this.setupDeeplinks();
+  },
+
+  updateRouteInfo() {
+    const r = this.currentRestaurant;
+    const routeDesc = document.getElementById('route-description');
+
+    if (r.travelTime) {
+      routeDesc.textContent = `${r.travelTime} 소요 예상`;
+    } else {
+      routeDesc.textContent = '경로를 계산할 수 없습니다.';
+    }
+  },
+
+  setupDeeplinks() {
+    const r = this.currentRestaurant;
+
+    // 좌표 또는 주소 기반 URL 생성
+    const hasCoords = r.lat && r.lng;
+    const encodedName = encodeURIComponent(r.name);
+    const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
+
+    // 네이버 지도 딥링크
+    const naverLink = document.getElementById('naver-deeplink');
+    if (hasCoords) {
+      naverLink.href = `https://map.naver.com/v5/directions/-/${r.lng},${r.lat},${encodedName},,/-/car`;
+    } else {
+      naverLink.href = `https://map.naver.com/v5/search/${mapQuery}`;
+    }
+
+    // 카카오맵 딥링크
+    const kakaoLink = document.getElementById('kakao-deeplink');
+    if (hasCoords) {
+      kakaoLink.href = `https://map.kakao.com/link/to/${encodedName},${r.lat},${r.lng}`;
+    } else {
+      kakaoLink.href = `https://map.kakao.com/link/search/${mapQuery}`;
+    }
+  },
+
+  setupEventListeners() {
+    // 뒤로 버튼
+    document.getElementById('directions-back-btn').addEventListener('click', () => {
+      Router.navigateTo('detail', { restaurantId: this.currentRestaurant.id });
+    });
+
+    // 이동수단 탭
+    const transportTabs = document.querySelectorAll('.transport-tab');
+    transportTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        this.currentTransport = tab.dataset.transport;
+        transportTabs.forEach(t => t.classList.remove('is-active'));
+        tab.classList.add('is-active');
+        this.updateRouteInfo();
+      });
+    });
+  }
+};
+
+// ========================================
+// 전역 초기화
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Trust Route App Initialized');
+  document.body.classList.add('js-enabled');
+
+  // 라우터 초기화
+  Router.init();
+
+  // 브랜드 로고 클릭
+  const titleLink = document.querySelector('.title-link');
+  if (titleLink) {
+    titleLink.addEventListener('click', () => {
+      Router.navigateTo('home');
+    });
+  }
+
+  // 네비게이션 버튼
+  const navButtons = document.querySelectorAll('.nav-button');
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = btn.dataset.target;
+      Router.navigateTo(target);
+    });
+  });
+
+  // 햄버거 메뉴 (모바일)
+  const hamburger = document.querySelector('.hamburger-menu');
+  const topNav = document.querySelector('.top-nav');
+  if (hamburger && topNav) {
+    hamburger.addEventListener('click', () => {
+      topNav.classList.toggle('is-open');
+      hamburger.classList.toggle('is-active');
+    });
+  }
 });
