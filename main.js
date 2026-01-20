@@ -377,36 +377,130 @@ const DetailScreen = {
   },
 
   setupEventListeners() {
+    // 이벤트 리스너 중복 방지를 위해 버튼을 복제해서 교체
+    const replaceButton = (id, handler) => {
+      const oldBtn = document.getElementById(id);
+      if (!oldBtn) return;
+      const newBtn = oldBtn.cloneNode(true);
+      oldBtn.parentNode.replaceChild(newBtn, oldBtn);
+      newBtn.addEventListener('click', handler);
+    };
+
     // 뒤로 버튼
-    document.getElementById('detail-back-btn').addEventListener('click', () => {
+    replaceButton('detail-back-btn', () => {
       Router.navigateTo('list');
     });
 
     // 길찾기 버튼
-    document.getElementById('detail-directions-btn').addEventListener('click', () => {
+    replaceButton('detail-directions-btn', () => {
       Router.navigateTo('directions', { restaurantId: this.currentRestaurant.id });
     });
 
-    // 저장 버튼 (Phase 6에서 구현)
-    document.getElementById('detail-save-btn').addEventListener('click', () => {
-      alert('저장 기능은 곧 제공됩니다.');
+    // 저장 버튼
+    replaceButton('detail-save-btn', () => {
+      this.handleSave();
     });
 
-    // 공유 버튼 (Phase 6에서 구현)
-    document.getElementById('detail-share-btn').addEventListener('click', () => {
-      alert('공유 기능은 곧 제공됩니다.');
+    // 공유 버튼
+    replaceButton('detail-share-btn', () => {
+      this.handleShare();
     });
 
     // 오정보 신고 버튼
-    document.getElementById('detail-report-btn').addEventListener('click', () => {
+    replaceButton('detail-report-btn', () => {
       Router.navigateTo('partner');
       setTimeout(() => {
         document.getElementById('contact-form-container')?.scrollIntoView({ behavior: 'smooth' });
       }, 300);
     });
 
-    // 댓글 시스템 (기본 UI, 로그인은 Phase 6에서 Supabase Auth로 구현)
+    // 댓글 시스템
     this.setupComments();
+  },
+
+  // 저장 기능 (localStorage 사용)
+  handleSave() {
+    const r = this.currentRestaurant;
+    if (!r) return;
+
+    // localStorage에서 저장된 목록 가져오기
+    let savedList = [];
+    try {
+      const saved = localStorage.getItem('savedRestaurants');
+      savedList = saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error('저장된 목록을 불러올 수 없습니다:', e);
+    }
+
+    // 이미 저장되어 있는지 확인
+    const index = savedList.findIndex(item => item.id === r.id);
+
+    if (index !== -1) {
+      // 이미 저장됨 - 제거
+      savedList.splice(index, 1);
+      localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
+      alert(`${r.name}을(를) 저장 목록에서 제거했습니다.`);
+
+      // 버튼 텍스트 변경
+      const saveBtn = document.getElementById('detail-save-btn');
+      if (saveBtn) {
+        saveBtn.innerHTML = '<span class="icon">💾</span> 저장';
+      }
+    } else {
+      // 저장
+      savedList.push({
+        id: r.id,
+        name: r.name,
+        location: r.location || `${r.region} ${r.area}`,
+        savedAt: new Date().toISOString()
+      });
+      localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
+      alert(`${r.name}을(를) 저장했습니다.`);
+
+      // 버튼 텍스트 변경
+      const saveBtn = document.getElementById('detail-save-btn');
+      if (saveBtn) {
+        saveBtn.innerHTML = '<span class="icon">✓</span> 저장됨';
+      }
+    }
+  },
+
+  // 공유 기능 (Web Share API)
+  async handleShare() {
+    const r = this.currentRestaurant;
+    if (!r) return;
+
+    const shareData = {
+      title: `Trust Route - ${r.name}`,
+      text: `${r.name} (${r.location || r.region}) - 신뢰할 수 있는 맛집 정보`,
+      url: `${window.location.origin}/#detail?id=${r.id}`
+    };
+
+    // Web Share API 지원 확인
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        console.log('공유 성공');
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('공유 실패:', err);
+          this.fallbackShare(shareData);
+        }
+      }
+    } else {
+      // 폴백: 클립보드에 복사
+      this.fallbackShare(shareData);
+    }
+  },
+
+  // 공유 폴백 (클립보드)
+  fallbackShare(shareData) {
+    const url = shareData.url;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('링크가 클립보드에 복사되었습니다.');
+    }).catch(() => {
+      alert(`링크를 복사해주세요: ${url}`);
+    });
   },
 
   // 댓글 시스템 초기화
