@@ -42,7 +42,22 @@ const Router = {
     const targetSection = document.querySelector(`[data-section="${screen}"]`);
     if (targetSection) {
       targetSection.classList.add('is-active');
-      window.scrollTo(0, 0);
+
+      // 화면 전환 시 즉시 맨 위로 스크롤 (강제)
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+      });
+
+      // 추가 보장: 약간의 지연 후 다시 스크롤
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'instant'
+        });
+      }, 50);
     }
 
     // 네비게이션 버튼 활성화 상태 업데이트
@@ -200,6 +215,23 @@ const HomeScreen = {
   },
 
   setupEventListeners() {
+    // 지도 토글 버튼
+    const toggleMapBtn = document.getElementById('toggle-map-btn');
+    const mapSection = document.getElementById('map-section');
+    if (toggleMapBtn && mapSection) {
+      toggleMapBtn.addEventListener('click', () => {
+        const isHidden = mapSection.style.display === 'none';
+        mapSection.style.display = isHidden ? 'block' : 'none';
+        toggleMapBtn.classList.toggle('is-active', isHidden);
+        toggleMapBtn.textContent = isHidden ? '🗺️ 지도 숨기기' : '🗺️ 지도에서 보기';
+
+        // 지도를 열 때 위치 업데이트
+        if (isHidden) {
+          this.updateMapLocation();
+        }
+      });
+    }
+
     // 위치 버튼
     const locationBtn = document.getElementById('get-location-btn');
     if (locationBtn) {

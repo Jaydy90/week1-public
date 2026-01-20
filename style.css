@@ -920,31 +920,59 @@ textarea {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* 심플 히어로 */
-.hero-simple {
+/* 간소화된 히어로 */
+.hero-compact {
   text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(120deg, rgba(228, 90, 43, 0.08), rgba(15, 107, 102, 0.1));
-  border-radius: var(--radius);
+  padding: 2rem 1rem 1.5rem;
   margin-bottom: 2rem;
 }
 
-.hero-simple h1 {
+.hero-compact h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  margin: 0 0 1.2rem;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  margin: 0 0 0.8rem;
   color: var(--ink);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-.hero-simple .hero-desc {
-  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+.hero-compact .hero-desc {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
   color: var(--muted);
-  max-width: 680px;
+  max-width: 600px;
   margin: 0 auto;
-  line-height: 1.7;
+  line-height: 1.6;
   font-weight: 400;
+}
+
+/* 지도 토글 버튼 */
+.map-section-toggle {
+  margin: 2rem 0 1rem;
+  text-align: center;
+}
+
+.toggle-map-btn {
+  padding: 0.9rem 2rem;
+  background: rgba(15, 107, 102, 0.1);
+  border: 2px solid var(--secondary);
+  color: var(--secondary);
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.toggle-map-btn:hover {
+  background: var(--secondary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 107, 102, 0.3);
+}
+
+.toggle-map-btn.is-active {
+  background: var(--secondary);
+  color: white;
 }
 
 /* 지도 섹션 */
@@ -955,6 +983,18 @@ textarea {
   margin-bottom: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: var(--shadow);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .map-controls {
