@@ -1386,6 +1386,8 @@ textarea {
 .user-menu {
   display: flex;
   align-items: center;
+  margin-left: auto;
+  z-index: 20;
 }
 
 .user-menu-btn {
@@ -1400,6 +1402,8 @@ textarea {
   transition: all 0.2s ease;
   font-size: 0.9rem;
   font-weight: 500;
+  position: relative;
+  z-index: 20;
 }
 
 .user-menu-btn:hover {

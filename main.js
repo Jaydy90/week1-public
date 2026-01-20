@@ -924,20 +924,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('Trust Route App Initialized');
   document.body.classList.add('js-enabled');
 
-  // 인증 시스템 초기화
-  console.log('Initializing AuthModule...');
-  await AuthModule.init();
-  console.log('AuthModule initialized');
+  // 인증 시스템 초기화 (에러가 나도 계속 진행)
+  try {
+    console.log('Initializing AuthModule...');
+    await AuthModule.init();
+    console.log('AuthModule initialized');
+  } catch (err) {
+    console.error('AuthModule initialization failed:', err);
+    console.log('Continuing without auth...');
+  }
 
-  // 모달 컨트롤러 초기화
-  console.log('Initializing ModalController...');
-  ModalController.init();
-  console.log('ModalController initialized');
+  // 모달 컨트롤러 초기화 (인증과 무관하게 작동해야 함)
+  try {
+    console.log('Initializing ModalController...');
+    ModalController.init();
+    console.log('ModalController initialized');
+  } catch (err) {
+    console.error('ModalController initialization failed:', err);
+  }
 
   // 라우터 초기화
-  console.log('Initializing Router...');
-  Router.init();
-  console.log('Router initialized');
+  try {
+    console.log('Initializing Router...');
+    Router.init();
+    console.log('Router initialized');
+  } catch (err) {
+    console.error('Router initialization failed:', err);
+  }
 
   // 브랜드 로고 클릭
   const titleLink = document.querySelector('.title-link');
