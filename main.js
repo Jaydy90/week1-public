@@ -717,9 +717,11 @@ const DirectionsScreen = {
 // ========================================
 const ModalController = {
   init() {
+    console.log('ModalController.init() called');
     this.setupLoginModal();
     this.setupSignupModal();
     this.setupUserMenu();
+    console.log('ModalController initialized successfully');
   },
 
   // 로그인 모달 설정
@@ -849,8 +851,12 @@ const ModalController = {
   // 사용자 메뉴 설정
   setupUserMenu() {
     const userMenuBtn = document.getElementById('user-menu-btn');
+    console.log('Setup user menu:', userMenuBtn ? 'Found' : 'Not found');
+
     if (userMenuBtn) {
       userMenuBtn.addEventListener('click', () => {
+        console.log('User menu clicked, authenticated:', AuthModule.isAuthenticated());
+
         if (AuthModule.isAuthenticated()) {
           // 로그인 상태 - 드롭다운 메뉴 또는 로그아웃
           if (confirm('로그아웃하시겠습니까?')) {
@@ -862,40 +868,76 @@ const ModalController = {
           }
         } else {
           // 비로그인 상태 - 로그인 모달 열기
+          console.log('Opening login modal...');
           this.openLoginModal();
         }
       });
+    } else {
+      console.error('user-menu-btn not found!');
     }
   },
 
   // 로그인 모달 열기
   openLoginModal() {
+    console.log('openLoginModal called');
     const modal = document.getElementById('login-modal');
-    if (modal) modal.style.display = 'flex';
+    console.log('Login modal element:', modal);
+
+    if (modal) {
+      modal.style.display = 'flex';
+      console.log('Login modal display set to flex');
+    } else {
+      console.error('login-modal element not found!');
+    }
   },
 
   // 회원가입 모달 열기
   openSignupModal() {
+    console.log('openSignupModal called');
     const modal = document.getElementById('signup-modal');
-    if (modal) modal.style.display = 'flex';
+    console.log('Signup modal element:', modal);
+
+    if (modal) {
+      modal.style.display = 'flex';
+      console.log('Signup modal display set to flex');
+    } else {
+      console.error('signup-modal element not found!');
+    }
   }
 };
 
 // ========================================
 // 전역 초기화
 // ========================================
+// 디버깅용 전역 함수
+window.testLoginModal = function() {
+  console.log('Testing login modal...');
+  ModalController.openLoginModal();
+};
+
+window.testSignupModal = function() {
+  console.log('Testing signup modal...');
+  ModalController.openSignupModal();
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('Trust Route App Initialized');
   document.body.classList.add('js-enabled');
 
   // 인증 시스템 초기화
+  console.log('Initializing AuthModule...');
   await AuthModule.init();
+  console.log('AuthModule initialized');
 
   // 모달 컨트롤러 초기화
+  console.log('Initializing ModalController...');
   ModalController.init();
+  console.log('ModalController initialized');
 
   // 라우터 초기화
+  console.log('Initializing Router...');
   Router.init();
+  console.log('Router initialized');
 
   // 브랜드 로고 클릭
   const titleLink = document.querySelector('.title-link');
