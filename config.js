@@ -14,7 +14,7 @@ const APP_CONFIG = {
   url: window.location.hostname === 'localhost'
     ? 'http://localhost:3000'
     : 'https://kpopeats.cc',
-  name: 'Trust Route'
+  name: 'KPopEats'
 };
 
 // Supabase 클라이언트 초기화

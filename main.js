@@ -199,17 +199,27 @@ const ListScreen = {
       countText.textContent = `전체 ${items.length}개`;
     }
 
+    // 빈 상태 처리
+    if (items.length === 0) {
+      container.innerHTML = '<p class="empty-state">필터 조건에 맞는 맛집이 없습니다.</p>';
+      return;
+    }
+
     // 렌더링
     container.innerHTML = items.map((item, index) => {
+      // 배지 생성
+      const badgeHTML = item.badgeType ? `<span class="badge-chip">${item.badgeType}</span>` : '';
+
       return `
         <article class="info-card" style="--delay:${index * 0.05}s" data-restaurant-id="${item.id}">
           <div class="card-meta">
-            <span class="status-pill">${item.badgeType}</span>
+            <span class="status-pill">${item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : '흑백요리사'}</span>
             <span>${item.category}</span>
           </div>
           <span class="card-title">${item.name}</span>
           <span class="card-location">${item.region} ${item.area}</span>
           <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
+          <div class="card-badges">${badgeHTML}</div>
           <div class="card-footer">
             <span>${item.sourceLabel}</span>
             <span>확인일: ${item.verifiedAt}</span>
