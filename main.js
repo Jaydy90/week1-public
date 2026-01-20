@@ -96,70 +96,10 @@ const Router = {
 // 홈 화면
 // ========================================
 const HomeScreen = {
-  map: null,
-  markers: [],
-
   init() {
     console.log('Home screen initialized');
-    this.initMap();
     this.renderPreviewList();
     this.setupEventListeners();
-  },
-
-  // 네이버 지도 초기화
-  initMap() {
-    const mapContainer = document.getElementById('map');
-    if (!mapContainer) return;
-
-    // 네이버 지도 API가 로드되었는지 확인
-    if (typeof naver === 'undefined' || !naver.maps) {
-      console.warn('네이버 지도 API가 로드되지 않았습니다. API 키를 확인해주세요.');
-      mapContainer.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#666;">지도를 불러올 수 없습니다. 네이버 지도 API 키가 필요합니다.</div>';
-      return;
-    }
-
-    // 서울 시청 기본 위치
-    const defaultCenter = new naver.maps.LatLng(37.5665, 126.9780);
-
-    // 지도 생성
-    this.map = new naver.maps.Map(mapContainer, {
-      center: defaultCenter,
-      zoom: 13,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: naver.maps.Position.TOP_RIGHT
-      }
-    });
-
-    // 마커 표시
-    this.renderMarkers();
-  },
-
-  // 식당 마커 렌더링
-  renderMarkers() {
-    if (!this.map) return;
-
-    // 기존 마커 제거
-    this.markers.forEach(marker => marker.setMap(null));
-    this.markers = [];
-
-    // nearbySpots에서 좌표가 있는 식당만 마커 표시
-    nearbySpots.forEach(restaurant => {
-      if (restaurant.lat && restaurant.lng) {
-        const marker = new naver.maps.Marker({
-          position: new naver.maps.LatLng(restaurant.lat, restaurant.lng),
-          map: this.map,
-          title: restaurant.name
-        });
-
-        // 마커 클릭 이벤트
-        naver.maps.Event.addListener(marker, 'click', () => {
-          Router.navigateTo('detail', { restaurantId: restaurant.id });
-        });
-
-        this.markers.push(marker);
-      }
-    });
   },
 
   renderPreviewList() {
@@ -196,25 +136,6 @@ const HomeScreen = {
   },
 
   setupEventListeners() {
-    // 내 위치 버튼
-    const myLocationBtn = document.getElementById('my-location-btn');
-    if (myLocationBtn) {
-      myLocationBtn.addEventListener('click', () => {
-        this.moveToMyLocation();
-      });
-    }
-
-    // 시간 필터
-    const filterPills = document.querySelectorAll('#home .filter-pill');
-    filterPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        AppState.filters.timeMinutes = Number(pill.dataset.minutes);
-        filterPills.forEach(p => p.classList.remove('is-active'));
-        pill.classList.add('is-active');
-        this.renderPreviewList();
-      });
-    });
-
     // 신뢰 탭
     const trustTabs = document.querySelectorAll('.trust-tab');
     trustTabs.forEach(tab => {
@@ -232,40 +153,6 @@ const HomeScreen = {
       listBtn.addEventListener('click', () => {
         Router.navigateTo('list');
       });
-    }
-  },
-
-  // 내 위치로 이동
-  moveToMyLocation() {
-    if (!this.map) return;
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const myLocation = new naver.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          this.map.setCenter(myLocation);
-          this.map.setZoom(15);
-
-          // 내 위치 마커 추가
-          new naver.maps.Marker({
-            position: myLocation,
-            map: this.map,
-            icon: {
-              content: '<div style="background:#e45a2b;width:20px;height:20px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
-              anchor: new naver.maps.Point(10, 10)
-            }
-          });
-        },
-        (error) => {
-          console.error('위치 정보를 가져올 수 없습니다:', error);
-          alert('위치 정보를 가져올 수 없습니다. 브라우저 설정을 확인해주세요.');
-        }
-      );
-    } else {
-      alert('이 브라우저는 위치 정보를 지원하지 않습니다.');
     }
   },
 

@@ -905,39 +905,28 @@ textarea {
   transform: rotate(-45deg) translate(7px, -7px);
 }
 
-/* 지도 컨테이너 */
-.map-container {
-  position: relative;
-  height: 400px;
-  background: rgba(15, 107, 102, 0.08);
+/* 심플 히어로 */
+.hero-simple {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: linear-gradient(120deg, rgba(228, 90, 43, 0.08), rgba(15, 107, 102, 0.1));
   border-radius: var(--radius);
-  margin-top: 1.5rem;
-  overflow: hidden;
+  margin-bottom: 2rem;
 }
 
-.map-view {
-  width: 100%;
-  height: 100%;
+.hero-simple h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin: 0 0 1rem;
+  color: var(--ink);
 }
 
-.my-location-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.6rem 1rem;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 999px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.my-location-btn:hover {
-  background: var(--primary);
-  color: white;
-  border-color: transparent;
+.hero-simple .hero-desc {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* 신뢰 탭 */
