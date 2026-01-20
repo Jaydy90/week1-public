@@ -1,7 +1,10 @@
 // ========================================
 // Trust Route - Main JavaScript
 // Phase 1: SPA Router + 4-Screen Layout
+// Version: 2.1 (Modal fix with global handler)
 // ========================================
+
+console.log('Trust Route main.js loaded - Version 2.1');
 
 // 전역 상태
 const AppState = {
