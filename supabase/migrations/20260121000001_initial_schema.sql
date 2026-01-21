@@ -16,9 +16,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   display_name TEXT,
   home_area TEXT,
-  preferences JSONB DEFAULT '{}'::JSONB,
-
-  CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
+  preferences JSONB DEFAULT '{}'::JSONB
 );
 
 -- 프로필 인덱스
@@ -58,7 +56,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
 );
 
 -- 레스토랑 인덱스
-CREATE INDEX IF NOT EXISTS restaurants_name_idx ON restaurants USING GIN (to_tsvector('korean', name));
+CREATE INDEX IF NOT EXISTS restaurants_name_idx ON restaurants USING GIN (to_tsvector('simple', name));
 CREATE INDEX IF NOT EXISTS restaurants_location_idx ON restaurants(lat, lng);
 CREATE INDEX IF NOT EXISTS restaurants_category_idx ON restaurants(category);
 

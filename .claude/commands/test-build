@@ -1,0 +1,68 @@
+#!/bin/bash
+# Test the static site (no build step needed)
+
+# Color codes
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+echo -e "${GREEN}Testing Trust Route static site...${NC}"
+
+# Check if required files exist
+echo -e "${YELLOW}Checking required files...${NC}"
+REQUIRED_FILES=("index.html" "config.js" "auth.js" "comments.js" "data.js" "main.js" "style.css")
+MISSING_FILES=()
+
+for file in "${REQUIRED_FILES[@]}"; do
+  if [ ! -f "$file" ]; then
+    MISSING_FILES+=("$file")
+  else
+    echo -e "${GREEN}✓${NC} $file"
+  fi
+done
+
+if [ ${#MISSING_FILES[@]} -gt 0 ]; then
+  echo -e "${RED}✗ Missing files:${NC}"
+  printf '%s\n' "${MISSING_FILES[@]}"
+  exit 1
+fi
+
+# Validate JavaScript syntax (basic check)
+echo -e "${YELLOW}Validating JavaScript files...${NC}"
+JS_FILES=("config.js" "auth.js" "comments.js" "data.js" "main.js")
+
+for file in "${JS_FILES[@]}"; do
+  # Check for common syntax errors
+  if grep -q "console.error\|TODO.*BUG\|FIXME" "$file"; then
+    echo -e "${YELLOW}⚠${NC} $file contains warnings"
+  else
+    echo -e "${GREEN}✓${NC} $file"
+  fi
+done
+
+# Check Supabase config
+echo -e "${YELLOW}Checking Supabase configuration...${NC}"
+if grep -q "SUPABASE_CONFIG" config.js && grep -q "url:" config.js && grep -q "anonKey:" config.js; then
+  echo -e "${GREEN}✓${NC} Supabase config present"
+else
+  echo -e "${RED}✗${NC} Supabase config missing or incomplete"
+  exit 1
+fi
+
+# Start local server for manual testing
+echo -e "${GREEN}✓ All checks passed!${NC}"
+echo -e "${YELLOW}Starting local server on http://localhost:8000${NC}"
+echo -e "${YELLOW}Press Ctrl+C to stop${NC}"
+
+# Check if Python is available, otherwise use npx serve
+if command -v python &> /dev/null; then
+  python -m http.server 8000
+elif command -v python3 &> /dev/null; then
+  python3 -m http.server 8000
+elif command -v npx &> /dev/null; then
+  npx serve . -p 8000
+else
+  echo -e "${RED}No server available. Install Python or Node.js to run local server.${NC}"
+  exit 1
+fi

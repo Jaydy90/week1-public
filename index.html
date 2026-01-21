@@ -119,6 +119,9 @@
     </script>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
     <header class="site-header">
@@ -523,9 +526,12 @@
             <!-- 구독 상태 -->
             <div class="mypage-section subscription-section">
                 <h2>구독 관리</h2>
-                <div id="subscription-status">
-                    <p class="loading">구독 정보 확인 중...</p>
+                <div id="subscription-status" class="subscription-status free">
+                    <p>무료 플랜</p>
                 </div>
+                <p id="subscription-expiry" class="subscription-expiry"></p>
+                <button id="subscribe-button" class="primary-button" onclick="SubscriptionModule.createCheckoutSession()">프리미엄 구독하기 (₩9,900/월)</button>
+                <button id="manage-subscription-button" class="secondary-button" onclick="SubscriptionModule.openCustomerPortal()" style="display: none;">구독 관리</button>
             </div>
 
             <!-- 저장한 맛집 -->
@@ -671,6 +677,7 @@
     <script src="config.js?v=12"></script>
     <script src="auth.js?v=12"></script>
     <script src="comments.js?v=12"></script>
+    <script src="subscription.js?v=12"></script>
     <script src="data.js?v=12"></script>
     <script src="main.js?v=12"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
