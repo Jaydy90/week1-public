@@ -45,8 +45,6 @@ wrangler.toml
 # Claude Code (keep configurations, exclude logs)
 .claude/*.log
 .claude/sessions/
-.mcp.json
-.claude/settings.local.json
 
 # Supabase (keep migrations, exclude local state)
 .supabase/
