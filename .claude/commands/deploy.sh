@@ -1,35 +1,48 @@
 #!/bin/bash
-# Slash command: /deploy
-# Description: Deploy to Cloudflare Pages
+# ========================================
+# Cloudflare Pages 배포 스크립트
+# 사용법: /deploy
+# ========================================
 
 set -e
 
-echo "🚀 Deploying to Cloudflare Pages..."
+echo "🚀 Cloudflare Pages 배포 시작..."
+echo ""
 
-# Cloudflare Pages는 GitHub 연동으로 자동 배포되므로
-# 이 명령은 push 후 배포 상태를 확인하는 용도
+# 1. 테스트 실행
+echo "📋 1/3: 빌드 검증 중..."
+bash .claude/commands/test-build.sh
 
 echo ""
-echo "📋 Pre-deployment checklist:"
-echo "  ✓ CLAUDE.md exists"
-echo "  ✓ All changes committed"
-echo "  ✓ Ready to push"
 
-echo ""
-read -p "Deploy to production? (y/N): " confirm
-
-if [[ $confirm != [yY] ]]; then
-  echo "❌ Deployment cancelled"
-  exit 0
+# 2. Git 상태 확인
+echo "🔍 2/3: Git 상태 확인 중..."
+if [ -n "$(git status --porcelain)" ]; then
+  echo "⚠️  커밋되지 않은 변경사항이 있습니다."
+  echo ""
+  git status
+  echo ""
+  read -p "계속 진행하시겠습니까? (y/n) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ 배포 취소됨"
+    exit 1
+  fi
+else
+  echo "✅ 작업 디렉토리가 깨끗합니다."
 fi
 
 echo ""
-echo "🔄 Pushing to main branch..."
+
+# 3. 푸시 및 자동 배포
+echo "🚢 3/3: 배포 트리거 중..."
 git push origin main
 
 echo ""
-echo "✅ Pushed to GitHub!"
-echo "📊 Cloudflare Pages will auto-deploy from GitHub"
-echo "🔗 Check deployment status: https://dash.cloudflare.com/"
+echo "✅ 배포가 시작되었습니다!"
 echo ""
-echo "🌐 Live URL: https://kpopeats.cc"
+echo "📊 배포 상태 확인:"
+echo "   https://dash.cloudflare.com/pages"
+echo ""
+echo "🌐 배포 완료 후 확인:"
+echo "   https://kpopeats.cc"

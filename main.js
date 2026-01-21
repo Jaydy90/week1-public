@@ -11,6 +11,7 @@ const AppState = {
   currentScreen: 'home',
   currentRestaurant: null,
   userLocation: null, // { lat, lng }
+  searchQuery: '', // 검색어
   filters: {
     timeMinutes: 15,
     trustTab: 'all',
@@ -543,17 +544,105 @@ const ListScreen = {
   getFilteredRestaurants() {
     let items = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
 
+    // 검색어 필터
+    if (AppState.searchQuery) {
+      const query = AppState.searchQuery.toLowerCase();
+      items = items.filter(item => {
+        const name = (item.name || '').toLowerCase();
+        const location = (item.location || '').toLowerCase();
+        const category = (item.category || '').toLowerCase();
+        const menu = (item.mainMenu || '').toLowerCase();
+
+        return name.includes(query) ||
+               location.includes(query) ||
+               category.includes(query) ||
+               menu.includes(query);
+      });
+    }
+
     // 배지 필터
     if (AppState.filters.badge !== 'all') {
       items = items.filter(item => item.group === AppState.filters.badge);
+    }
+
+    // 영업 상태 필터
+    if (AppState.filters.status !== 'all') {
+      items = items.filter(item => item.status === 'open');
+    }
+
+    // 가격대 필터
+    if (AppState.filters.price !== 'all') {
+      items = items.filter(item => item.priceRange === AppState.filters.price);
     }
 
     return items;
   },
 
   sortRestaurants(items) {
-    // 현재는 기본 정렬만 구현
-    return items;
+    const sorted = [...items];
+
+    switch (AppState.sort) {
+      case 'distance':
+        // 거리순 정렬 (사용자 위치가 있으면)
+        if (AppState.userLocation) {
+          sorted.sort((a, b) => {
+            const distA = this.calculateDistance(AppState.userLocation, { lat: a.lat, lng: a.lng });
+            const distB = this.calculateDistance(AppState.userLocation, { lat: b.lat, lng: b.lng });
+            return distA - distB;
+          });
+        }
+        break;
+
+      case 'speed':
+        // 빠른 순 (예상 이동 시간)
+        sorted.sort((a, b) => {
+          const timeA = parseInt(a.travelTime) || 999;
+          const timeB = parseInt(b.travelTime) || 999;
+          return timeA - timeB;
+        });
+        break;
+
+      case 'saves':
+        // 저장 순
+        sorted.sort((a, b) => {
+          const savesA = a.saves || 0;
+          const savesB = b.saves || 0;
+          return savesB - savesA;
+        });
+        break;
+
+      default:
+        // 기본: 최신순 (verifiedAt 기준)
+        sorted.sort((a, b) => {
+          const dateA = new Date(a.verifiedAt || 0);
+          const dateB = new Date(b.verifiedAt || 0);
+          return dateB - dateA;
+        });
+    }
+
+    return sorted;
+  },
+
+  // 거리 계산 (Haversine formula)
+  calculateDistance(loc1, loc2) {
+    if (!loc1 || !loc2 || !loc1.lat || !loc1.lng || !loc2.lat || !loc2.lng) {
+      return 999999;
+    }
+
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = this.deg2rad(loc2.lat - loc1.lat);
+    const dLon = this.deg2rad(loc2.lng - loc1.lng);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(loc1.lat)) * Math.cos(this.deg2rad(loc2.lat)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // km
+    return distance;
+  },
+
+  deg2rad(deg) {
+    return deg * (Math.PI / 180);
   },
 
   setupEventListeners() {
@@ -1170,16 +1259,16 @@ const MypageScreen = {
     container.innerHTML = '<p class="loading">구독 정보 확인 중...</p>';
 
     try {
-      const subscription = await SubscriptionModule.getSubscription();
+      const subscription = await SubscriptionModule.getSubscriptionStatus();
 
-      if (!subscription || !['active', 'trialing'].includes(subscription.status)) {
+      if (!subscription || !SubscriptionModule.isSubscriptionActive(subscription)) {
         // 비구독 상태
         container.innerHTML = `
           <div class="subscription-card free">
             <h3>🆓 무료 플랜</h3>
             <p class="subscription-description">기본 기능을 무료로 이용 중입니다.</p>
             <button class="primary-button" id="start-subscription-btn">
-              프리미엄으로 업그레이드 ✨
+              프리미엄으로 업그레이드 ✨ (₩9,900/월)
             </button>
             <p class="subscription-benefits">
               프리미엄 혜택:<br>
@@ -1194,32 +1283,38 @@ const MypageScreen = {
         // 구독 시작 버튼 이벤트
         const startBtn = document.getElementById('start-subscription-btn');
         if (startBtn) {
-          startBtn.addEventListener('click', () => {
-            SubscriptionModule.startCheckout();
+          startBtn.addEventListener('click', async () => {
+            startBtn.disabled = true;
+            startBtn.textContent = '처리 중...';
+            await SubscriptionModule.createCheckoutSession();
+            startBtn.disabled = false;
+            startBtn.textContent = '프리미엄으로 업그레이드 ✨ (₩9,900/월)';
           });
         }
       } else {
         // 구독 중
         const endDate = new Date(subscription.current_period_end).toLocaleDateString('ko-KR');
-        const statusText = subscription.status === 'trialing' ? '체험 중' : '활성';
+        const statusLabel = SubscriptionModule.getStatusLabel(subscription.status);
 
         container.innerHTML = `
           <div class="subscription-card premium">
             <h3>⭐ 프리미엄 플랜</h3>
-            <p class="subscription-status">상태: <strong>${statusText}</strong></p>
+            <p class="subscription-status">상태: <strong>${statusLabel}</strong></p>
             <p class="subscription-period">다음 결제일: ${endDate}</p>
-            ${subscription.cancel_at_period_end ? '<p class="subscription-cancel-notice">⚠️ 구독이 ${endDate}에 종료됩니다.</p>' : ''}
-            <button class="secondary-button" id="manage-subscription-btn">
-              구독 관리
-            </button>
+            ${subscription.cancel_at_period_end ? `<p class="subscription-cancel-notice">⚠️ 구독이 ${endDate}에 종료됩니다.</p>` : ''}
+            ${subscription.cancel_at_period_end ? '' : '<button class="secondary-button" id="cancel-subscription-btn">구독 취소</button>'}
           </div>
         `;
 
-        // 구독 관리 버튼 이벤트
-        const manageBtn = document.getElementById('manage-subscription-btn');
-        if (manageBtn) {
-          manageBtn.addEventListener('click', () => {
-            SubscriptionModule.cancelSubscription();
+        // 구독 취소 버튼 이벤트
+        const cancelBtn = document.getElementById('cancel-subscription-btn');
+        if (cancelBtn) {
+          cancelBtn.addEventListener('click', async () => {
+            const success = await SubscriptionModule.cancelSubscription();
+            if (success) {
+              // 구독 상태 새로고침
+              await this.renderSubscriptionStatus();
+            }
           });
         }
       }
@@ -1855,6 +1950,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Continuing without auth...');
   }
 
+  // Stripe 구독 모듈 초기화
+  try {
+    console.log('Initializing SubscriptionModule...');
+    SubscriptionModule.init();
+    console.log('SubscriptionModule initialized');
+  } catch (err) {
+    console.error('SubscriptionModule initialization failed:', err);
+  }
+
   // 모달 컨트롤러 초기화 (이벤트 리스너 설정)
   // ModalController는 이미 전역으로 노출되어 있음
   try {
@@ -1899,6 +2003,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     hamburger.addEventListener('click', () => {
       topNav.classList.toggle('is-open');
       hamburger.classList.toggle('is-active');
+    });
+  }
+
+  // 검색 기능
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    // 디바운스 타이머
+    let searchTimeout = null;
+
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      const query = e.target.value.trim().toLowerCase();
+
+      searchTimeout = setTimeout(() => {
+        AppState.searchQuery = query;
+
+        // 현재 리스트 화면이면 즉시 필터링
+        if (AppState.currentScreen === 'list') {
+          ListScreen.renderList();
+        }
+      }, 300); // 300ms 디바운스
+    });
+
+    // 엔터 키로 검색
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = e.target.value.trim().toLowerCase();
+        AppState.searchQuery = query;
+
+        // 리스트 화면으로 이동
+        Router.navigateTo('list');
+      }
     });
   }
 });
