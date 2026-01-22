@@ -22,10 +22,8 @@ const STRIPE_CONFIG = {
   // Stripe Publishable Key (Test mode)
   publishableKey: 'pk_test_51SrtnKGuLgjU9MPRtWD0TRoyDwc5ZdScIa1Q6IX9R2C5ER39Ltm7i4rtmS0Qqe7Vz44b5Ctqf2eaAlhAciql4vMB00namwSzzP',
 
-  // ⚠️ TODO: Price ID로 교체 필요!
-  // Product ID를 받았는데 Price ID가 필요합니다.
-  // Stripe Dashboard > Products > prod_TpZk4wrWujzY38 클릭 > Pricing 섹션에서 price_xxx 복사
-  priceId: 'prod_TpZk4wrWujzY38' // ← Price ID로 교체 필요 (price_xxx 형식)
+  // Stripe Price ID (KPopEats Premium - ₩9,900/월)
+  priceId: 'price_1SsEbiGuLgjU9MPRa1eldTcj'
 };
 
 // Supabase 클라이언트 초기화
