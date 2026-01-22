@@ -6,6 +6,11 @@
             window.location.replace('https://kpopeats.cc' + window.location.pathname + window.location.search + window.location.hash);
         }
     </script>
+    <!-- Sentry Error Tracking -->
+    <script
+        src="https://js.sentry-cdn.com/229d91506a0cd8e138f0097c2ebf70b7.min.js"
+        crossorigin="anonymous"
+    ></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT8PV02XX4"></script>
     <script>
@@ -261,7 +266,8 @@
                 <button class="primary-button" data-target="list">전체 리스트 보기</button>
             </div>
 
-            <!-- 지도 섹션 (접을 수 있게) -->
+            <!-- 지도 섹션 (접을 수 있게) - 기본 숨김 -->
+            <!--
             <div class="map-section-toggle">
                 <button class="toggle-map-btn" id="toggle-map-btn" type="button">
                     🗺️ 지도에서 보기
@@ -298,8 +304,10 @@
                     </div>
                 </div>
             </div>
+            -->
 
-            <!-- 트러스트 루트 서비스 소개 (맨 아래) -->
+            <!-- 트러스트 루트 서비스 소개 (맨 아래) - 숨김 -->
+            <!--
             <div class="trust-route-service">
                 <div class="service-header">
                     <h2>트러스트 루트 (Trust Route, TR루트)</h2>
@@ -339,6 +347,7 @@
                     </ul>
                 </div>
             </div>
+            -->
         </section>
 
         <!-- LIST: 리스트 화면 -->
