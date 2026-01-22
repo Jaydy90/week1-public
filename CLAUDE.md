@@ -410,3 +410,41 @@ A feature is complete when:
 4. No console errors
 5. Tested on mobile viewport (responsive)
 6. Committed with clear message and pushed to main
+
+## TODO: Pending Tasks
+
+### Re-enable Stripe Subscription Features (DISABLED: 2026-01-22)
+
+**Why disabled**: Cloudflare Pages Functions build failed due to missing dependencies
+
+**Current state**:
+- Functions directory renamed to `_functions_disabled`
+- Basic features (restaurant cards, login, navigation) working perfectly
+- Subscription buttons exist but API calls will fail
+
+**To re-enable**:
+1. Rename `_functions_disabled` back to `functions`
+2. Create `functions/package.json`:
+   ```json
+   {
+     "name": "kpopeats-functions",
+     "version": "1.0.0",
+     "type": "module",
+     "dependencies": {
+       "stripe": "^14.11.0",
+       "@supabase/supabase-js": "^2.39.3"
+     }
+   }
+   ```
+3. Add environment variables in Cloudflare Pages Dashboard:
+   - `STRIPE_SECRET_KEY` - Get from https://dashboard.stripe.com/test/apikeys
+   - `SUPABASE_SERVICE_ROLE_KEY` - Get from Supabase Dashboard > Settings > API
+   - `SUPABASE_URL` - Same as in config.js
+4. Test deployment in Cloudflare Pages logs
+5. Test subscription flow end-to-end
+
+**Files affected**:
+- `_functions_disabled/api/create-checkout-session.js`
+- `_functions_disabled/api/customer-portal.js`
+- `_functions_disabled/api/cancel-subscription.js`
+- `_functions_disabled/api/webhooks/stripe.js`
