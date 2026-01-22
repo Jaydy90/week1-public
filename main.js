@@ -1782,130 +1782,8 @@ console.log('ModalController exposed globally (before DOMContentLoaded)');
 // ========================================
 
 // ========================================
-// Subscription Module (구독 관리)
+// SubscriptionModule은 subscription.js에 정의되어 있습니다.
 // ========================================
-const SubscriptionModule = {
-  /**
-   * 사용자의 활성 구독 확인
-   */
-  async hasActiveSubscription() {
-    try {
-      const supabase = getSupabaseClient();
-      const user = await supabase.auth.getUser();
-
-      if (!user.data.user) {
-        return false;
-      }
-
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .eq('user_id', user.data.user.id)
-        .in('status', ['active', 'trialing'])
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('구독 확인 오류:', error);
-        return false;
-      }
-
-      // 구독이 있고 만료 전이면 활성
-      if (data && new Date(data.current_period_end) > new Date()) {
-        return true;
-      }
-
-      return false;
-    } catch (err) {
-      console.error('구독 확인 실패:', err);
-      return false;
-    }
-  },
-
-  /**
-   * 구독 정보 가져오기
-   */
-  async getSubscription() {
-    try {
-      const supabase = getSupabaseClient();
-      const user = await supabase.auth.getUser();
-
-      if (!user.data.user) {
-        return null;
-      }
-
-      const { data, error } = await supabase
-        .from('subscriptions')
-        .select('*')
-        .eq('user_id', user.data.user.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('구독 정보 조회 오류:', error);
-        return null;
-      }
-
-      return data;
-    } catch (err) {
-      console.error('구독 정보 조회 실패:', err);
-      return null;
-    }
-  },
-
-  /**
-   * Stripe Checkout Session 생성 및 리다이렉트
-   */
-  async startCheckout() {
-    try {
-      // 로그인 확인
-      const user = AuthModule.currentUser;
-      if (!user) {
-        alert('로그인이 필요합니다.');
-        return;
-      }
-
-      // 이미 구독 중인지 확인
-      const hasActive = await this.hasActiveSubscription();
-      if (hasActive) {
-        alert('이미 구독 중입니다.');
-        return;
-      }
-
-      // Checkout Session 생성 API 호출
-      const response = await fetch('/api/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          priceId: STRIPE_CONFIG.priceId,
-          userId: user.id,
-          successUrl: `${APP_CONFIG.url}/#mypage?checkout=success`,
-          cancelUrl: `${APP_CONFIG.url}/#mypage?checkout=cancel`,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Checkout Session 생성 실패');
-      }
-
-      const { url } = await response.json();
-
-      // Stripe Checkout 페이지로 리다이렉트
-      window.location.href = url;
-    } catch (err) {
-      console.error('구독 시작 오류:', err);
-      alert('구독 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-    }
-  },
-
-  /**
-   * 구독 취소 (Stripe Customer Portal로 리다이렉트)
-   */
-  async cancelSubscription() {
-    alert('구독 관리는 Stripe Customer Portal에서 가능합니다.\n\n추후 업데이트 예정입니다.');
-    // TODO: Stripe Customer Portal Session 생성 API 구현
-  },
-};
 
 // 디버깅용 전역 함수
 window.testLoginModal = function() {
@@ -1973,6 +1851,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('ModalController initialized');
   } catch (err) {
     console.error('ModalController initialization failed:', err);
+  }
+
+  // Stripe 구독 모듈 초기화
+  try {
+    console.log('Initializing SubscriptionModule...');
+    SubscriptionModule.init();
+    console.log('SubscriptionModule initialized');
+  } catch (err) {
+    console.error('SubscriptionModule initialization failed:', err);
   }
 
   // 라우터 초기화
