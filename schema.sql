@@ -21,6 +21,12 @@ CREATE INDEX IF NOT EXISTS idx_comments_created_at ON comments(created_at DESC);
 -- RLS (Row Level Security) 정책 활성화
 ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
 
+-- 기존 정책 삭제 (재실행 가능하도록)
+DROP POLICY IF EXISTS "Anyone can view comments" ON comments;
+DROP POLICY IF EXISTS "Authenticated users can create comments" ON comments;
+DROP POLICY IF EXISTS "Users can update their own comments" ON comments;
+DROP POLICY IF EXISTS "Users can delete their own comments" ON comments;
+
 -- 모든 사용자가 댓글 조회 가능
 CREATE POLICY "Anyone can view comments"
   ON comments FOR SELECT
@@ -145,6 +151,11 @@ CREATE INDEX IF NOT EXISTS idx_bookmarks_user_id ON bookmarks(user_id);
 -- profiles 테이블 RLS
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
+-- 기존 정책 삭제
+DROP POLICY IF EXISTS "Users can view their own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can update their own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can insert their own profile" ON profiles;
+
 CREATE POLICY "Users can view their own profile"
   ON profiles FOR SELECT
   USING (auth.uid() = id);
@@ -160,6 +171,9 @@ CREATE POLICY "Users can insert their own profile"
 -- customers 테이블 RLS
 ALTER TABLE customers ENABLE ROW LEVEL SECURITY;
 
+-- 기존 정책 삭제
+DROP POLICY IF EXISTS "Users can view their own customer data" ON customers;
+
 CREATE POLICY "Users can view their own customer data"
   ON customers FOR SELECT
   USING (auth.uid() = id);
@@ -167,12 +181,20 @@ CREATE POLICY "Users can view their own customer data"
 -- subscriptions 테이블 RLS
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 
+-- 기존 정책 삭제
+DROP POLICY IF EXISTS "Users can view their own subscriptions" ON subscriptions;
+
 CREATE POLICY "Users can view their own subscriptions"
   ON subscriptions FOR SELECT
   USING (auth.uid() = user_id);
 
 -- bookmarks 테이블 RLS
 ALTER TABLE bookmarks ENABLE ROW LEVEL SECURITY;
+
+-- 기존 정책 삭제
+DROP POLICY IF EXISTS "Users can view their own bookmarks" ON bookmarks;
+DROP POLICY IF EXISTS "Users can create their own bookmarks" ON bookmarks;
+DROP POLICY IF EXISTS "Users can delete their own bookmarks" ON bookmarks;
 
 CREATE POLICY "Users can view their own bookmarks"
   ON bookmarks FOR SELECT
@@ -188,6 +210,10 @@ CREATE POLICY "Users can delete their own bookmarks"
 
 -- reports 테이블 RLS
 ALTER TABLE reports ENABLE ROW LEVEL SECURITY;
+
+-- 기존 정책 삭제
+DROP POLICY IF EXISTS "Anyone can create reports" ON reports;
+DROP POLICY IF EXISTS "Users can view their own reports" ON reports;
 
 CREATE POLICY "Anyone can create reports"
   ON reports FOR INSERT
