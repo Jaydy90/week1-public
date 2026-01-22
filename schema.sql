@@ -51,6 +51,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- updated_at 트리거 생성
+DROP TRIGGER IF EXISTS update_comments_updated_at ON comments;
 CREATE TRIGGER update_comments_updated_at
   BEFORE UPDATE ON comments
   FOR EACH ROW
@@ -102,8 +103,6 @@ CREATE TABLE IF NOT EXISTS stripe_events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   stripe_event_id TEXT UNIQUE NOT NULL,
   type TEXT NOT NULL,
-  data JSONB NOT NULL,
-  processed BOOLEAN DEFAULT false,
   received_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -136,7 +135,7 @@ CREATE INDEX IF NOT EXISTS idx_subscriptions_stripe_subscription_id ON subscript
 CREATE INDEX IF NOT EXISTS idx_subscriptions_status ON subscriptions(status);
 CREATE INDEX IF NOT EXISTS idx_customers_stripe_customer_id ON customers(stripe_customer_id);
 CREATE INDEX IF NOT EXISTS idx_stripe_events_stripe_event_id ON stripe_events(stripe_event_id);
-CREATE INDEX IF NOT EXISTS idx_stripe_events_processed ON stripe_events(processed);
+CREATE INDEX IF NOT EXISTS idx_stripe_events_type ON stripe_events(type);
 CREATE INDEX IF NOT EXISTS idx_bookmarks_user_id ON bookmarks(user_id);
 
 -- ========================================
@@ -203,18 +202,21 @@ CREATE POLICY "Users can view their own reports"
 -- ========================================
 
 -- profiles updated_at 트리거
+DROP TRIGGER IF EXISTS update_profiles_updated_at ON profiles;
 CREATE TRIGGER update_profiles_updated_at
   BEFORE UPDATE ON profiles
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
 -- customers updated_at 트리거
+DROP TRIGGER IF EXISTS update_customers_updated_at ON customers;
 CREATE TRIGGER update_customers_updated_at
   BEFORE UPDATE ON customers
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
 -- subscriptions updated_at 트리거
+DROP TRIGGER IF EXISTS update_subscriptions_updated_at ON subscriptions;
 CREATE TRIGGER update_subscriptions_updated_at
   BEFORE UPDATE ON subscriptions
   FOR EACH ROW
