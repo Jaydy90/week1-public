@@ -1965,15 +1965,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('Continuing without auth...');
   }
 
-  // Stripe 구독 모듈 초기화
-  try {
-    console.log('Initializing SubscriptionModule...');
-    SubscriptionModule.init();
-    console.log('SubscriptionModule initialized');
-  } catch (err) {
-    console.error('SubscriptionModule initialization failed:', err);
-  }
-
   // 모달 컨트롤러 초기화 (이벤트 리스너 설정)
   // ModalController는 이미 전역으로 노출되어 있음
   try {
