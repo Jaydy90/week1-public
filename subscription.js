@@ -1,6 +1,7 @@
 // ========================================
 // Trust Route - Subscription Module
 // Stripe 구독 관리 기능
+// Last updated: 2026-01-22
 // ========================================
 
 const SubscriptionModule = {
