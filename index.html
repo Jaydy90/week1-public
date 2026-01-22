@@ -357,35 +357,39 @@
                 <p class="section-lead">신뢰 근거가 확인된 식당 목록입니다. 필터와 정렬로 원하는 맛집을 찾으세요.</p>
             </div>
 
-            <!-- 필터 그룹 -->
-            <div class="list-filters">
-                <div class="filter-group">
-                    <span class="filter-label">영업 상태</span>
-                    <button class="filter-button is-active" type="button" data-filter="status" data-value="all">전체</button>
-                    <button class="filter-button" type="button" data-filter="status" data-value="open">영업중</button>
-                </div>
-                <div class="filter-group">
-                    <span class="filter-label">가격대</span>
-                    <button class="filter-button is-active" type="button" data-filter="price" data-value="all">전체</button>
-                    <button class="filter-button" type="button" data-filter="price" data-value="low">저렴</button>
-                    <button class="filter-button" type="button" data-filter="price" data-value="medium">보통</button>
-                    <button class="filter-button" type="button" data-filter="price" data-value="high">고가</button>
-                </div>
-                <div class="filter-group">
-                    <span class="filter-label">신뢰 배지</span>
-                    <button class="filter-button is-active" type="button" data-filter="badge" data-value="all">전체</button>
-                    <button class="filter-button" type="button" data-filter="badge" data-value="michelin">미쉐린</button>
-                    <button class="filter-button" type="button" data-filter="badge" data-value="celebrity">유명인</button>
-                    <button class="filter-button" type="button" data-filter="badge" data-value="chef">흑백요리사</button>
-                </div>
+            <!-- 신뢰 카테고리 (항상 보임) -->
+            <div class="trust-tabs">
+                <button class="trust-tab is-active" type="button" data-tab="all">전체</button>
+                <button class="trust-tab" type="button" data-tab="michelin">미쉐린</button>
+                <button class="trust-tab" type="button" data-tab="celebrity">유명인</button>
+                <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
+                <button class="settings-toggle-btn" type="button" id="settings-toggle-btn">⚙️ 설정</button>
             </div>
 
-            <!-- 정렬 옵션 -->
-            <div class="sort-filter" aria-label="정렬 기준">
-                <span class="sort-label">정렬</span>
-                <button class="sort-pill is-active" type="button" data-sort="distance">거리순</button>
-                <button class="sort-pill" type="button" data-sort="speed">빠른순</button>
-                <button class="sort-pill" type="button" data-sort="saves">저장순</button>
+            <!-- 고급 필터 (기본 숨김) -->
+            <div class="advanced-filters" id="advanced-filters" style="display: none;">
+                <div class="list-filters">
+                    <div class="filter-group">
+                        <span class="filter-label">영업 상태</span>
+                        <button class="filter-button is-active" type="button" data-filter="status" data-value="all">전체</button>
+                        <button class="filter-button" type="button" data-filter="status" data-value="open">영업중</button>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">가격대</span>
+                        <button class="filter-button is-active" type="button" data-filter="price" data-value="all">전체</button>
+                        <button class="filter-button" type="button" data-filter="price" data-value="low">저렴</button>
+                        <button class="filter-button" type="button" data-filter="price" data-value="medium">보통</button>
+                        <button class="filter-button" type="button" data-filter="price" data-value="high">고가</button>
+                    </div>
+                </div>
+
+                <!-- 정렬 옵션 -->
+                <div class="sort-filter" aria-label="정렬 기준">
+                    <span class="sort-label">정렬</span>
+                    <button class="sort-pill is-active" type="button" data-sort="distance">거리순</button>
+                    <button class="sort-pill" type="button" data-sort="speed">빠른순</button>
+                    <button class="sort-pill" type="button" data-sort="saves">저장순</button>
+                </div>
             </div>
 
             <!-- 리스트 카운트 -->

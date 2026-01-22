@@ -186,8 +186,16 @@ const HomeScreen = {
     const container = document.getElementById('home-preview-list');
     if (!container) return;
 
-    // nearbySpots에서 처음 6개만 표시
-    const items = nearbySpots.slice(0, 6);
+    // 필터링된 nearbySpots
+    let items = nearbySpots;
+
+    // trustTab 필터 적용
+    if (AppState.filters.trustTab !== 'all') {
+      items = items.filter(item => item.group === AppState.filters.trustTab);
+    }
+
+    // 처음 6개만 표시
+    items = items.slice(0, 6);
 
     container.innerHTML = items.map((item, index) => {
       const badges = item.badges || [];
@@ -349,22 +357,11 @@ const HomeScreen = {
         <div class="inline-detail-main-info">
           <p class="inline-detail-category">${r.category || r.badgeType || ''} ${badgeHTML}</p>
           <p class="inline-detail-menu"><strong>대표 메뉴:</strong> ${r.mainMenu || '정보 없음'}</p>
-          ${r.address ? `<p class="inline-detail-address"><strong>주소:</strong> ${r.address}</p>` : ''}
         </div>
 
         <div class="inline-trust-evidence">
           <h3>신뢰 근거</h3>
           <p>${r.context || r.category || '신뢰할 수 있는 출처에서 확인되었습니다.'}</p>
-          ${r.sourceUrl && r.sourceLabel ? `
-            <div class="evidence-meta">
-              <a class="evidence-link" href="${r.sourceUrl}" target="_blank" rel="noopener">${r.sourceLabel}</a>
-            </div>
-          ` : ''}
-          ${r.verifiedAt ? `
-            <div class="evidence-meta">
-              <span>확인일: ${r.verifiedAt}</span>
-            </div>
-          ` : ''}
         </div>
 
         <div class="inline-detail-actions">
@@ -376,6 +373,12 @@ const HomeScreen = {
           </button>
           <button class="inline-action-button primary" id="inline-directions-btn">
             <span>🗺️</span> 바로 길찾기
+          </button>
+        </div>
+
+        <div class="inline-detail-more-section">
+          <button class="inline-action-button secondary" id="inline-more-btn">
+            <span>📋</span> 더 보기 (상세 정보)
           </button>
         </div>
       </div>
@@ -417,6 +420,15 @@ const HomeScreen = {
       directionsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         Router.navigateTo('directions', { restaurantId: restaurant.id });
+      });
+    }
+
+    // 더 보기 버튼
+    const moreBtn = detailDiv.querySelector('#inline-more-btn');
+    if (moreBtn) {
+      moreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        Router.navigateTo('detail', { restaurantId: restaurant.id });
       });
     }
   },
@@ -646,20 +658,62 @@ const ListScreen = {
   },
 
   setupEventListeners() {
+    // 신뢰 탭 (리스트 화면)
+    const trustTabs = document.querySelectorAll('#list .trust-tab');
+    trustTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabValue = tab.dataset.tab;
+
+        // 토글 기능: 같은 탭을 다시 클릭하면 'all'로 변경
+        if (AppState.filters.badge === tabValue && tabValue !== 'all') {
+          AppState.filters.badge = 'all';
+          trustTabs.forEach(t => t.classList.remove('is-active'));
+          document.querySelector('#list .trust-tab[data-tab="all"]')?.classList.add('is-active');
+        } else {
+          AppState.filters.badge = tabValue;
+          trustTabs.forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+        }
+
+        this.renderList();
+      });
+    });
+
+    // 설정 토글 버튼
+    const settingsToggleBtn = document.getElementById('settings-toggle-btn');
+    const advancedFilters = document.getElementById('advanced-filters');
+    if (settingsToggleBtn && advancedFilters) {
+      settingsToggleBtn.addEventListener('click', () => {
+        const isHidden = advancedFilters.style.display === 'none';
+        advancedFilters.style.display = isHidden ? 'block' : 'none';
+        settingsToggleBtn.classList.toggle('is-active', isHidden);
+      });
+    }
+
     // 필터 버튼
     const filterButtons = document.querySelectorAll('#list .filter-button');
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const filterType = btn.dataset.filter;
         const filterValue = btn.dataset.value;
-        AppState.filters[filterType] = filterValue;
 
-        // 같은 그룹의 버튼들 비활성화
-        filterButtons.forEach(b => {
-          if (b.dataset.filter === filterType) {
-            b.classList.toggle('is-active', b === btn);
-          }
-        });
+        // 토글 기능: 같은 필터를 다시 클릭하면 'all'로 변경
+        if (AppState.filters[filterType] === filterValue && filterValue !== 'all') {
+          AppState.filters[filterType] = 'all';
+          filterButtons.forEach(b => {
+            if (b.dataset.filter === filterType) {
+              b.classList.toggle('is-active', b.dataset.value === 'all');
+            }
+          });
+        } else {
+          AppState.filters[filterType] = filterValue;
+          // 같은 그룹의 버튼들 비활성화
+          filterButtons.forEach(b => {
+            if (b.dataset.filter === filterType) {
+              b.classList.toggle('is-active', b === btn);
+            }
+          });
+        }
 
         this.renderList();
       });
@@ -669,9 +723,19 @@ const ListScreen = {
     const sortPills = document.querySelectorAll('#list .sort-pill');
     sortPills.forEach(pill => {
       pill.addEventListener('click', () => {
-        AppState.sort = pill.dataset.sort;
-        sortPills.forEach(p => p.classList.remove('is-active'));
-        pill.classList.add('is-active');
+        const sortValue = pill.dataset.sort;
+
+        // 토글 기능: 같은 정렬을 다시 클릭하면 'distance'로 변경
+        if (AppState.sort === sortValue && sortValue !== 'distance') {
+          AppState.sort = 'distance';
+          sortPills.forEach(p => p.classList.remove('is-active'));
+          document.querySelector('#list .sort-pill[data-sort="distance"]')?.classList.add('is-active');
+        } else {
+          AppState.sort = sortValue;
+          sortPills.forEach(p => p.classList.remove('is-active'));
+          pill.classList.add('is-active');
+        }
+
         this.renderList();
       });
     });

@@ -1082,6 +1082,35 @@ textarea {
   border-color: transparent;
 }
 
+/* 설정 토글 버튼 */
+.settings-toggle-btn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.settings-toggle-btn:hover,
+.settings-toggle-btn.is-active {
+  background: var(--secondary);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* 고급 필터 */
+.advanced-filters {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(15, 107, 102, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(15, 107, 102, 0.2);
+  animation: slideDown 0.3s ease;
+}
+
 /* 리스트 필터 */
 .list-filters {
   display: grid;
@@ -1368,6 +1397,26 @@ textarea {
   border-color: var(--primary-dark);
   box-shadow: 0 12px 30px rgba(228, 90, 43, 0.5);
   transform: translateY(-4px);
+}
+
+.inline-action-button.secondary {
+  background: linear-gradient(135deg, rgba(15, 107, 102, 0.1) 0%, rgba(15, 107, 102, 0.15) 100%);
+  color: var(--secondary);
+  border-color: var(--secondary);
+  box-shadow: 0 4px 12px rgba(15, 107, 102, 0.2);
+}
+
+.inline-action-button.secondary:hover {
+  background: var(--secondary);
+  color: white;
+  box-shadow: 0 8px 20px rgba(15, 107, 102, 0.4);
+  transform: translateY(-3px);
+}
+
+.inline-detail-more-section {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* 트러스트 루트 서비스 섹션 */
@@ -2638,6 +2687,22 @@ textarea {
   background: rgba(0, 0, 0, 0.02);
   border-radius: 12px;
   margin: 0;
+}
+
+/* FAQ, 제보/제휴, 마이페이지에서 홈 화면 요소 숨기기 */
+#faq .hero-compact,
+#faq .trust-tabs,
+#faq .card-grid,
+#faq .home-cta,
+#partner .hero-compact,
+#partner .trust-tabs,
+#partner .card-grid,
+#partner .home-cta,
+#mypage .hero-compact,
+#mypage .trust-tabs,
+#mypage .card-grid,
+#mypage .home-cta {
+  display: none !important;
 }
 
 /* 모바일 반응형 */

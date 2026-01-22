@@ -11,7 +11,8 @@ const nearbySpots = [
     badges: ["미쉐린 2스타", "검증 완료"],
     context: "미쉐린 가이드 등재 기준으로 선필터",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "michelin"
   },
   {
     id: "rest-002",
@@ -25,7 +26,8 @@ const nearbySpots = [
     badges: ["빕 구르망", "검증 완료"],
     context: "미쉐린 빕 구르망 등재 식당",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "michelin"
   },
   {
     id: "rest-003",
@@ -39,7 +41,8 @@ const nearbySpots = [
     badges: ["유명인 추천", "검증 완료"],
     context: "공식 채널 공개 방문 기준",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "celebrity"
   },
   {
     id: "rest-004",
@@ -53,7 +56,8 @@ const nearbySpots = [
     badges: ["유명인 방문", "검증 완료"],
     context: "공식 계정 출처 기반 검증",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "celebrity"
   },
   {
     id: "rest-005",
@@ -67,7 +71,8 @@ const nearbySpots = [
     badges: ["흑백요리사", "검증 완료"],
     context: "출연 셰프 운영 매장 기준",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "chef"
   },
   {
     id: "rest-006",
@@ -81,7 +86,8 @@ const nearbySpots = [
     badges: ["흑백요리사", "검증 완료"],
     context: "출연 셰프 운영/협업 여부 확인 완료",
     status: "검증 완료",
-    updatedAt: "2026-01-19"
+    updatedAt: "2026-01-19",
+    group: "chef"
   }
 ];
 
