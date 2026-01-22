@@ -55,19 +55,11 @@ const SubscriptionModule = {
         cancelUrl
       });
 
-      // Supabase Edge Function 호출
-      const supabase = getSupabaseClient();
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        throw new Error('No active session');
-      }
-
-      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/create-checkout-session`, {
+      // Cloudflare Workers API 호출
+      const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           priceId: STRIPE_CONFIG.priceId,
@@ -156,19 +148,11 @@ const SubscriptionModule = {
         return false;
       }
 
-      // Supabase Edge Function 호출
-      const supabase = getSupabaseClient();
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        throw new Error('No active session');
-      }
-
-      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/cancel-subscription`, {
+      // Cloudflare Workers API 호출
+      const response = await fetch('/api/cancel-subscription', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           subscriptionId: subscription.stripe_subscription_id
@@ -207,19 +191,11 @@ const SubscriptionModule = {
       const userId = AuthModule.getUserId();
       const returnUrl = `${APP_CONFIG.url}/#mypage`;
 
-      // Supabase Edge Function 호출
-      const supabase = getSupabaseClient();
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        throw new Error('No active session');
-      }
-
-      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/customer-portal`, {
+      // Cloudflare Workers API 호출
+      const response = await fetch('/api/customer-portal', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           userId: userId,

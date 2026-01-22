@@ -19,17 +19,13 @@ const APP_CONFIG = {
 
 // Stripe 설정
 const STRIPE_CONFIG = {
-  // Stripe Publishable Key (클라이언트에서 사용 가능, 공개해도 안전)
-  // 테스트: pk_test_... / 프로덕션: pk_live_...
-  // ⚠️ Stripe Dashboard > Developers > API keys > Publishable key 복사하여 교체
-  // 예: pk_test_51SrtnaGgszhVkbip...
-  publishableKey: 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY',
+  // ⚠️ TODO: Stripe Dashboard에서 발급받은 키로 교체하세요!
+  // Stripe Dashboard > Developers > API keys > Publishable key
+  publishableKey: 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY', // ← 여기에 붙여넣기
 
-  // Stripe Price ID (구독 상품 가격)
-  // Stripe Dashboard > Products > Add product 생성 후 Price ID 복사
-  // ⚠️ 실제 Price ID로 교체 필요!
+  // Stripe Dashboard > Products에서 생성한 Price ID
   // 예: price_1234567890abcdef (KPopEats Premium - ₩9,900/월)
-  priceId: 'price_YOUR_PRICE_ID'
+  priceId: 'price_YOUR_PRICE_ID' // ← 여기에 붙여넣기
 };
 
 // Supabase 클라이언트 초기화
