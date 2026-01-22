@@ -1302,9 +1302,24 @@ const MypageScreen = {
             <p class="subscription-status">상태: <strong>${statusLabel}</strong></p>
             <p class="subscription-period">다음 결제일: ${endDate}</p>
             ${subscription.cancel_at_period_end ? `<p class="subscription-cancel-notice">⚠️ 구독이 ${endDate}에 종료됩니다.</p>` : ''}
-            ${subscription.cancel_at_period_end ? '' : '<button class="secondary-button" id="cancel-subscription-btn">구독 취소</button>'}
+            <div class="subscription-actions">
+              <button class="secondary-button" id="manage-subscription-btn">결제 수단 및 구독 관리</button>
+              ${subscription.cancel_at_period_end ? '' : '<button class="secondary-button cancel-btn" id="cancel-subscription-btn">구독 취소</button>'}
+            </div>
           </div>
         `;
+
+        // 구독 관리 버튼 (Customer Portal)
+        const manageBtn = document.getElementById('manage-subscription-btn');
+        if (manageBtn) {
+          manageBtn.addEventListener('click', async () => {
+            manageBtn.disabled = true;
+            manageBtn.textContent = '처리 중...';
+            await SubscriptionModule.openCustomerPortal();
+            manageBtn.disabled = false;
+            manageBtn.textContent = '결제 수단 및 구독 관리';
+          });
+        }
 
         // 구독 취소 버튼 이벤트
         const cancelBtn = document.getElementById('cancel-subscription-btn');

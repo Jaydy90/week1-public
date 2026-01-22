@@ -55,11 +55,19 @@ const SubscriptionModule = {
         cancelUrl
       });
 
-      // API 호출: Checkout Session 생성
-      const response = await fetch('/api/create-checkout-session', {
+      // Supabase Edge Function 호출
+      const supabase = getSupabaseClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/create-checkout-session`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
         },
         body: JSON.stringify({
           priceId: STRIPE_CONFIG.priceId,
@@ -80,10 +88,8 @@ const SubscriptionModule = {
 
       // Stripe Checkout으로 리다이렉트
       if (url) {
-        // Stripe Checkout URL로 직접 이동 (권장)
         window.location.href = url;
       } else {
-        // 또는 Stripe.js의 redirectToCheckout 사용
         const { error } = await this.stripe.redirectToCheckout({ sessionId });
         if (error) {
           throw new Error(error.message);
@@ -140,7 +146,7 @@ const SubscriptionModule = {
       }
 
       const subscription = await this.getSubscriptionStatus();
-      
+
       if (!subscription || !subscription.stripe_subscription_id) {
         alert('활성 구독이 없습니다.');
         return false;
@@ -150,11 +156,19 @@ const SubscriptionModule = {
         return false;
       }
 
-      // API 호출: 구독 취소
-      const response = await fetch('/api/cancel-subscription', {
+      // Supabase Edge Function 호출
+      const supabase = getSupabaseClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/cancel-subscription`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
         },
         body: JSON.stringify({
           subscriptionId: subscription.stripe_subscription_id
@@ -167,7 +181,7 @@ const SubscriptionModule = {
       }
 
       alert('구독이 취소되었습니다. 현재 결제 기간까지 서비스를 이용할 수 있습니다.');
-      
+
       // 구독 상태 새로고침
       if (window.MypageScreen) {
         MypageScreen.loadSubscriptionStatus();
@@ -178,6 +192,56 @@ const SubscriptionModule = {
     } catch (error) {
       console.error('Cancel subscription error:', error);
       alert(`구독 취소 중 오류가 발생했습니다: ${error.message}`);
+      return false;
+    }
+  },
+
+  // Customer Portal 열기
+  async openCustomerPortal() {
+    try {
+      if (!AuthModule.isAuthenticated()) {
+        alert('로그인이 필요합니다.');
+        return false;
+      }
+
+      const userId = AuthModule.getUserId();
+      const returnUrl = `${APP_CONFIG.url}/#mypage`;
+
+      // Supabase Edge Function 호출
+      const supabase = getSupabaseClient();
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('No active session');
+      }
+
+      const response = await fetch(`${SUPABASE_CONFIG.url}/functions/v1/customer-portal`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
+        },
+        body: JSON.stringify({
+          userId: userId,
+          returnUrl: returnUrl
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create portal session');
+      }
+
+      const { url } = await response.json();
+
+      // Customer Portal로 리다이렉트
+      window.location.href = url;
+
+      return true;
+
+    } catch (error) {
+      console.error('Customer portal error:', error);
+      alert(`구독 관리 페이지를 열 수 없습니다: ${error.message}`);
       return false;
     }
   },

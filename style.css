@@ -2010,6 +2010,28 @@ textarea {
   width: 100%;
 }
 
+.subscription-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.subscription-actions .secondary-button {
+  margin-top: 0;
+}
+
+.subscription-actions .cancel-btn {
+  background: #f8f9fa;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.subscription-actions .cancel-btn:hover {
+  background: #dc3545;
+  color: white;
+}
+
 .subscription-card .loading,
 .subscription-card .error {
   text-align: center;
