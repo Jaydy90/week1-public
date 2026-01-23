@@ -206,7 +206,7 @@ const HomeScreen = {
           </div>
           <span class="card-title">${item.name}</span>
           <span class="card-location">${item.location}</span>
-          <p class="card-context">${item.context}</p>
+          <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
           <div class="card-badges">${badgeMarkup}</div>
           <div class="card-footer">
             <span>${item.bestRoute}</span>
