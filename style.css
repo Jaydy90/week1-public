@@ -158,6 +158,27 @@ body.js-enabled .page-section:target {
   display: block;
 }
 
+/* 절대 규칙: 홈 화면 요소는 홈 페이지에서만 표시 */
+#home .hero-compact,
+#home .trust-tabs,
+#home .card-grid,
+#home .home-cta,
+#home #inline-detail-container {
+  display: none !important;
+}
+
+/* 홈 화면이 활성화될 때만 표시 */
+#home.is-active .hero-compact,
+#home.is-active .trust-tabs,
+#home.is-active .home-cta,
+#home.is-active #inline-detail-container {
+  display: block !important;
+}
+
+#home.is-active .card-grid {
+  display: grid !important;
+}
+
 .hero {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2928,21 +2949,10 @@ textarea {
   margin: 0;
 }
 
-/* FAQ, 제보/제휴, 마이페이지에서 홈 화면 요소 숨기기 */
-#faq .hero-compact,
-#faq .trust-tabs,
-#faq .card-grid,
-#faq .home-cta,
-#partner .hero-compact,
-#partner .trust-tabs,
-#partner .card-grid,
-#partner .home-cta,
-#mypage .hero-compact,
-#mypage .trust-tabs,
-#mypage .card-grid,
-#mypage .home-cta {
-  display: none !important;
-}
+/*
+  FAQ, 제보/제휴, 마이페이지에서 홈 화면 요소 숨기기
+  이 규칙은 제거됨 - 대신 위의 #home.is-active 규칙 사용 (line 152-174)
+*/
 
 /* 모바일 반응형 */
 @media (max-width: 768px) {

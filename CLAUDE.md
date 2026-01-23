@@ -205,6 +205,48 @@ await CommentsModule.deleteComment(commentId)
 
 ## UI/UX Implementation Rules
 
+### ⚠️ ABSOLUTE RULE: Page Content Isolation (CRITICAL)
+
+**FAQ, 제보/제휴(Partner), 마이페이지에서는 홈 화면 요소가 절대 표시되어서는 안 됩니다.**
+
+**금지 요소**:
+- "지금 갈 맛집, 빠르게 결정하세요" (`.hero-compact`)
+- 신뢰 탭 (`.trust-tabs`)
+- 맛집 카드 리스트 (`.card-grid`)
+- "전체 리스트 보기" 버튼 (`.home-cta`)
+- 검색 관련 UI
+
+**Implementation**:
+```css
+/* style.css (Lines 152-174) */
+#home .hero-compact,
+#home .trust-tabs,
+#home .card-grid,
+#home .home-cta,
+#home #inline-detail-container {
+  display: none !important;
+}
+
+#home.is-active .hero-compact,
+#home.is-active .trust-tabs,
+#home.is-active .home-cta,
+#home.is-active #inline-detail-container {
+  display: block !important;
+}
+
+#home.is-active .card-grid {
+  display: grid !important;
+}
+```
+
+**Verification**:
+1. Navigate to FAQ page → Should show ONLY FAQ content
+2. Navigate to Partner page → Should show ONLY partnership content
+3. Navigate to Mypage → Should show ONLY user profile/data
+4. NO restaurant cards, NO trust tabs, NO "지금 갈 맛집" text
+
+**Why this matters**: Users reported confusion when restaurant content appeared on non-restaurant pages. This breaks the single-responsibility principle of each page and violates user expectations.
+
 ### State Management
 Each screen must handle:
 - **Loading state** - Show during async operations
