@@ -448,12 +448,26 @@ const HomeScreen = {
 
   // 네이버 지도 길찾기 바로 열기
   openNaverDirections(restaurant) {
+    // 모바일 기기 감지
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     let naverUrl;
 
     if (restaurant.lat && restaurant.lng) {
-      // 좌표가 있으면 좌표 기반 길찾기
       const encodedName = encodeURIComponent(restaurant.name);
-      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+
+      if (isMobile) {
+        // 모바일: 앱 URL 스키마 사용 (출발지 생략 = 자동으로 현재 위치)
+        naverUrl = `nmap://route/pt?dlat=${restaurant.lat}&dlng=${restaurant.lng}&dname=${encodedName}&appname=kpopeats`;
+
+        // 앱이 없을 경우를 대비한 웹 URL 폴백
+        setTimeout(() => {
+          window.open(`https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`, '_blank');
+        }, 500);
+      } else {
+        // 데스크톱: 웹 URL (출발지 비워두면 자동으로 현재 위치 사용)
+        naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+      }
     } else {
       // 좌표가 없으면 검색 기반
       const mapQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region}`);
@@ -461,7 +475,13 @@ const HomeScreen = {
     }
 
     // 새 창으로 열기
-    window.open(naverUrl, '_blank');
+    if (isMobile && restaurant.lat && restaurant.lng) {
+      // 모바일 앱 URL은 현재 창에서 시도 (앱이 열리고 페이지는 그대로 유지됨)
+      window.location.href = naverUrl;
+    } else {
+      // 데스크톱 웹 URL은 새 탭에서 열기
+      window.open(naverUrl, '_blank');
+    }
 
     // Google Analytics 이벤트 (있는 경우)
     if (typeof gtag !== 'undefined') {
@@ -1107,12 +1127,26 @@ const DetailScreen = {
 
   // 네이버 지도 길찾기 바로 열기
   openNaverDirections(restaurant) {
+    // 모바일 기기 감지
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
     let naverUrl;
 
     if (restaurant.lat && restaurant.lng) {
-      // 좌표가 있으면 좌표 기반 길찾기
       const encodedName = encodeURIComponent(restaurant.name);
-      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+
+      if (isMobile) {
+        // 모바일: 앱 URL 스키마 사용 (출발지 생략 = 자동으로 현재 위치)
+        naverUrl = `nmap://route/pt?dlat=${restaurant.lat}&dlng=${restaurant.lng}&dname=${encodedName}&appname=kpopeats`;
+
+        // 앱이 없을 경우를 대비한 웹 URL 폴백
+        setTimeout(() => {
+          window.open(`https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`, '_blank');
+        }, 500);
+      } else {
+        // 데스크톱: 웹 URL (출발지 비워두면 자동으로 현재 위치 사용)
+        naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+      }
     } else {
       // 좌표가 없으면 검색 기반
       const mapQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region}`);
@@ -1120,7 +1154,13 @@ const DetailScreen = {
     }
 
     // 새 창으로 열기
-    window.open(naverUrl, '_blank');
+    if (isMobile && restaurant.lat && restaurant.lng) {
+      // 모바일 앱 URL은 현재 창에서 시도 (앱이 열리고 페이지는 그대로 유지됨)
+      window.location.href = naverUrl;
+    } else {
+      // 데스크톱 웹 URL은 새 탭에서 열기
+      window.open(naverUrl, '_blank');
+    }
 
     // Google Analytics 이벤트 (있는 경우)
     if (typeof gtag !== 'undefined') {

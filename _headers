@@ -1,0 +1,14 @@
+# 모든 HTML 파일은 항상 최신 버전 확인
+/*.html
+  Cache-Control: no-cache, must-revalidate
+
+# 루트 HTML
+/
+  Cache-Control: no-cache, must-revalidate
+
+# JS/CSS 파일은 버전 파라미터로 관리하므로 긴 캐시 허용
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable

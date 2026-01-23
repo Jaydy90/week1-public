@@ -7,6 +7,10 @@ firebase-debug.log
 .env.*.local
 .env.mcp
 
+# OAuth credentials (NEVER commit!)
+credentials.json
+client_secret*.json
+
 # Dependencies
 node_modules/
 functions/node_modules/
