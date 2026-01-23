@@ -211,34 +211,62 @@ const HomeScreen = {
     const container = document.getElementById('home-preview-list');
     if (!container) return;
 
-    // 필터링된 nearbySpots
-    let items = nearbySpots;
+    // allRestaurants와 nearbySpots 결합
+    // nearbySpots의 featured 맛집과 allRestaurants의 전체 맛집을 합침
+    let allItems = [];
+
+    // 먼저 nearbySpots 추가 (featured 맛집)
+    if (Array.isArray(nearbySpots) && nearbySpots.length > 0) {
+      allItems = [...nearbySpots];
+    }
+
+    // allRestaurants에서 nearbySpots에 없는 맛집 추가
+    if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
+      const nearbyIds = new Set(nearbySpots.map(item => item.id));
+      const additionalItems = window.allRestaurants
+        .filter(item => !nearbyIds.has(item.id))
+        .map(item => ({
+          ...item,
+          location: `${item.region} ${item.area}`,
+          travelTime: '거리 계산 중',
+          bestRoute: '경로 확인 필요',
+          saves: 0,
+          badges: [item.badgeType],
+          status: item.sourceLabel === '출처 확인 중' ? '검증 중' : '검증 완료'
+        }));
+      allItems = [...allItems, ...additionalItems];
+    }
 
     // trustTab 필터 적용
+    let items = allItems;
     if (AppState.filters.trustTab !== 'all') {
       items = items.filter(item => item.group === AppState.filters.trustTab);
     }
 
-    // 처음 6개만 표시
-    items = items.slice(0, 6);
-
+    // 전체 표시 (슬라이스 제거하여 모든 맛집 표시)
     container.innerHTML = items.map((item, index) => {
       const badges = item.badges || [];
       const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
 
+      // 홈 화면용 표시 (nearbySpots 형식과 allRestaurants 형식 모두 지원)
+      const location = item.location || `${item.region} ${item.area}`;
+      const travelTime = item.travelTime || '거리 계산 중';
+      const bestRoute = item.bestRoute || '경로 확인';
+      const saves = item.saves || 0;
+
       return `
-        <article class="info-card" style="--delay:${index * 0.08}s" data-restaurant-id="${item.id}">
+        <article class="info-card" style="--delay:${Math.min(index * 0.08, 0.5)}s" data-restaurant-id="${item.id}">
           <div class="card-meta">
             <span class="status-pill">${item.status || '검증 중'}</span>
-            <span>${item.travelTime}</span>
+            <span>${travelTime}</span>
           </div>
           <span class="card-title">${item.name}</span>
-          <span class="card-location">${item.location}</span>
+          <span class="card-location">${location}</span>
           <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
           <div class="card-badges">${badgeMarkup}</div>
           <div class="card-footer">
-            <span>${item.bestRoute}</span>
-            <span>저장 ${item.saves}회</span>
+            <span>${bestRoute}</span>
+            <span>저장 ${saves}회</span>
           </div>
         </article>
       `;
@@ -274,8 +302,8 @@ const HomeScreen = {
       });
     }
 
-    // 신뢰 탭
-    const trustTabs = document.querySelectorAll('.trust-tab');
+    // 신뢰 탭 (홈 화면 전용)
+    const trustTabs = document.querySelectorAll('#home .trust-tab');
     trustTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         AppState.filters.trustTab = tab.dataset.tab;

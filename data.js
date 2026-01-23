@@ -500,3 +500,7 @@ const allRestaurants = allRestaurantsRaw.map((line, index) => {
     sourceUrl: sourceUrl || ""
   };
 });
+
+// 전역으로 노출 (HomeScreen과 ListScreen에서 사용)
+window.allRestaurants = allRestaurants;
+window.nearbySpots = nearbySpots;
