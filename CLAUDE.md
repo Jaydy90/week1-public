@@ -39,11 +39,13 @@ Router.navigateTo(screen, data = {})
 ```
 
 **Screen Controllers**:
-- `HomeScreen` - Preview cards, trust tabs
-- `ListScreen` - Full restaurant list with filters
+- `HomeScreen` - Preview cards, trust tabs, inline detail
+- `ListScreen` - Full restaurant list with filters, inline detail
 - `DetailScreen` - Restaurant details, trust evidence cards, comments
-- `DirectionsScreen` - Naver Maps deeplink
+- `MypageScreen` - User profile, saved restaurants, activity stats
 - `ModalController` - Login/signup modals
+
+**Note**: DirectionsScreen was removed (2026-01-23). "바로 길찾기" button now opens Naver Map directly via `window.open()` instead of showing intermediate screen.
 
 ### Authentication Flow
 
@@ -167,14 +169,43 @@ All Supabase tables must have RLS enabled. Current policies:
 ### Restaurant Data
 
 **Current**: Static arrays in `data.js`
-- `nearbySpots[]` - Featured restaurants for home screen
-- `allRestaurants[]` - Full list parsed from CSV-like format
+- `nearbySpots[]` - Featured restaurants for home screen (6 items)
+- `allRestaurants[]` - Full list parsed from CSV-like format (~100+ items)
 
-**Each restaurant must have**:
-- `id` - Unique identifier (e.g., "rest-001")
-- `name`, `location`, `category`
-- `sourceUrl`, `sourceLabel` - Trust evidence
-- `verifiedAt` - Confirmation date
+**nearbySpots structure** (home screen featured cards):
+```javascript
+{
+  id: "rest-001",                    // Unique ID
+  name: "밍글스",                     // Restaurant name
+  location: "서울 강남구",            // Location display text
+  category: "이노베이티브",           // Category
+  mainMenu: "멸치 국수와 전복",       // Representative menu (REQUIRED)
+  travelMinutes: 12,                 // Travel time in minutes
+  travelTime: "도보 12분(예상)",      // Travel time display text
+  distanceKm: 1.1,                   // Distance in km
+  saves: 284,                        // Number of saves (for sorting)
+  bestRoute: "가장 효율적: 도보",     // Best route recommendation
+  badges: ["미쉐린 2스타", "검증 완료"], // Display badges
+  context: "미쉐린 가이드 등재...",   // Trust context description
+  status: "검증 완료",                // Verification status
+  updatedAt: "2026-01-19",           // Last verified date
+  group: "michelin",                 // Trust group: michelin/celebrity/chef
+  lat: 37.524815,                    // Latitude (REQUIRED for accurate navigation)
+  lng: 127.044955,                   // Longitude (REQUIRED for accurate navigation)
+  mapQuery: "밍글스 서울 강남구"      // Fallback search query
+}
+```
+
+**allRestaurants structure** (full list):
+- Parsed from pipe-separated string format
+- Fields: name, region, area, category, badgeType, mainMenu, sourceLabel, verifiedAt, group, sourceUrl
+- All restaurants MUST have `mainMenu` filled in
+
+**CRITICAL**: Every restaurant must have:
+- `mainMenu` - Representative menu (displayed on cards)
+- `lat`, `lng` - For accurate Naver Map navigation
+- `category` - For filtering and display
+- Trust evidence fields (`group`, `sourceLabel`, `verifiedAt`)
 
 ### Adding New Restaurants
 
