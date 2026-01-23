@@ -100,13 +100,40 @@ const Router = {
   // 초기 라우팅 (페이지 로드 시)
   init() {
     const hash = window.location.hash.replace('#', '');
-    const initialScreen = hash || 'home';
-    this.navigateTo(initialScreen);
+
+    // Handle article routing (e.g., #news/article-id)
+    if (hash.startsWith('news/')) {
+      const articleId = hash.replace('news/', '');
+      this.navigateTo('news');
+      // Open article modal after a short delay to ensure page is loaded
+      setTimeout(() => {
+        if (window.ArticleModalController) {
+          ArticleModalController.open(articleId);
+        }
+      }, 300);
+    } else {
+      const initialScreen = hash || 'home';
+      this.navigateTo(initialScreen);
+    }
 
     // 해시 변경 이벤트 리스너
     window.addEventListener('hashchange', () => {
       const newHash = window.location.hash.replace('#', '');
-      if (newHash && newHash !== AppState.currentScreen) {
+
+      // Handle article routing
+      if (newHash.startsWith('news/')) {
+        const articleId = newHash.replace('news/', '');
+        // Navigate to news page if not already there
+        if (AppState.currentScreen !== 'news') {
+          this.navigateTo('news');
+        }
+        // Open article modal
+        setTimeout(() => {
+          if (window.ArticleModalController) {
+            ArticleModalController.open(articleId);
+          }
+        }, 100);
+      } else if (newHash && newHash !== AppState.currentScreen) {
         this.navigateTo(newHash);
       }
     });
@@ -1871,6 +1898,227 @@ window.ModalController = ModalController;
 console.log('ModalController exposed globally (before DOMContentLoaded)');
 
 // ========================================
+// Article Modal Controller
+// ========================================
+
+const ArticleModalController = {
+  modal: null,
+  overlay: null,
+  content: null,
+  closeBtn: null,
+
+  init() {
+    console.log('ArticleModalController.init() called');
+    this.modal = document.getElementById('article-modal');
+    this.overlay = this.modal?.querySelector('.article-modal-overlay');
+    this.content = this.modal?.querySelector('.article-modal-content');
+    this.closeBtn = this.modal?.querySelector('.article-close-btn');
+
+    if (!this.modal) {
+      console.error('Article modal element not found!');
+      return;
+    }
+
+    // Close button event
+    if (this.closeBtn) {
+      this.closeBtn.addEventListener('click', () => this.close());
+    }
+
+    // Overlay click to close
+    if (this.overlay) {
+      this.overlay.addEventListener('click', () => this.close());
+    }
+
+    // ESC key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.modal.style.display !== 'none') {
+        this.close();
+      }
+    });
+
+    console.log('ArticleModalController initialized successfully');
+  },
+
+  open(articleId) {
+    console.log('Opening article:', articleId);
+
+    if (!window.newsArticles) {
+      console.error('newsArticles not loaded!');
+      alert('기사 데이터를 불러올 수 없습니다.');
+      return;
+    }
+
+    const article = window.newsArticles.find(a => a.id === articleId);
+    if (!article) {
+      console.error('Article not found:', articleId);
+      alert('기사를 찾을 수 없습니다.');
+      return;
+    }
+
+    this.renderArticle(article);
+    this.modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent body scroll
+
+    // Update URL hash for SEO
+    window.location.hash = `news/${articleId}`;
+
+    // Google Analytics event
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'view_article', {
+        'event_category': '맛집 뉴스',
+        'event_label': article.title,
+        'value': 1
+      });
+    }
+  },
+
+  close() {
+    console.log('Closing article modal');
+    this.modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restore body scroll
+
+    // Return to news section hash
+    if (window.location.hash.startsWith('#news/')) {
+      window.location.hash = 'news';
+    }
+  },
+
+  renderArticle(article) {
+    // Update meta information
+    const categoryEl = this.modal.querySelector('.article-category');
+    const titleEl = this.modal.querySelector('.article-title');
+    const dateEl = this.modal.querySelector('.article-date');
+    const authorEl = this.modal.querySelector('.article-author');
+    const readTimeEl = this.modal.querySelector('.article-readtime');
+    const bodyEl = this.modal.querySelector('.article-body');
+
+    if (categoryEl) categoryEl.textContent = article.category;
+    if (titleEl) titleEl.textContent = article.title;
+    if (dateEl) {
+      dateEl.textContent = article.date;
+      dateEl.setAttribute('datetime', article.date);
+    }
+    if (authorEl) authorEl.textContent = article.author;
+    if (readTimeEl) readTimeEl.textContent = article.readTime;
+    if (bodyEl) bodyEl.innerHTML = article.content;
+
+    // Setup share button
+    const shareBtn = this.modal.querySelector('.share-btn');
+    if (shareBtn) {
+      const newShareBtn = shareBtn.cloneNode(true);
+      shareBtn.parentNode.replaceChild(newShareBtn, shareBtn);
+      newShareBtn.addEventListener('click', () => this.shareArticle(article));
+    }
+
+    // Render related restaurants
+    this.renderRelatedRestaurants(article.relatedRestaurants);
+
+    // Setup internal restaurant links
+    const restaurantLinks = bodyEl.querySelectorAll('a[data-restaurant]');
+    restaurantLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const restaurantId = link.getAttribute('data-restaurant');
+        this.close();
+        // Navigate to list screen with restaurant detail
+        Router.navigateTo('list', { highlightId: restaurantId });
+        // Find and open restaurant detail
+        setTimeout(() => {
+          const restaurant = window.allRestaurants?.find(r => r.id === restaurantId);
+          if (restaurant) {
+            DetailScreen.render(restaurant);
+            Router.navigateTo('detail', restaurant);
+          }
+        }, 300);
+      });
+    });
+  },
+
+  renderRelatedRestaurants(restaurantIds) {
+    const container = document.getElementById('article-related-restaurants');
+    if (!container || !restaurantIds || restaurantIds.length === 0) {
+      if (container) container.innerHTML = '';
+      return;
+    }
+
+    const restaurants = restaurantIds
+      .map(id => window.allRestaurants?.find(r => r.id === id))
+      .filter(r => r); // Remove undefined
+
+    if (restaurants.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    container.innerHTML = `
+      <h3>관련 맛집</h3>
+      ${restaurants.map(r => `
+        <div class="related-restaurant-card" data-restaurant-id="${r.id}">
+          <div class="related-restaurant-name">${r.name}</div>
+          <div class="related-restaurant-info">${r.location || r.region} · ${r.category}</div>
+        </div>
+      `).join('')}
+    `;
+
+    // Add click handlers to related restaurant cards
+    const cards = container.querySelectorAll('.related-restaurant-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.getAttribute('data-restaurant-id');
+        const restaurant = restaurants.find(r => r.id === restaurantId);
+        if (restaurant) {
+          this.close();
+          DetailScreen.render(restaurant);
+          Router.navigateTo('detail', restaurant);
+        }
+      });
+    });
+  },
+
+  shareArticle(article) {
+    const url = `https://kpopeats.cc/#news/${article.id}`;
+    const text = `${article.title} - KPopEats`;
+
+    if (navigator.share) {
+      // Use native share API on mobile
+      navigator.share({
+        title: article.title,
+        text: article.excerpt,
+        url: url
+      }).then(() => {
+        console.log('Article shared successfully');
+      }).catch((error) => {
+        console.error('Error sharing article:', error);
+        this.fallbackShare(url);
+      });
+    } else {
+      // Fallback: copy to clipboard
+      this.fallbackShare(url);
+    }
+  },
+
+  fallbackShare(url) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('링크가 클립보드에 복사되었습니다!');
+      }).catch(() => {
+        this.showUrlPrompt(url);
+      });
+    } else {
+      this.showUrlPrompt(url);
+    }
+  },
+
+  showUrlPrompt(url) {
+    prompt('이 링크를 복사하세요:', url);
+  }
+};
+
+// Expose globally
+window.ArticleModalController = ArticleModalController;
+console.log('ArticleModalController exposed globally');
+
+// ========================================
 // 전역 초기화
 // ========================================
 
@@ -1944,6 +2192,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('ModalController initialized');
   } catch (err) {
     console.error('ModalController initialization failed:', err);
+  }
+
+  // Article Modal Controller 초기화
+  try {
+    console.log('Initializing ArticleModalController...');
+    ArticleModalController.init();
+    console.log('ArticleModalController initialized');
+  } catch (err) {
+    console.error('ArticleModalController initialization failed:', err);
+  }
+
+  // News article "자세히 보기" buttons
+  try {
+    const newsReadBtns = document.querySelectorAll('.news-read-btn');
+    console.log(`Found ${newsReadBtns.length} news read buttons`);
+
+    newsReadBtns.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        // Article IDs in order: michelin-2026-02, culinary-wars-2026-01, celebrity-picks-2026-01, hotplace-2026-02
+        const articleIds = [
+          'michelin-2026-02',
+          'culinary-wars-2026-01',
+          'celebrity-picks-2026-01',
+          'hotplace-2026-02'
+        ];
+        const articleId = articleIds[index];
+        if (articleId) {
+          ArticleModalController.open(articleId);
+        } else {
+          console.error('Unknown article index:', index);
+        }
+      });
+    });
+  } catch (err) {
+    console.error('News buttons setup failed:', err);
   }
 
   // Stripe 구독 모듈 초기화

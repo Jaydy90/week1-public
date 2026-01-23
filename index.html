@@ -659,6 +659,36 @@
         </section>
     </main>
 
+    <!-- Article Modal -->
+    <div class="article-modal" id="article-modal" style="display: none;">
+        <div class="article-modal-overlay"></div>
+        <div class="article-modal-content">
+            <button class="article-close-btn" aria-label="닫기">✕</button>
+            <article class="article-full" itemscope itemtype="https://schema.org/BlogPosting">
+                <header class="article-header">
+                    <span class="article-category" itemprop="articleSection"></span>
+                    <h1 class="article-title" itemprop="headline"></h1>
+                    <div class="article-meta">
+                        <time class="article-date" itemprop="datePublished"></time>
+                        <span class="article-author" itemprop="author"></span>
+                        <span class="article-readtime"></span>
+                    </div>
+                </header>
+                <div class="article-body" itemprop="articleBody">
+                    <!-- Article content will be inserted here -->
+                </div>
+                <footer class="article-footer">
+                    <div class="article-share">
+                        <button class="share-btn" type="button">🔗 공유하기</button>
+                    </div>
+                    <div class="article-related" id="article-related-restaurants">
+                        <!-- Related restaurants will be inserted here -->
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </div>
+
     <footer class="site-footer">
         <p>KPopEats · 최종 업데이트: 2026-02-01</p>
         <p>공식 출처 기반 제보는 상단 제보/제휴 메뉴를 이용해 주세요.</p>
@@ -672,12 +702,13 @@
     <script src="https://js.stripe.com/v3/"></script>
 
     <!-- App Scripts -->
-    <script src="config.js?v=18"></script>
-    <script src="auth.js?v=18"></script>
-    <script src="comments.js?v=18"></script>
-    <script src="data.js?v=18"></script>
-    <script src="subscription.js?v=18"></script>
-    <script src="main.js?v=18"></script>
+    <script src="config.js?v=19"></script>
+    <script src="auth.js?v=19"></script>
+    <script src="comments.js?v=19"></script>
+    <script src="data.js?v=19"></script>
+    <script src="news-data.js?v=19"></script>
+    <script src="subscription.js?v=19"></script>
+    <script src="main.js?v=19"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
