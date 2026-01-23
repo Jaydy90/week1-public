@@ -13,7 +13,7 @@ const AppState = {
   userLocation: null, // { lat, lng }
   searchQuery: '', // 검색어
   filters: {
-    timeMinutes: 15,
+    time: 'all', // 이동 시간: 'all', '10', '15', '30'
     trustTab: 'all',
     status: 'all',
     price: 'all',
@@ -248,18 +248,6 @@ const HomeScreen = {
         this.getUserLocation();
       });
     }
-
-    // 시간 필터
-    const timeFilters = document.querySelectorAll('.time-filter .filter-pill');
-    timeFilters.forEach(filter => {
-      filter.addEventListener('click', () => {
-        const timeValue = parseInt(filter.dataset.time);
-        AppState.filters.timeMinutes = timeValue;
-        timeFilters.forEach(f => f.classList.remove('is-active'));
-        filter.classList.add('is-active');
-        this.renderPreviewList();
-      });
-    });
 
     // 신뢰 탭
     const trustTabs = document.querySelectorAll('.trust-tab');
@@ -569,6 +557,19 @@ const ListScreen = {
                location.includes(query) ||
                category.includes(query) ||
                menu.includes(query);
+      });
+    }
+
+    // 이동 시간 필터
+    if (AppState.filters.time !== 'all') {
+      const maxTime = parseInt(AppState.filters.time);
+      items = items.filter(item => {
+        // travelMinutes 필드가 있는 경우에만 필터링
+        if (item.travelMinutes) {
+          return item.travelMinutes <= maxTime;
+        }
+        // travelMinutes가 없으면 포함 (nearbySpots에만 있을 수 있음)
+        return true;
       });
     }
 
