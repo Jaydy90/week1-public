@@ -684,9 +684,31 @@ const ListScreen = {
     const advancedFilters = document.getElementById('advanced-filters');
     if (settingsToggleBtn && advancedFilters) {
       settingsToggleBtn.addEventListener('click', () => {
-        const isHidden = advancedFilters.style.display === 'none';
-        advancedFilters.style.display = isHidden ? 'block' : 'none';
-        settingsToggleBtn.classList.toggle('is-active', isHidden);
+        const isHidden = advancedFilters.classList.contains('hidden');
+
+        if (isHidden) {
+          // 열기
+          advancedFilters.classList.remove('hidden');
+          advancedFilters.style.display = 'block';
+          settingsToggleBtn.classList.add('is-active');
+
+          // 애니메이션을 위해 약간의 지연
+          requestAnimationFrame(() => {
+            advancedFilters.style.opacity = '1';
+            advancedFilters.style.transform = 'scaleY(1)';
+          });
+        } else {
+          // 닫기
+          advancedFilters.style.opacity = '0';
+          advancedFilters.style.transform = 'scaleY(0.8)';
+          settingsToggleBtn.classList.remove('is-active');
+
+          // 애니메이션 후 숨김
+          setTimeout(() => {
+            advancedFilters.style.display = 'none';
+            advancedFilters.classList.add('hidden');
+          }, 300);
+        }
       });
     }
 
