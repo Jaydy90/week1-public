@@ -402,12 +402,12 @@ const HomeScreen = {
       });
     }
 
-    // 길찾기 버튼
+    // 길찾기 버튼 - 바로 네이버 지도로 연결
     const directionsBtn = detailDiv.querySelector('#inline-directions-btn');
     if (directionsBtn) {
       directionsBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        Router.navigateTo('directions', { restaurantId: restaurant.id });
+        this.openNaverDirections(restaurant);
       });
     }
 
@@ -446,6 +446,33 @@ const HomeScreen = {
       });
       localStorage.setItem('savedRestaurants', JSON.stringify(savedList));
       alert(`${restaurant.name}을(를) 저장했습니다.`);
+    }
+  },
+
+  // 네이버 지도 길찾기 바로 열기
+  openNaverDirections(restaurant) {
+    let naverUrl;
+
+    if (restaurant.lat && restaurant.lng) {
+      // 좌표가 있으면 좌표 기반 길찾기
+      const encodedName = encodeURIComponent(restaurant.name);
+      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+    } else {
+      // 좌표가 없으면 검색 기반
+      const mapQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region}`);
+      naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
+    }
+
+    // 새 창으로 열기
+    window.open(naverUrl, '_blank');
+
+    // Google Analytics 이벤트 (있는 경우)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'click', {
+        'event_category': '길찾기',
+        'event_label': restaurant.name,
+        'value': 1
+      });
     }
   },
 
@@ -969,9 +996,9 @@ const DetailScreen = {
       Router.navigateTo('list');
     });
 
-    // 길찾기 버튼
+    // 길찾기 버튼 - 바로 네이버 지도로 연결
     replaceButton('detail-directions-btn', () => {
-      Router.navigateTo('directions', { restaurantId: this.currentRestaurant.id });
+      this.openNaverDirections(this.currentRestaurant);
     });
 
     // 저장 버튼
@@ -1079,6 +1106,33 @@ const DetailScreen = {
     }).catch(() => {
       alert(`링크를 복사해주세요: ${url}`);
     });
+  },
+
+  // 네이버 지도 길찾기 바로 열기
+  openNaverDirections(restaurant) {
+    let naverUrl;
+
+    if (restaurant.lat && restaurant.lng) {
+      // 좌표가 있으면 좌표 기반 길찾기
+      const encodedName = encodeURIComponent(restaurant.name);
+      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${restaurant.lng},${restaurant.lat},${encodedName},,/-/transit`;
+    } else {
+      // 좌표가 없으면 검색 기반
+      const mapQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region}`);
+      naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
+    }
+
+    // 새 창으로 열기
+    window.open(naverUrl, '_blank');
+
+    // Google Analytics 이벤트 (있는 경우)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'click', {
+        'event_category': '길찾기',
+        'event_label': restaurant.name,
+        'value': 1
+      });
+    }
   },
 
   // 댓글 시스템 초기화

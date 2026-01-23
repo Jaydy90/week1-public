@@ -183,6 +183,35 @@ All Supabase tables must have RLS enabled. Current policies:
 3. Ensure unique ID
 4. Include trust evidence fields
 
+### Updating Representative Menu (대표 메뉴)
+
+**How to determine the representative menu**:
+
+1. **Visit Naver Place** for the restaurant
+2. **Analyze reviews** (네이버 플레이스 리뷰):
+   - Look for most frequently mentioned dishes in reviews
+   - Check review photos - what dishes appear most often?
+   - Read "방문자 리뷰" and "블로그 리뷰"
+   - Note dishes with highest ratings/thumbs up
+3. **Check restaurant's menu** if available
+4. **Update `mainMenu` field** in `data.js`:
+   ```javascript
+   {
+     name: "밍글스",
+     mainMenu: "멸치 국수와 전복", // Most mentioned in reviews
+     // ...
+   }
+   ```
+
+**Important**:
+- Choose 1-2 signature dishes max
+- Use Korean dish names (e.g., "멸치 국수", not "anchovy noodles")
+- Avoid generic names like "코스 요리" unless that's the only option
+- Update monthly to reflect current popular items
+
+**Manual process** (no automation):
+This is a static site, so menu extraction must be done manually. Future: Consider Cloudflare Functions + Naver API for automation.
+
 ### Comments CRUD
 
 **Module**: `comments.js` (`CommentsModule`)
@@ -202,6 +231,32 @@ await CommentsModule.deleteComment(commentId)
 ```
 
 **Security**: All mutations check `AuthModule.isAuthenticated()` and user_id ownership.
+
+## Navigation & External Links
+
+### Naver Map Directions ("바로 길찾기")
+
+**Implementation**: Direct deep-link to Naver Map (not iframe navigation screen)
+
+**URL Format**:
+```javascript
+// With coordinates (preferred):
+`https://map.naver.com/v5/directions/-/-,-,-,-,-/${lng},${lat},${encodedName},,/-/transit`
+
+// Without coordinates (fallback):
+`https://map.naver.com/v5/search/${mapQuery}`
+```
+
+**Behavior**:
+- Opens in new tab/window (`window.open(url, '_blank')`)
+- Triggers Google Analytics event if available
+- Works on both mobile (opens Naver app if installed) and desktop
+
+**Required fields in `data.js`**:
+- `lat` (latitude): Required for accurate directions
+- `lng` (longitude): Required for accurate directions
+- `mapQuery` (fallback): "식당명 위치" format
+- `name`: Restaurant name
 
 ## UI/UX Implementation Rules
 
