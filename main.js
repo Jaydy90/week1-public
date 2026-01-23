@@ -89,6 +89,7 @@ const Router = {
       case 'mypage':
         MypageScreen.init();
         break;
+      case 'news':
       case 'faq':
       case 'partner':
         // 정적 페이지, 별도 초기화 불필요
