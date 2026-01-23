@@ -3,6 +3,8 @@ const nearbySpots = [
     id: "rest-001",
     name: "밍글스",
     location: "서울 강남구",
+    category: "이노베이티브",
+    mainMenu: "멸치 국수와 전복",
     travelMinutes: 12,
     travelTime: "도보 12분(예상)",
     distanceKm: 1.1,
@@ -12,12 +14,17 @@ const nearbySpots = [
     context: "미쉐린 가이드 등재 기준으로 선필터",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "michelin"
+    group: "michelin",
+    lat: 37.524815,
+    lng: 127.044955,
+    mapQuery: "밍글스 서울 강남구"
   },
   {
     id: "rest-002",
     name: "옥동식",
     location: "서울 마포구",
+    category: "돼지국밥",
+    mainMenu: "돼지곰탕",
     travelMinutes: 15,
     travelTime: "대중교통 15분(예상)",
     distanceKm: 2.2,
@@ -27,12 +34,17 @@ const nearbySpots = [
     context: "미쉐린 빕 구르망 등재 식당",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "michelin"
+    group: "michelin",
+    lat: 37.555355,
+    lng: 126.914614,
+    mapQuery: "옥동식 서울 마포구"
   },
   {
     id: "rest-003",
     name: "을지로보석",
     location: "서울 중구",
+    category: "한식 주점",
+    mainMenu: "들기름 낙지젓 카펠리니",
     travelMinutes: 18,
     travelTime: "도보 18분(예상)",
     distanceKm: 1.8,
@@ -42,12 +54,17 @@ const nearbySpots = [
     context: "공식 채널 공개 방문 기준",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "celebrity"
+    group: "celebrity",
+    lat: 37.564412,
+    lng: 126.992811,
+    mapQuery: "을지로보석 서울 중구"
   },
   {
     id: "rest-004",
     name: "금돼지식당",
     location: "서울 중구",
+    category: "돼지고기 구이",
+    mainMenu: "본삼겹",
     travelMinutes: 22,
     travelTime: "차량 22분(예상)",
     distanceKm: 4.6,
@@ -57,12 +74,17 @@ const nearbySpots = [
     context: "공식 계정 출처 기반 검증",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "celebrity"
+    group: "celebrity",
+    lat: 37.557121,
+    lng: 127.013033,
+    mapQuery: "금돼지식당 서울 중구"
   },
   {
     id: "rest-005",
     name: "비아 톨레도 파스타바",
     location: "서울 용산구",
+    category: "이탈리안",
+    mainMenu: "할머니의 라자냐",
     travelMinutes: 25,
     travelTime: "대중교통 25분(예상)",
     distanceKm: 5.2,
@@ -72,12 +94,17 @@ const nearbySpots = [
     context: "출연 셰프 운영 매장 기준",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "chef"
+    group: "chef",
+    lat: 37.538522,
+    lng: 126.971811,
+    mapQuery: "비아 톨레도 파스타바 서울 용산구"
   },
   {
     id: "rest-006",
     name: "트리드",
     location: "서울 강남구",
+    category: "이노베이티브",
+    mainMenu: "트러플 슈",
     travelMinutes: 30,
     travelTime: "차량 30분(예상)",
     distanceKm: 6.4,
@@ -87,7 +114,10 @@ const nearbySpots = [
     context: "출연 셰프 운영/협업 여부 확인 완료",
     status: "검증 완료",
     updatedAt: "2026-01-19",
-    group: "chef"
+    group: "chef",
+    lat: 37.523421,
+    lng: 127.041355,
+    mapQuery: "트리드 서울 강남구"
   }
 ];
 

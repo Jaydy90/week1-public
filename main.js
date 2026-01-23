@@ -86,9 +86,6 @@ const Router = {
       case 'detail':
         DetailScreen.init(data.restaurantId);
         break;
-      case 'directions':
-        DirectionsScreen.init(data.restaurantId);
-        break;
       case 'mypage':
         MypageScreen.init();
         break;
@@ -1255,92 +1252,6 @@ const DetailScreen = {
         }
       });
     });
-  }
-};
-
-// ========================================
-// 길찾기 화면
-// ========================================
-const DirectionsScreen = {
-  currentRestaurant: null,
-  currentTransport: 'walk',
-
-  init(restaurantId) {
-    console.log('Directions screen initialized for:', restaurantId);
-
-    // 레스토랑 데이터 찾기
-    this.currentRestaurant = DetailScreen.findRestaurant(restaurantId);
-
-    if (!this.currentRestaurant) {
-      console.error('Restaurant not found:', restaurantId);
-      Router.navigateTo('home');
-      return;
-    }
-
-    this.render();
-    this.setupEventListeners();
-  },
-
-  render() {
-    const r = this.currentRestaurant;
-
-    // 제목과 위치
-    document.getElementById('directions-title').textContent = r.name;
-    document.getElementById('directions-location').textContent = r.location || `${r.region} ${r.area}`;
-
-    // 네이버 길찾기 iframe 설정
-    this.setupNaverDirectionsIframe();
-
-    // 새 창 링크 설정
-    this.setupNewWindowLink();
-  },
-
-  setupNaverDirectionsIframe() {
-    const r = this.currentRestaurant;
-    const iframe = document.getElementById('naver-directions-iframe');
-    if (!iframe) return;
-
-    // 네이버 길찾기 URL 생성
-    const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
-
-    // 좌표가 있으면 좌표 기반, 없으면 검색 기반
-    let naverUrl;
-    if (r.lat && r.lng) {
-      const encodedName = encodeURIComponent(r.name);
-      // 목적지만 설정 (출발지는 사용자가 직접 설정)
-      naverUrl = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${r.lng},${r.lat},${encodedName},,/-/transit`;
-    } else {
-      // 검색 결과 페이지
-      naverUrl = `https://map.naver.com/v5/search/${mapQuery}`;
-    }
-
-    iframe.src = naverUrl;
-    console.log('Naver directions iframe URL:', naverUrl);
-  },
-
-  setupNewWindowLink() {
-    const r = this.currentRestaurant;
-    const link = document.getElementById('naver-deeplink-new-window');
-    if (!link) return;
-
-    const mapQuery = encodeURIComponent(r.mapQuery || `${r.name} ${r.location || r.region}`);
-
-    if (r.lat && r.lng) {
-      const encodedName = encodeURIComponent(r.name);
-      link.href = `https://map.naver.com/v5/directions/-/-,-,-,-,-/${r.lng},${r.lat},${encodedName},,/-/transit`;
-    } else {
-      link.href = `https://map.naver.com/v5/search/${mapQuery}`;
-    }
-  },
-
-  setupEventListeners() {
-    // 뒤로 버튼
-    const backBtn = document.getElementById('directions-back-btn');
-    if (backBtn) {
-      backBtn.addEventListener('click', () => {
-        Router.navigateTo('detail', { restaurantId: this.currentRestaurant.id });
-      });
-    }
   }
 };
 
