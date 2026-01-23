@@ -566,7 +566,7 @@ const ListScreen = {
   },
 
   getFilteredRestaurants() {
-    let items = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
+    let items = Array.isArray(allRestaurants) ? allRestaurants : [];
 
     // 검색어 필터
     if (AppState.searchQuery) {
