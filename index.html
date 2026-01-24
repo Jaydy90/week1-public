@@ -703,20 +703,24 @@
         <p><a class="footer-link" href="privacy.html">개인정보처리방침</a></p>
     </footer>
 
+    <!-- DOMPurify - XSS Protection -->
+    <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js" integrity="sha384-vdScihEZCfbPnBQf+lc7LgXUdJVYyhC3yWHUW5C5P5GpHRqVnaM6HJELJxT6IqwM" crossorigin="anonymous"></script>
+
     <!-- Supabase Client - defer for better performance -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
 
     <!-- Stripe.js - defer for better performance -->
     <script defer src="https://js.stripe.com/v3/"></script>
 
     <!-- App Scripts - defer for better performance -->
-    <script defer src="config.js?v=21"></script>
-    <script defer src="auth.js?v=21"></script>
-    <script defer src="comments.js?v=21"></script>
-    <script defer src="data.js?v=21"></script>
-    <script defer src="news-data.js?v=21"></script>
-    <script defer src="subscription.js?v=21"></script>
-    <script defer src="main.js?v=21"></script>
+    <script defer src="config.js?v=22"></script>
+    <script defer src="sanitize.js?v=22"></script>
+    <script defer src="auth.js?v=22"></script>
+    <script defer src="comments.js?v=22"></script>
+    <script defer src="data.js?v=22"></script>
+    <script defer src="news-data.js?v=22"></script>
+    <script defer src="subscription.js?v=22"></script>
+    <script defer src="main.js?v=22"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
