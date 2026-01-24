@@ -76,6 +76,9 @@ const Router = {
 
   // 화면별 초기화
   initScreen(screen, data) {
+    // Update meta tags first for SEO
+    this.updateMetaTags(screen, data);
+
     switch(screen) {
       case 'home':
         HomeScreen.init();
@@ -95,6 +98,77 @@ const Router = {
         // 정적 페이지, 별도 초기화 불필요
         break;
     }
+  },
+
+  // Dynamic meta tag updates for SEO
+  updateMetaTags(screen, data) {
+    const metaConfig = {
+      home: {
+        title: 'Trust Route - 믿을 수 있는 맛집 추천 | 미쉐린, 유명인, 흑백요리사',
+        description: '미쉐린 가이드, 유명인 인증, 흑백요리사 출연 셰프의 신뢰할 수 있는 맛집만 엄선. 서울 강남 파인다이닝부터 로컬 맛집까지 신뢰 근거와 함께 추천하고 네이버 지도 길찾기까지 한 번에 연결합니다.',
+        url: 'https://kpopeats.cc/#home'
+      },
+      list: {
+        title: '맛집 리스트 - 검증된 85개 레스토랑 | Trust Route',
+        description: '미쉐린, 유명인, 흑백요리사 기준으로 검증된 85개 맛집 전체 목록. 필터와 정렬로 원하는 맛집을 빠르게 찾으세요.',
+        url: 'https://kpopeats.cc/#list'
+      },
+      detail: {
+        title: data.restaurant ? `${data.restaurant.name} (${data.restaurant.location || data.restaurant.region}) - Trust Route` : 'Trust Route',
+        description: data.restaurant ? `대표 메뉴: ${data.restaurant.mainMenu || '정보 없음'}. ${data.restaurant.context || data.restaurant.category || '신뢰할 수 있는 맛집 정보'}` : '신뢰할 수 있는 맛집 추천',
+        url: data.restaurant ? `https://kpopeats.cc/#detail?id=${data.restaurant.id}` : 'https://kpopeats.cc/'
+      },
+      news: {
+        title: '맛집 뉴스 - 최신 미쉐린, 흑백요리사, 유명인 추천 | Trust Route',
+        description: '최신 맛집 트렌드와 신뢰할 수 있는 정보. 미쉐린 가이드 업데이트, 흑백요리사 셰프 신메뉴, 유명인 인증 맛집 소식.',
+        url: 'https://kpopeats.cc/#news'
+      },
+      faq: {
+        title: '자주 묻는 질문 (FAQ) - 신뢰 기준과 정책 | Trust Route',
+        description: 'Trust Route의 맛집 선정 기준, 검증 프로세스, 배지 부여 정책에 대한 자주 묻는 질문과 답변.',
+        url: 'https://kpopeats.cc/#faq'
+      },
+      partner: {
+        title: '제보 & 제휴 - 맛집 정보 제보 및 B2B 협업 | Trust Route',
+        description: '신뢰 근거 기반 맛집 정보 제보, B2B 전환 도구, 콘텐츠 협업 문의. 식당 운영자와 파트너를 위한 협업 패키지.',
+        url: 'https://kpopeats.cc/#partner'
+      },
+      mypage: {
+        title: '마이페이지 - 내 맛집 활동 | Trust Route',
+        description: '저장한 맛집, 최근 본 맛집, 작성한 후기를 한눈에 확인하세요.',
+        url: 'https://kpopeats.cc/#mypage'
+      }
+    };
+
+    const config = metaConfig[screen] || metaConfig.home;
+
+    // Update document title
+    document.title = config.title;
+
+    // Update meta description
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', config.description);
+
+    // Update Open Graph tags
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', config.title);
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', config.description);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', config.url);
+
+    // Update Twitter Card tags
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle) twitterTitle.setAttribute('content', config.title);
+
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twitterDesc) twitterDesc.setAttribute('content', config.description);
+
+    // Update canonical URL
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', config.url);
   },
 
   // 초기 라우팅 (페이지 로드 시)
@@ -944,6 +1018,12 @@ const DetailScreen = {
     // 최근 본 목록에 추가
     this.addToRecentViewed(this.currentRestaurant);
 
+    // Update meta tags with restaurant data
+    Router.updateMetaTags('detail', { restaurant: this.currentRestaurant });
+
+    // Add Restaurant JSON-LD schema
+    this.addRestaurantSchema(this.currentRestaurant);
+
     this.render();
     this.setupEventListeners();
   },
@@ -985,6 +1065,67 @@ const DetailScreen = {
     }
 
     return restaurant;
+  },
+
+  // Add Restaurant JSON-LD schema for SEO
+  addRestaurantSchema(restaurant) {
+    // Remove existing restaurant schema if any
+    const existingSchema = document.querySelector('script[data-schema="restaurant"]');
+    if (existingSchema) {
+      existingSchema.remove();
+    }
+
+    // Create Restaurant schema
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "@id": `https://kpopeats.cc/#restaurant/${restaurant.id}`,
+      "name": restaurant.name,
+      "url": `https://kpopeats.cc/#detail?id=${restaurant.id}`,
+      "servesCuisine": restaurant.category || "한식",
+      "description": restaurant.context || `${restaurant.mainMenu} 맛집 ${restaurant.name}`
+    };
+
+    // Add address if available
+    if (restaurant.region || restaurant.area || restaurant.location) {
+      schema.address = {
+        "@type": "PostalAddress",
+        "addressLocality": restaurant.area || restaurant.location || "",
+        "addressRegion": restaurant.region || "서울",
+        "addressCountry": "KR"
+      };
+    }
+
+    // Add geo coordinates if available
+    if (restaurant.lat && restaurant.lng) {
+      schema.geo = {
+        "@type": "GeoCoordinates",
+        "latitude": restaurant.lat,
+        "longitude": restaurant.lng
+      };
+    }
+
+    // Add menu if available
+    if (restaurant.mainMenu) {
+      schema.menu = restaurant.mainMenu;
+    }
+
+    // Add aggregate rating if saves data available
+    if (restaurant.saves) {
+      schema.aggregateRating = {
+        "@type": "AggregateRating",
+        "reviewCount": restaurant.saves
+      };
+    }
+
+    // Create script tag and inject into head
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.setAttribute('data-schema', 'restaurant');
+    script.textContent = JSON.stringify(schema, null, 2);
+    document.head.appendChild(script);
+
+    console.log('Restaurant schema added for:', restaurant.name);
   },
 
   render() {

@@ -1,0 +1,41 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Trust Route Logo/Icon (simplified) -->
+  <circle cx="600" cy="200" r="80" fill="white" opacity="0.95"/>
+  <text x="600" y="225" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#FF6B35" text-anchor="middle">TR</text>
+
+  <!-- Main Title -->
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white" text-anchor="middle">Trust Route</text>
+
+  <!-- Subtitle in Korean -->
+  <text x="600" y="410" font-family="Arial, sans-serif" font-size="36" fill="white" text-anchor="middle" opacity="0.95">믿을 수 있는 맛집 추천</text>
+
+  <!-- Trust Badges -->
+  <g transform="translate(300, 480)">
+    <rect x="0" y="0" width="140" height="50" rx="25" fill="white" opacity="0.9"/>
+    <text x="70" y="33" font-family="Arial, sans-serif" font-size="20" fill="#FF6B35" text-anchor="middle" font-weight="bold">미쉐린</text>
+  </g>
+
+  <g transform="translate(460, 480)">
+    <rect x="0" y="0" width="140" height="50" rx="25" fill="white" opacity="0.9"/>
+    <text x="70" y="33" font-family="Arial, sans-serif" font-size="20" fill="#FF6B35" text-anchor="middle" font-weight="bold">유명인</text>
+  </g>
+
+  <g transform="translate(620, 480)">
+    <rect x="0" y="0" width="160" height="50" rx="25" fill="white" opacity="0.9"/>
+    <text x="80" y="33" font-family="Arial, sans-serif" font-size="18" fill="#FF6B35" text-anchor="middle" font-weight="bold">흑백요리사</text>
+  </g>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="585" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle" opacity="0.85">신뢰 근거부터 길찾기까지 한 번에</text>
+</svg>
