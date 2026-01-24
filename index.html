@@ -122,8 +122,16 @@
             ]
         }
     </script>
+    <!-- Preconnect to improve font loading performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://djmadubptsajvdvzpdvd.supabase.co">
+
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
     <header class="site-header">
@@ -695,20 +703,20 @@
         <p><a class="footer-link" href="privacy.html">개인정보처리방침</a></p>
     </footer>
 
-    <!-- Supabase Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Client - defer for better performance -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Stripe.js - defer for better performance -->
+    <script defer src="https://js.stripe.com/v3/"></script>
 
-    <!-- App Scripts -->
-    <script src="config.js?v=20"></script>
-    <script src="auth.js?v=20"></script>
-    <script src="comments.js?v=20"></script>
-    <script src="data.js?v=20"></script>
-    <script src="news-data.js?v=20"></script>
-    <script src="subscription.js?v=20"></script>
-    <script src="main.js?v=20"></script>
+    <!-- App Scripts - defer for better performance -->
+    <script defer src="config.js?v=21"></script>
+    <script defer src="auth.js?v=21"></script>
+    <script defer src="comments.js?v=21"></script>
+    <script defer src="data.js?v=21"></script>
+    <script defer src="news-data.js?v=21"></script>
+    <script defer src="subscription.js?v=21"></script>
+    <script defer src="main.js?v=21"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
