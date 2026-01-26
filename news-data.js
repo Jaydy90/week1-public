@@ -434,7 +434,7 @@ const newsArticles = [
     title: '겨울 식재료의 비밀: 제철 맛의 과학',
     excerpt: '왜 겨울 대방어는 특별할까? 미슐랭 셰프들이 겨울에 집중하는 식재료와 그 이유. 제철의 의미를 과학적으로 풀어봅니다.',
     readTime: '6분 읽기',
-    coverImage: 'https://images.unsplash.com/photo-1615887023516-9a09e47e4eb1?w=1200&h=600&fit=crop&auto=format',
+    coverImage: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200&h=600&fit=crop&q=80',
     author: '김민지 (푸드 사이언티스트)',
     tags: ['식재료', '제철', '겨울', '대방어', '과학'],
     views: 8240,
