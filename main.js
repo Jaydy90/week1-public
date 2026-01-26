@@ -296,9 +296,10 @@ const HomeScreen = {
 
     // allRestaurants에서 nearbySpots에 없는 맛집 추가
     if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
-      const nearbyIds = new Set(nearbySpots.map(item => item.id));
+      // ID 대신 name으로 비교 (ID 충돌 방지)
+      const nearbyNames = new Set(nearbySpots.map(item => item.name));
       const additionalItems = window.allRestaurants
-        .filter(item => !nearbyIds.has(item.id))
+        .filter(item => !nearbyNames.has(item.name))
         .map(item => ({
           ...item,
           location: `${item.region} ${item.area}`,
