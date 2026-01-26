@@ -93,6 +93,8 @@ const Router = {
         MypageScreen.init();
         break;
       case 'news':
+        NewsScreen.init();
+        break;
       case 'faq':
       case 'partner':
         // 정적 페이지, 별도 초기화 불필요
@@ -1511,6 +1513,199 @@ const DetailScreen = {
           } catch (err) {
             alert(err.message || '삭제에 실패했습니다.');
           }
+        }
+      });
+    });
+  }
+};
+
+// ========================================
+// 뉴스/블로그 화면
+// ========================================
+const NewsScreen = {
+  currentCategory: 'all',
+  currentSort: 'latest',
+  currentSearch: '',
+  displayedCount: 6,
+  articlesPerLoad: 6,
+
+  init() {
+    console.log('News screen initialized');
+    this.renderFeaturedArticles();
+    this.renderArticles();
+    this.setupEventListeners();
+  },
+
+  setupEventListeners() {
+    // Category Filter
+    const categoryBtns = document.querySelectorAll('.category-filter-btn');
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        categoryBtns.forEach(b => b.classList.remove('is-active'));
+        e.target.classList.add('is-active');
+        this.currentCategory = e.target.dataset.category;
+        this.displayedCount = this.articlesPerLoad;
+        this.renderArticles();
+      });
+    });
+
+    // Search
+    const searchInput = document.getElementById('blog-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        this.currentSearch = e.target.value.toLowerCase();
+        this.displayedCount = this.articlesPerLoad;
+        this.renderArticles();
+      });
+    }
+
+    // Sort
+    const sortSelect = document.getElementById('blog-sort-select');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', (e) => {
+        this.currentSort = e.target.value;
+        this.renderArticles();
+      });
+    }
+
+    // Load More
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        this.displayedCount += this.articlesPerLoad;
+        this.renderArticles();
+      });
+    }
+  },
+
+  renderFeaturedArticles() {
+    const container = document.getElementById('featured-articles');
+    if (!container || !window.newsArticles) return;
+
+    const featured = window.newsArticles
+      .filter(article => article.featured)
+      .slice(0, 2);
+
+    if (featured.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    const html = `
+      <div class="featured-grid">
+        ${featured.map(article => `
+          <article class="featured-article" data-article-id="${article.id}">
+            <img src="${article.coverImage}" alt="${article.title}" class="featured-article-image" loading="lazy">
+            <div class="featured-article-overlay">
+              <span class="featured-badge">Featured</span>
+              <div class="featured-article-content">
+                <span class="featured-article-category">${article.category}</span>
+                <h2 class="featured-article-title">${article.title}</h2>
+                <p class="featured-article-excerpt">${article.excerpt}</p>
+                <div class="featured-article-meta">
+                  <span class="featured-views">${article.views?.toLocaleString() || '0'} views</span>
+                  <span>${article.readTime}</span>
+                  <span>${article.date}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    `;
+
+    container.innerHTML = html;
+
+    // Add click handlers
+    container.querySelectorAll('.featured-article').forEach(card => {
+      card.addEventListener('click', () => {
+        const articleId = card.dataset.articleId;
+        if (window.ArticleModalController) {
+          ArticleModalController.open(articleId);
+        }
+      });
+    });
+  },
+
+  renderArticles() {
+    const container = document.getElementById('articles-grid');
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (!container || !window.newsArticles) return;
+
+    // Filter articles
+    let filtered = window.newsArticles.filter(article => {
+      // Category filter
+      if (this.currentCategory !== 'all' && article.category !== this.currentCategory) {
+        return false;
+      }
+
+      // Search filter
+      if (this.currentSearch) {
+        const searchableText = `${article.title} ${article.excerpt} ${article.category}`.toLowerCase();
+        if (!searchableText.includes(this.currentSearch)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    // Sort articles
+    filtered.sort((a, b) => {
+      switch (this.currentSort) {
+        case 'popular':
+          return (b.views || 0) - (a.views || 0);
+        case 'reading-time':
+          const aTime = parseInt(a.readTime) || 0;
+          const bTime = parseInt(b.readTime) || 0;
+          return aTime - bTime;
+        case 'latest':
+        default:
+          return new Date(b.date) - new Date(a.date);
+      }
+    });
+
+    // Remove featured articles from regular grid
+    filtered = filtered.filter(article => !article.featured);
+
+    const displayArticles = filtered.slice(0, this.displayedCount);
+    const hasMore = filtered.length > this.displayedCount;
+
+    const html = displayArticles.map(article => `
+      <article class="article-card" data-article-id="${article.id}">
+        <div class="article-card-image-wrapper">
+          <img src="${article.coverImage}" alt="${article.title}" class="article-card-image" loading="lazy">
+        </div>
+        <div class="article-card-content">
+          <span class="article-card-category">${article.category}</span>
+          <h3 class="article-card-title">${article.title}</h3>
+          <p class="article-card-excerpt">${article.excerpt}</p>
+          <div class="article-card-footer">
+            <span class="article-card-date">${article.date}</span>
+            <span class="article-card-readtime">${article.readTime}</span>
+          </div>
+        </div>
+      </article>
+    `).join('');
+
+    container.innerHTML = html;
+
+    // Update Load More button
+    if (loadMoreBtn) {
+      if (hasMore) {
+        loadMoreBtn.style.display = 'block';
+        loadMoreBtn.disabled = false;
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    // Add click handlers
+    container.querySelectorAll('.article-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const articleId = card.dataset.articleId;
+        if (window.ArticleModalController) {
+          ArticleModalController.open(articleId);
         }
       });
     });
