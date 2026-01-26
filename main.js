@@ -285,12 +285,12 @@ const HomeScreen = {
     const container = document.getElementById('home-preview-list');
     if (!container) return;
 
-    // ✅ allRestaurants 우선, 없으면 nearbySpots 사용
+    // ✅ allRestaurants 우선, 없으면 window.nearbySpots 사용
     let allItems = [];
 
     // 전역 변수 확인
     console.log('[HomeScreen DEBUG] window.allRestaurants:', window.allRestaurants?.length);
-    console.log('[HomeScreen DEBUG] window.nearbySpots:', window.nearbySpots?.length);
+    console.log('[HomeScreen DEBUG] window.window.nearbySpots:', window.window.nearbySpots?.length);
 
     // allRestaurants가 로드되었으면 사용
     if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
@@ -304,10 +304,10 @@ const HomeScreen = {
         status: item.status || (item.sourceLabel === '출처 확인 중' ? '검증 중' : '검증 완료')
       }));
     }
-    // 폴백: nearbySpots 사용
-    else if (Array.isArray(window.nearbySpots) && window.nearbySpots.length > 0) {
-      console.warn('[HomeScreen] allRestaurants 로드 실패, nearbySpots 사용');
-      allItems = [...window.nearbySpots];
+    // 폴백: window.nearbySpots 사용
+    else if (Array.isArray(window.window.nearbySpots) && window.window.nearbySpots.length > 0) {
+      console.warn('[HomeScreen] allRestaurants 로드 실패, window.nearbySpots 사용');
+      allItems = [...window.window.nearbySpots];
     }
 
     // 디버깅: 전체 개수 확인
@@ -331,7 +331,7 @@ const HomeScreen = {
       const badges = item.badges || [];
       const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
 
-      // 홈 화면용 표시 (nearbySpots 형식과 allRestaurants 형식 모두 지원)
+      // 홈 화면용 표시 (window.nearbySpots 형식과 allRestaurants 형식 모두 지원)
       const location = item.location || `${item.region} ${item.area}`;
       const travelTime = item.travelTime || '거리 계산 중';
       const bestRoute = item.bestRoute || '경로 확인';
@@ -418,7 +418,7 @@ const HomeScreen = {
   // 인라인 상세 정보 표시 (그리드 밖 컨테이너에)
   showInlineDetail(restaurantId, clickedCard) {
     // 레스토랑 데이터 찾기
-    let restaurant = nearbySpots.find(r => r.id === restaurantId);
+    let restaurant = window.nearbySpots.find(r => r.id === restaurantId);
     if (!restaurant && window.allRestaurants) {
       restaurant = window.allRestaurants.find(r => r.id === restaurantId);
     }
@@ -725,7 +725,7 @@ const ListScreen = {
   },
 
   getFilteredRestaurants() {
-    let items = Array.isArray(allRestaurants) ? allRestaurants : [];
+    let items = Array.isArray(window.allRestaurants) ? window.allRestaurants : [];
 
     // 검색어 필터
     if (AppState.searchQuery) {
@@ -751,7 +751,7 @@ const ListScreen = {
         if (item.travelMinutes) {
           return item.travelMinutes <= maxTime;
         }
-        // travelMinutes가 없으면 포함 (nearbySpots에만 있을 수 있음)
+        // travelMinutes가 없으면 포함 (window.nearbySpots에만 있을 수 있음)
         return true;
       });
     }
@@ -965,7 +965,7 @@ const ListScreen = {
     // HomeScreen의 메서드 재사용
     let restaurant = window.allRestaurants ? window.allRestaurants.find(r => r.id === restaurantId) : null;
     if (!restaurant) {
-      restaurant = nearbySpots.find(r => r.id === restaurantId);
+      restaurant = window.nearbySpots.find(r => r.id === restaurantId);
     }
 
     if (!restaurant) {
@@ -1068,8 +1068,8 @@ const DetailScreen = {
   },
 
   findRestaurant(id) {
-    // nearbySpots에서 먼저 찾기
-    let restaurant = nearbySpots.find(r => r.id === id);
+    // window.nearbySpots에서 먼저 찾기
+    let restaurant = window.nearbySpots.find(r => r.id === id);
 
     // allRestaurants에서 찾기
     if (!restaurant && window.allRestaurants) {
