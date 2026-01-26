@@ -311,10 +311,13 @@ const HomeScreen = {
       allItems = [...allItems, ...additionalItems];
     }
 
-    // trustTab 필터 적용
+    // trustTab 필터 적용 (검증 중 맛집도 포함)
     let items = allItems;
     if (AppState.filters.trustTab !== 'all') {
-      items = items.filter(item => item.group === AppState.filters.trustTab);
+      items = items.filter(item => {
+        // group이 일치하면 status와 상관없이 표시
+        return item.group === AppState.filters.trustTab;
+      });
     }
 
     // 전체 표시 (슬라이스 제거하여 모든 맛집 표시)
@@ -747,9 +750,12 @@ const ListScreen = {
       });
     }
 
-    // 배지 필터
+    // 배지 필터 (검증 중 맛집도 포함)
     if (AppState.filters.badge !== 'all') {
-      items = items.filter(item => item.group === AppState.filters.badge);
+      items = items.filter(item => {
+        // group이 일치하면 status와 상관없이 표시
+        return item.group === AppState.filters.badge;
+      });
     }
 
     // 영업 상태 필터

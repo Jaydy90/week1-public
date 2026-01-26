@@ -1,64 +1,55 @@
 #!/bin/bash
-# ========================================
-# Supabase 데이터베이스 마이그레이션 스크립트
-# 사용법: /db-migrate
-# ========================================
+# /db-migrate - Supabase 스키마 마이그레이션 가이드
+# Usage: Shows migration steps and opens Supabase SQL Editor
 
 set -e
 
-echo "🗄️  Supabase 데이터베이스 마이그레이션 시작..."
+echo "🗄️  Supabase Schema Migration"
+echo "============================="
+echo ""
+echo "📝 Current schema file: schema.sql"
 echo ""
 
-# Supabase CLI 설치 확인
-if ! command -v supabase &> /dev/null; then
-  echo "❌ Supabase CLI가 설치되지 않았습니다."
-  echo ""
-  echo "설치 방법:"
-  echo "  npm install -g supabase"
-  echo "  또는"
-  echo "  brew install supabase/tap/supabase  # macOS"
+# Check if schema.sql exists
+if [ ! -f "schema.sql" ]; then
+  echo "❌ Error: schema.sql not found"
+  echo "Create schema.sql in project root first"
   exit 1
 fi
 
-echo "✅ Supabase CLI 확인됨"
+echo "📋 Schema file contents:"
+echo "------------------------"
+head -20 schema.sql
+echo "..."
 echo ""
 
-# 1. 마이그레이션 파일 확인
-echo "📂 1/3: 마이그레이션 파일 확인 중..."
-if [ ! -d "supabase/migrations" ]; then
-  echo "❌ supabase/migrations 디렉토리가 없습니다."
-  exit 1
-fi
-
-MIGRATION_COUNT=$(ls -1 supabase/migrations/*.sql 2>/dev/null | wc -l)
-echo "✅ $MIGRATION_COUNT 개의 마이그레이션 파일 발견"
+echo "🔧 Migration Steps:"
+echo "1. ✏️  Edit schema.sql with your changes"
+echo "2. 📋 Copy SQL from schema.sql"
+echo "3. 🌐 Open Supabase SQL Editor:"
+echo "   https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd/sql"
+echo "4. 📝 Paste and run the query"
+echo "5. ✅ Verify changes in Table Editor"
 echo ""
 
-# 2. 프로젝트 연결 확인
-echo "🔗 2/3: Supabase 프로젝트 연결 확인 중..."
-if [ ! -f ".git/config.toml" ]; then
-  echo "⚠️  프로젝트가 연결되지 않았습니다."
-  echo ""
-  read -p "프로젝트 Reference ID를 입력하세요 (예: djmadubptsajvdvzpdvd): " PROJECT_REF
+read -p "Open Supabase SQL Editor in browser? (y/n): " answer
 
-  if [ -z "$PROJECT_REF" ]; then
-    echo "❌ Reference ID가 필요합니다."
-    exit 1
+if [ "$answer" = "y" ]; then
+  echo "🌐 Opening Supabase Dashboard..."
+
+  # Try to open browser based on OS
+  if command -v xdg-open &> /dev/null; then
+    xdg-open "https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd/sql"
+  elif command -v open &> /dev/null; then
+    open "https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd/sql"
+  elif command -v start &> /dev/null; then
+    start "https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd/sql"
+  else
+    echo "📋 Copy this URL:"
+    echo "https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd/sql"
   fi
-
-  echo "연결 중..."
-  supabase link --project-ref "$PROJECT_REF"
 fi
 
-echo "✅ 프로젝트 연결됨"
 echo ""
-
-# 3. 마이그레이션 실행
-echo "🚀 3/3: 마이그레이션 실행 중..."
-supabase db push
-
-echo ""
-echo "✅ 마이그레이션 완료!"
-echo ""
-echo "📊 Supabase Dashboard에서 확인:"
-echo "   https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd"
+echo "💡 Tip: Test migrations on dev environment first!"
+echo "📚 Docs: SUPABASE_SETUP.md"

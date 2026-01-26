@@ -1,48 +1,44 @@
 #!/bin/bash
-# ========================================
-# Cloudflare Pages 배포 스크립트
-# 사용법: /deploy
-# ========================================
+# /deploy - Cloudflare Pages 배포 상태 확인
+# Usage: Quick deploy (git push) and status check
 
 set -e
 
-echo "🚀 Cloudflare Pages 배포 시작..."
+echo "🚀 Trust Route - Deploy to Cloudflare Pages"
+echo "==========================================="
 echo ""
 
-# 1. 테스트 실행
-echo "📋 1/3: 빌드 검증 중..."
-bash .claude/commands/test-build.sh
-
-echo ""
-
-# 2. Git 상태 확인
-echo "🔍 2/3: Git 상태 확인 중..."
-if [ -n "$(git status --porcelain)" ]; then
-  echo "⚠️  커밋되지 않은 변경사항이 있습니다."
+# Check if there are uncommitted changes
+if ! git diff-index --quiet HEAD --; then
+  echo "⚠️  Warning: You have uncommitted changes"
   echo ""
-  git status
+  git status --short
   echo ""
-  read -p "계속 진행하시겠습니까? (y/n) " -n 1 -r
-  echo
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo "❌ 배포 취소됨"
-    exit 1
+  read -p "Do you want to commit and push? (y/n): " answer
+
+  if [ "$answer" = "y" ]; then
+    read -p "📝 Commit message: " commit_msg
+    git add -A
+    git commit -m "$commit_msg
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+    git push origin main
+    echo ""
+    echo "✅ Pushed to main branch"
+  else
+    echo "❌ Deploy cancelled"
+    exit 0
   fi
 else
-  echo "✅ 작업 디렉토리가 깨끗합니다."
+  echo "📦 No local changes - pushing latest commit"
+  git push origin main
 fi
 
 echo ""
-
-# 3. 푸시 및 자동 배포
-echo "🚢 3/3: 배포 트리거 중..."
-git push origin main
-
+echo "🌐 Deployment Info:"
+echo "  Production: https://kpopeats.cc"
+echo "  Dev: https://week1-public.pages.dev"
+echo "  Dashboard: https://dash.cloudflare.com/pages"
 echo ""
-echo "✅ 배포가 시작되었습니다!"
-echo ""
-echo "📊 배포 상태 확인:"
-echo "   https://dash.cloudflare.com/pages"
-echo ""
-echo "🌐 배포 완료 후 확인:"
-echo "   https://kpopeats.cc"
+echo "⏱️  Auto-deploy will complete in 1-2 minutes"
+echo "📊 Monitor build logs in Cloudflare Dashboard"

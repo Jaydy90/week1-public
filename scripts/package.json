@@ -1,0 +1,13 @@
+{
+  "name": "kpopeats-scripts",
+  "version": "1.0.0",
+  "description": "Utility scripts for Trust Route",
+  "type": "module",
+  "scripts": {
+    "geocode": "node add-coordinates.js",
+    "geocode:test": "node add-coordinates.js --test"
+  },
+  "keywords": ["geocoding", "naver", "maps"],
+  "author": "Trust Route Team",
+  "license": "MIT"
+}

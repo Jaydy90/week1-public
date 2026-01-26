@@ -1,61 +1,49 @@
-# Security Headers (All pages)
+# Cloudflare Pages Custom Headers
+
+# 모든 페이지에 적용되는 보안 헤더
 /*
-  # Prevent clickjacking attacks
   X-Frame-Options: DENY
-
-  # Prevent MIME type sniffing
   X-Content-Type-Options: nosniff
-
-  # Enable XSS filter (legacy browsers)
   X-XSS-Protection: 1; mode=block
-
-  # Control referrer information
   Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(self), microphone=(), camera=()
 
-  # Restrict browser features
-  Permissions-Policy: camera=(), microphone=(), geolocation=(self), payment=(self), usb=()
-
-  # Force HTTPS (HSTS) - 1 year, include subdomains
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-
-  # Content Security Policy - Prevent XSS attacks
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://js.stripe.com https://djmadubptsajvdvzpdvd.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://www.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://djmadubptsajvdvzpdvd.supabase.co https://www.google-analytics.com https://www.clarity.ms https://pagead2.googlesyndication.com https://api.stripe.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
-
-# 모든 HTML 파일은 항상 최신 버전 확인
+# HTML 파일 캐싱 전략
 /*.html
-  Cache-Control: no-cache, must-revalidate
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Robots-Tag: index, follow
 
-# 루트 HTML
-/
-  Cache-Control: no-cache, must-revalidate
-
-# JS/CSS 파일은 버전 파라미터로 관리하므로 긴 캐시 허용
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: application/javascript; charset=utf-8
-
+# CSS/JS 파일 장기 캐싱
 /*.css
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: text/css; charset=utf-8
 
-# Font files
-/*.woff2
+/*.js
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: font/woff2
 
-/*.woff
+# 이미지 파일 캐싱
+/*.jpg
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: font/woff
-
-# Image files
-/*.webp
-  Cache-Control: public, max-age=31536000, immutable
-  Content-Type: image/webp
 
 /*.png
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: image/png
 
-/*.jpg
+/*.webp
   Cache-Control: public, max-age=31536000, immutable
-  Content-Type: image/jpeg
+
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# API 엔드포인트 (향후 사용)
+/api/*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex
+
+# Sitemap
+/sitemap.xml
+  Cache-Control: public, max-age=86400
+  Content-Type: application/xml
+
+# Robots.txt
+/robots.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain

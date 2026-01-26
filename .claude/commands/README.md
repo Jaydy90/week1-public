@@ -1,443 +1,140 @@
-# Trust Route 커맨드 가이드
+# Trust Route - Custom Commands
 
-`.claude/commands/` 디렉토리의 자동화 스크립트 모음입니다.
+Custom workflow commands for Claude Code and local development.
 
-## 📦 설치된 커맨드 (18개)
+## Available Commands
 
-### Git & 배포
+### `/commit-push`
+자동 커밋 + 푸시 to main branch
 
-#### `/commit-push`
-자동 커밋 + 푸시 스크립트
-
+**Usage:**
 ```bash
-# 타입 자동 감지
-/commit-push "커밋 메시지"
-
-# 타입 지정
-/commit-push feat "새 기능 추가"
-/commit-push fix "버그 수정"
-/commit-push chore "설정 파일 업데이트"
+bash .claude/commands/commit-push.sh
 ```
 
-**지원 타입**: `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `test`, `perf`
-
-#### `/deploy`
-테스트 + 배포 (프로덕션 배포)
-
-```bash
-/deploy
-```
-
-**동작**:
-1. `/test-build` 실행 (검증)
-2. Git 상태 확인
-3. main 브랜치에 푸시 → Cloudflare Pages 자동 배포
-
-#### `/quick-fix`
-빠른 버그 수정 + 즉시 배포
-
-```bash
-/quick-fix "수정 내용 설명"
-```
-
-**동작**: JavaScript 구문 검사 → 커밋 → 푸시 (테스트 최소화로 빠른 배포)
+**What it does:**
+- Shows git status
+- Prompts for commit message
+- Stages all changes (`git add -A`)
+- Creates commit with Claude co-author tag
+- Pushes to `origin/main`
+- Triggers Cloudflare Pages auto-deploy
 
 ---
 
-### 🧪 테스트 & 검증 (6개)
+### `/test-build`
+로컬 테스트 서버 실행
 
-#### `/test-build`
-빌드 검증 스크립트
-
+**Usage:**
 ```bash
-/test-build
+bash .claude/commands/test-build.sh
 ```
 
-**검사 항목**:
-- ESLint (있으면)
-- HTML 구문 (tidy)
-- JavaScript 구문 (`node --check`)
-- 필수 파일 존재 확인
+**What it does:**
+- Starts local development server on port 8000
+- Uses `npx serve` or Python `http.server`
+- Required for testing Supabase auth redirects
+- No build step needed (static site)
 
-#### `/preview`
-배포 전 프리뷰 체크리스트
-
-```bash
-/preview
-```
-
-**검사 항목** (7가지):
-1. Git 상태
-2. JavaScript 구문
-3. 필수 파일 존재
-4. 맛집 데이터 품질 (mainMenu, 좌표)
-5. 보안 체크 (Service Role Key, eval)
-6. console.log 확인
-7. Supabase 설정
-
-**결과**: 7/7 통과 시 배포 권장
-
-#### `/analyze`
-코드 품질 분석
-
-```bash
-/analyze
-```
-
-**분석 항목** (6가지):
-1. 파일 크기 분석
-2. TODO/FIXME 태그 검색
-3. console.log 검색
-4. 중복 이벤트 리스너 패턴
-5. 보안 패턴 (innerHTML, eval, Service Role Key)
-6. 데이터 품질 (mainMenu, 좌표)
-
-#### `/seo-check`
-SEO 메타태그 검증
-
-```bash
-/seo-check
-```
-
-**검사 항목** (12가지):
-1. Title & Description (길이, 품질)
-2. Open Graph 태그 (소셜 미디어)
-3. Twitter Cards
-4. JSON-LD 구조화된 데이터
-5. Canonical URL, Favicon, Viewport
-6. robots.txt, Sitemap
-
-**출력**: SEO 점수 (0-100%) + 개선 권장사항
-
-#### `/image-optimize`
-이미지 최적화 분석
-
-```bash
-/image-optimize
-```
-
-**분석 항목**:
-1. 이미지 파일 스캔 (크기, 형식)
-2. 최적화 도구 확인 (ImageMagick, cwebp 등)
-3. 최적화 권장 (100KB 이상, WebP 변환)
-4. HTML 태그 분석 (alt, loading, width/height)
-
-**권장**: 이미지 100KB 이하, WebP 형식, lazy loading
-
-#### `/performance`
-성능 측정 및 분석
-
-```bash
-/performance
-```
-
-**분석 항목** (5가지):
-1. 파일 크기 (HTML, CSS, JS)
-2. 로딩 성능 (defer/async, lazy loading, preload)
-3. 렌더링 성능 (CSS 복잡도, DOM 크기)
-4. 네트워크 최적화 (외부 리소스, CDN)
-5. JavaScript 성능 (이벤트 리스너, 타이머)
-
-**출력**: 성능 점수 (0-10) + 최적화 권장사항
-
-#### `/security-scan`
-보안 스캔
-
-```bash
-/security-scan
-```
-
-**검사 항목** (6가지):
-1. 민감 정보 노출 (API keys, passwords)
-2. XSS 취약점 (innerHTML, eval)
-3. 인증/인가 보안
-4. Injection 공격 (동적 쿼리)
-5. 보안 헤더 (CSP, CORS)
-6. 의존성 보안 (npm audit, SRI)
-
-**출력**: 취약점 수 + 경고 수 + 개선 권장사항
+**Access at:** http://localhost:8000
 
 ---
 
-### 🍽️ 맛집 데이터 관리
+### `/deploy`
+Cloudflare Pages 배포
 
-#### `/add-restaurant`
-새 맛집 추가 (인터랙티브)
-
+**Usage:**
 ```bash
-/add-restaurant
+bash .claude/commands/deploy.sh
 ```
 
-**입력 항목**:
-1. 기본 정보 (이름, 지역, 카테고리, 대표 메뉴)
-2. 위치 정보 (네이버 지도 URL, 좌표)
-3. 신뢰 배지 (그룹, 배지, 출처)
-4. 추가 정보 (도보 시간, 거리, 설명)
+**What it does:**
+- Checks for uncommitted changes
+- Prompts to commit if needed
+- Pushes to main branch
+- Shows deployment URLs and dashboard link
+- Cloudflare auto-deploys in 1-2 minutes
 
-**출력**: JSON 형식 데이터 → `data.js`에 수동 추가
-
-#### `/update-menu`
-대표 메뉴 업데이트
-
-```bash
-/update-menu "식당명"
-
-# 예시
-/update-menu "밍글스"
-```
-
-**동작**:
-1. `data.js`에서 식당 검색
-2. 현재 대표 메뉴 표시
-3. 네이버 플레이스 조사 가이드 제공
-4. 새 메뉴 입력
-5. 자동 업데이트 (선택)
-
-**중요**: 네이버 플레이스 리뷰 분석 필수!
+**Deployment targets:**
+- Production: https://kpopeats.cc
+- Dev: https://week1-public.pages.dev
 
 ---
 
-### 🗄️ 데이터베이스
+### `/db-migrate`
+Supabase 마이그레이션 가이드
 
-#### `/db-migrate`
-Supabase 마이그레이션 실행
-
+**Usage:**
 ```bash
-/db-migrate
+bash .claude/commands/db-migrate.sh
 ```
 
-**전제 조건**:
-- Supabase CLI 설치 (`npm install -g supabase`)
-- `supabase/migrations/` 디렉토리 존재
+**What it does:**
+- Shows schema.sql preview
+- Displays step-by-step migration instructions
+- Opens Supabase SQL Editor in browser
+- Links to project dashboard
 
-**동작**:
-1. Supabase CLI 확인
-2. 마이그레이션 파일 확인
-3. 프로젝트 연결 (필요 시)
-4. `supabase db push` 실행
-
-#### `/backup`
-데이터 백업
-
-```bash
-/backup
-```
-
-**백업 항목**:
-- 주요 파일 (`data.js`, `config.js`, `schema.sql` 등)
-- Git 상태 (`git status`, `git log`)
-- 환경 정보 (Node 버전 등)
-
-**출력**: `backups/backup_YYYYMMDD_HHMMSS.zip` (압축 옵션)
-
-**Supabase 데이터**: 대시보드에서 수동 Export 필요
+**Manual process:**
+1. Edit `schema.sql`
+2. Copy SQL content
+3. Paste in Supabase SQL Editor
+4. Run query
+5. Verify in Table Editor
 
 ---
 
-### 🌐 로컬 개발
+## Making Scripts Executable (Optional)
 
-#### `/local-server`
-로컬 개발 서버 실행
-
+On Unix-like systems (macOS, Linux):
 ```bash
-/local-server           # 기본 포트 8000
-/local-server 3000      # 포트 3000
+chmod +x .claude/commands/*.sh
 ```
 
-**지원 서버**:
-1. Python HTTP Server (권장)
-2. npx serve (Node.js)
-
-**접속**: `http://localhost:8000`
-
-**종료**: `Ctrl+C`
-
-#### `/clean`
-캐시 및 임시 파일 정리
-
+Then run directly:
 ```bash
-/clean
+./.claude/commands/commit-push.sh
 ```
 
-**정리 항목**:
-1. `node_modules` (있으면)
-2. 임시 백업 파일 (`*.bak`, `*.tmp`, `*~`)
-3. Git 가비지 컬렉션
-4. 30일 이상 오래된 백업
-5. 브라우저 캐시 안내
-
----
-
-### 📊 프로젝트 관리
-
-#### `/status`
-프로젝트 전체 상태 확인
-
+On Windows (Git Bash or WSL):
 ```bash
-/status
-```
-
-**표시 정보** (5가지):
-1. Git 상태 (브랜치, 커밋, 변경사항)
-2. 핵심 파일 상태 (존재 여부, 수정일)
-3. 맛집 데이터 통계 (총 개수, 그룹별)
-4. 배포 환경 (프로덕션, 개발, 대시보드 URL)
-5. 사용 가능한 커맨드 목록
-
-#### `/help`
-커맨드 도움말 표시
-
-```bash
-/help
-```
-
-**내용**:
-- 모든 커맨드 목록
-- 사용 예시
-- 유용한 링크
-
----
-
-## 🚀 사용 시나리오
-
-### 1. 새 기능 개발 워크플로우
-
-```bash
-# 1. 로컬 서버로 개발
-/local-server
-
-# 2. 개발 완료 후 코드 분석
-/analyze
-
-# 3. 배포 전 체크
-/preview
-
-# 4. 커밋 + 푸시
-/commit-push feat "Add category filter"
-
-# 5. 배포
-/deploy
-```
-
-### 2. 버그 긴급 수정
-
-```bash
-# 코드 수정 후
-/quick-fix "Fix login button alignment"
-
-# 끝! (자동으로 배포까지 완료)
-```
-
-### 3. 맛집 추가
-
-```bash
-# 1. 맛집 추가
-/add-restaurant
-# (인터랙티브 입력)
-
-# 2. data.js에 수동으로 복사 붙여넣기
-
-# 3. 검증
-/test-build
-
-# 4. 커밋 + 배포
-/commit-push feat "Add restaurant: 식당명"
-/deploy
-```
-
-### 4. 대표 메뉴 업데이트
-
-```bash
-# 1. 메뉴 업데이트
-/update-menu "밍글스"
-# (네이버 플레이스 리뷰 확인 후 입력)
-
-# 2. 커밋
-/commit-push fix "Update menu for Mingles"
-```
-
-### 5. 정기 점검
-
-```bash
-# 1. 프로젝트 상태 확인
-/status
-
-# 2. 코드 품질 분석
-/analyze
-
-# 3. 백업
-/backup
-
-# 4. 정리
-/clean
+bash .claude/commands/commit-push.sh
 ```
 
 ---
 
-## ⚙️ 환경 요구사항
+## Integration with Claude Code
 
-### 필수
-- **Git Bash** (Windows) 또는 **Bash** (macOS/Linux)
-- **Node.js** (JavaScript 구문 검사용)
+These commands are designed to work with Claude Code's workflow.
 
-### 선택사항
-- **Python** (로컬 서버용)
-- **Supabase CLI** (DB 마이그레이션용)
-- **tidy** (HTML 검증용)
-- **zip** (백업 압축용)
+When Claude asks "Would you like me to commit these changes?", you can reference:
+- "Use `/commit-push` to commit and deploy"
+- "Run `/test-build` to test locally first"
 
 ---
 
-## 🔧 커맨드 추가 방법
+## Notes
 
-1. `.claude/commands/` 디렉토리에 `.sh` 파일 생성
-2. 실행 권한 부여: `chmod +x .claude/commands/새커맨드.sh`
-3. 첫 줄에 `#!/bin/bash` 추가
-4. 주석으로 설명 추가:
-   ```bash
-   # ========================================
-   # 커맨드 설명
-   # 사용법: /새커맨드 [옵션]
-   # ========================================
-   ```
+- All scripts use `set -e` to exit on error
+- Scripts are safe to run multiple times
+- No destructive operations without confirmation
+- Co-author tag added automatically to commits
 
 ---
 
-## 📖 참고 문서
+## Troubleshooting
 
-- **프로젝트 가이드**: `CLAUDE.md`
-- **Supabase 설정**: `SUPABASE_SETUP.md`
-- **데이터베이스 스키마**: `schema.sql`
+**Script not found:**
+```bash
+# Run from project root
+cd "C:\Users\jdy2\Desktop\KEats (Trust Route)"
+bash .claude/commands/commit-push.sh
+```
 
----
+**Permission denied (Unix):**
+```bash
+chmod +x .claude/commands/*.sh
+```
 
-## 🔗 유용한 링크
-
-- **프로덕션**: https://kpopeats.cc
-- **개발**: https://week1-public.pages.dev
-- **Cloudflare Dashboard**: https://dash.cloudflare.com/pages
-- **Supabase Dashboard**: https://supabase.com/dashboard/project/djmadubptsajvdvzpdvd
-
----
-
-## 💡 팁
-
-1. **자주 사용하는 워크플로우**를 Bash alias로 등록하면 더 편리합니다:
-   ```bash
-   # ~/.bashrc 또는 ~/.zshrc에 추가
-   alias tr-dev="cd '/c/Users/jdy2/Desktop/KEats (Trust Route)' && /local-server"
-   alias tr-deploy="/preview && /deploy"
-   ```
-
-2. **Windows Git Bash**에서 `read` 명령어가 작동하지 않으면:
-   - Git Bash를 관리자 권한으로 실행
-   - 또는 WSL (Windows Subsystem for Linux) 사용
-
-3. **자동 완성**: Tab 키로 커맨드명 자동 완성 (Bash 기본 기능)
-
-4. **히스토리**: `history | grep /commit-push`로 이전 커맨드 검색
-
----
-
-**마지막 업데이트**: 2026-01-24
-**총 커맨드 수**: 18개
+**Python/npx not found:**
+Install Node.js or Python for local server.

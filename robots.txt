@@ -1,4 +1,40 @@
+# Trust Route - Robots.txt
+
+# 모든 검색 엔진 허용
 User-agent: *
 Allow: /
 
+# 크롤링 제외 (향후 관리자 페이지 등)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_functions_disabled/
+Disallow: /scripts/
+
+# Sitemap 위치
 Sitemap: https://kpopeats.cc/sitemap.xml
+
+# 크롤링 속도 제한 (선택사항)
+Crawl-delay: 1
+
+# 특정 봇 설정
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Yeti
+Allow: /
+Crawl-delay: 0
+
+# 악성 봇 차단
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
