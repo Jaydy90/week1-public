@@ -311,20 +311,33 @@ const HomeScreen = {
     }
 
     // 디버깅: 전체 개수 확인
-    console.log(`[HomeScreen] allItems 전체: ${allItems.length}개`);
-    console.log(`[HomeScreen] michelin: ${allItems.filter(r => r.group === 'michelin').length}개`);
-    console.log(`[HomeScreen] celebrity: ${allItems.filter(r => r.group === 'celebrity').length}개`);
-    console.log(`[HomeScreen] chef: ${allItems.filter(r => r.group === 'chef').length}개`);
+    console.log('');
+    console.log('===== HomeScreen.renderPreviewList() =====');
+    console.log(`allItems 전체: ${allItems.length}개`);
+    console.log(`- michelin: ${allItems.filter(r => r.group === 'michelin').length}개`);
+    console.log(`- celebrity: ${allItems.filter(r => r.group === 'celebrity').length}개`);
+    console.log(`- chef: ${allItems.filter(r => r.group === 'chef').length}개`);
+    console.log(`현재 필터: ${AppState.filters.trustTab}`);
 
     // trustTab 필터 적용 (검증 중 맛집도 포함)
     let items = allItems;
     if (AppState.filters.trustTab !== 'all') {
+      console.log(`필터링 전: ${items.length}개`);
       items = items.filter(item => {
-        // group이 일치하면 status와 상관없이 표시
-        return item.group === AppState.filters.trustTab;
+        const match = item.group === AppState.filters.trustTab;
+        if (!match && items.length < 10) {
+          console.log(`  제외: ${item.name} (group: ${item.group})`);
+        }
+        return match;
       });
-      console.log(`[HomeScreen] 필터 후 (${AppState.filters.trustTab}): ${items.length}개`);
+      console.log(`필터링 후 (${AppState.filters.trustTab}): ${items.length}개`);
+      if (items.length > 0 && items.length < 10) {
+        console.log('필터링된 아이템:');
+        items.forEach(item => console.log(`  - ${item.name} (${item.group})`));
+      }
     }
+    console.log('==========================================');
+    console.log('');
 
     // 전체 표시 (슬라이스 제거하여 모든 맛집 표시)
     container.innerHTML = items.map((item, index) => {

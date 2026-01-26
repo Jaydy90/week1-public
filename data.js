@@ -503,3 +503,19 @@ const allRestaurants = allRestaurantsRaw.map((line, index) => {
 // 전역으로 노출 (HomeScreen과 ListScreen에서 사용)
 window.allRestaurants = allRestaurants;
 window.nearbySpots = nearbySpots;
+
+// ✅ 즉시 검증
+console.log('===== DATA.JS 로드 완료 =====');
+console.log('window.allRestaurants:', window.allRestaurants?.length, '개');
+console.log('window.nearbySpots:', window.nearbySpots?.length, '개');
+console.log('');
+console.log('그룹별 개수:');
+console.log('- michelin:', window.allRestaurants?.filter(r => r.group === 'michelin').length, '개');
+console.log('- celebrity:', window.allRestaurants?.filter(r => r.group === 'celebrity').length, '개');
+console.log('- chef:', window.allRestaurants?.filter(r => r.group === 'chef').length, '개');
+console.log('');
+console.log('샘플 데이터 (처음 3개):');
+window.allRestaurants?.slice(0, 3).forEach(r => {
+  console.log(`  - ${r.name} (${r.group})`);
+});
+console.log('============================');
