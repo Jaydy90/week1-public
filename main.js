@@ -285,32 +285,27 @@ const HomeScreen = {
     const container = document.getElementById('home-preview-list');
     if (!container) return;
 
-    // allRestaurants와 nearbySpots 결합
-    // nearbySpots의 featured 맛집과 allRestaurants의 전체 맛집을 합침
+    // ✅ nearbySpots 대신 allRestaurants만 사용 (간소화)
     let allItems = [];
 
-    // 먼저 nearbySpots 추가 (featured 맛집)
-    if (Array.isArray(nearbySpots) && nearbySpots.length > 0) {
-      allItems = [...nearbySpots];
+    // window.allRestaurants를 직접 사용
+    if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
+      allItems = window.allRestaurants.map(item => ({
+        ...item,
+        location: item.location || `${item.region} ${item.area}`,
+        travelTime: item.travelTime || '거리 계산 중',
+        bestRoute: item.bestRoute || '경로 확인',
+        saves: item.saves || 0,
+        badges: item.badges || [item.badgeType],
+        status: item.status || (item.sourceLabel === '출처 확인 중' ? '검증 중' : '검증 완료')
+      }));
     }
 
-    // allRestaurants에서 nearbySpots에 없는 맛집 추가
-    if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
-      // ID 대신 name으로 비교 (ID 충돌 방지)
-      const nearbyNames = new Set(nearbySpots.map(item => item.name));
-      const additionalItems = window.allRestaurants
-        .filter(item => !nearbyNames.has(item.name))
-        .map(item => ({
-          ...item,
-          location: `${item.region} ${item.area}`,
-          travelTime: '거리 계산 중',
-          bestRoute: '경로 확인 필요',
-          saves: 0,
-          badges: [item.badgeType],
-          status: item.sourceLabel === '출처 확인 중' ? '검증 중' : '검증 완료'
-        }));
-      allItems = [...allItems, ...additionalItems];
-    }
+    // 디버깅: 전체 개수 확인
+    console.log(`[HomeScreen] allItems 전체: ${allItems.length}개`);
+    console.log(`[HomeScreen] michelin: ${allItems.filter(r => r.group === 'michelin').length}개`);
+    console.log(`[HomeScreen] celebrity: ${allItems.filter(r => r.group === 'celebrity').length}개`);
+    console.log(`[HomeScreen] chef: ${allItems.filter(r => r.group === 'chef').length}개`);
 
     // trustTab 필터 적용 (검증 중 맛집도 포함)
     let items = allItems;
@@ -319,6 +314,7 @@ const HomeScreen = {
         // group이 일치하면 status와 상관없이 표시
         return item.group === AppState.filters.trustTab;
       });
+      console.log(`[HomeScreen] 필터 후 (${AppState.filters.trustTab}): ${items.length}개`);
     }
 
     // 전체 표시 (슬라이스 제거하여 모든 맛집 표시)
