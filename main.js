@@ -285,10 +285,14 @@ const HomeScreen = {
     const container = document.getElementById('home-preview-list');
     if (!container) return;
 
-    // ✅ nearbySpots 대신 allRestaurants만 사용 (간소화)
+    // ✅ allRestaurants 우선, 없으면 nearbySpots 사용
     let allItems = [];
 
-    // window.allRestaurants를 직접 사용
+    // 전역 변수 확인
+    console.log('[HomeScreen DEBUG] window.allRestaurants:', window.allRestaurants?.length);
+    console.log('[HomeScreen DEBUG] window.nearbySpots:', window.nearbySpots?.length);
+
+    // allRestaurants가 로드되었으면 사용
     if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
       allItems = window.allRestaurants.map(item => ({
         ...item,
@@ -299,6 +303,11 @@ const HomeScreen = {
         badges: item.badges || [item.badgeType],
         status: item.status || (item.sourceLabel === '출처 확인 중' ? '검증 중' : '검증 완료')
       }));
+    }
+    // 폴백: nearbySpots 사용
+    else if (Array.isArray(window.nearbySpots) && window.nearbySpots.length > 0) {
+      console.warn('[HomeScreen] allRestaurants 로드 실패, nearbySpots 사용');
+      allItems = [...window.nearbySpots];
     }
 
     // 디버깅: 전체 개수 확인
