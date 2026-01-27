@@ -2610,6 +2610,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('News buttons setup failed:', err);
   }
 
+  // 흑백요리사 셰프 카드 클릭 이벤트
+  try {
+    const chefCards = document.querySelectorAll('.chef-card');
+    console.log(`Found ${chefCards.length} chef cards`);
+
+    chefCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.dataset.restaurantId;
+        const restaurantName = card.dataset.restaurantName;
+
+        if (restaurantId) {
+          // ID가 있으면 직접 상세 페이지로 이동
+          Router.navigateTo('detail', { restaurantId });
+        } else if (restaurantName) {
+          // 이름으로 검색해서 찾기
+          const restaurant = window.allRestaurants?.find(r =>
+            r.name.includes(restaurantName) || r.badgeType?.includes(restaurantName)
+          );
+          if (restaurant) {
+            Router.navigateTo('detail', { restaurantId: restaurant.id });
+          } else {
+            // 음식점을 찾을 수 없으면 리스트 화면으로 이동 (흑백요리사 필터 적용)
+            Router.navigateTo('list');
+            setTimeout(() => {
+              // 흑백요리사 탭 클릭
+              const chefTab = document.querySelector('.trust-tab[data-tab="chef"]');
+              if (chefTab) {
+                chefTab.click();
+              }
+            }, 100);
+          }
+        }
+      });
+    });
+  } catch (err) {
+    console.error('Chef cards setup failed:', err);
+  }
+
   // Stripe 구독 모듈 초기화
   try {
     console.log('Initializing SubscriptionModule...');

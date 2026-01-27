@@ -1,0 +1,298 @@
+/* ========================================
+   흑백요리사 시즌1 Top 8 Section
+   ======================================== */
+
+.culinary-class-heroes {
+  margin: 3rem 0 4rem 0;
+  padding: 0;
+}
+
+.heroes-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.heroes-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.2;
+}
+
+.heroes-subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.heroes-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: start;
+  background: linear-gradient(to right, rgba(28, 25, 22, 0.03) 0%, rgba(28, 25, 22, 0.03) 50%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.03) 100%);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* 팀 섹션 */
+.team {
+  position: relative;
+}
+
+.team-label {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid;
+}
+
+.team.black-spoon .team-label {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.team.white-spoon .team-label {
+  color: var(--ink);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* 셰프 그리드 */
+.chefs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+/* 셰프 카드 */
+.chef-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.chef-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary);
+}
+
+.chef-card:active {
+  transform: scale(1.02);
+}
+
+/* 셰프 사진 */
+.chef-photo {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 aspect ratio */
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  overflow: hidden;
+}
+
+.chef-photo img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.chef-card:hover .chef-photo img {
+  transform: scale(1.1);
+}
+
+/* Placeholder for missing images */
+.chef-photo img[src*="images/chefs/"]:not([src*="http"]) {
+  opacity: 0;
+}
+
+.chef-photo::before {
+  content: "📸";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* 셰프 정보 */
+.chef-info {
+  padding: 1rem;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, #fff 100%);
+}
+
+.chef-nickname {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.25rem 0;
+}
+
+.chef-name {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* 중앙 구분선 */
+.divider-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  height: 100%;
+  min-height: 400px;
+}
+
+.divider-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(to bottom, transparent 0%, var(--ink) 50%, transparent 100%);
+  opacity: 0.3;
+}
+
+.divider-vs {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  text-shadow: 0 2px 8px rgba(228, 90, 43, 0.3);
+  padding: 1rem;
+  background: #fff;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 3px solid var(--primary);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .heroes-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .divider-vertical {
+    flex-direction: row;
+    min-height: auto;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .divider-line {
+    height: 2px;
+    width: 100%;
+    flex: 1;
+    background: linear-gradient(to right, transparent 0%, var(--ink) 50%, transparent 100%);
+  }
+
+  .divider-vs {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .team-label {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .culinary-class-heroes {
+    margin: 2rem 0 3rem 0;
+  }
+
+  .heroes-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .chefs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+  }
+
+  .chef-nickname {
+    font-size: 0.9375rem;
+  }
+
+  .chef-name {
+    font-size: 0.8125rem;
+  }
+
+  .chef-info {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .divider-vs {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+}
+
+/* 흑수저 팀 스타일 강조 */
+.team.black-spoon {
+  position: relative;
+}
+
+.team.black-spoon::before {
+  content: "";
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+  right: -1rem;
+  bottom: -1rem;
+  background: linear-gradient(135deg, rgba(28, 25, 22, 0.02) 0%, rgba(28, 25, 22, 0.05) 100%);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+/* 백수저 팀 스타일 강조 */
+.team.white-spoon {
+  position: relative;
+}
+
+.team.white-spoon::before {
+  content: "";
+  position: absolute;
+  top: -1rem;
+  left: -1rem;
+  right: -1rem;
+  bottom: -1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(240, 240, 240, 0.3) 100%);
+  border-radius: 12px;
+  z-index: -1;
+}
