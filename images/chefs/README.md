@@ -6,14 +6,14 @@
 
 ### 흑수저 팀 (4명)
 
-1. **napoli-matfia.jpg** - 나폴리 맛피아 (권성준)
-2. **dolai.jpg** - 요리하는 돌아이 (안유성)
-3. **imukase.jpg** - 이무카세 1호 (김도윤)
-4. **triple-star.jpg** - 트리플 스타 (최강록)
+1. **napoli-matfia.jpg** - 나폴리 맛피아 (권성준) - 비아 톨레도 파스타바 오너 (최종 우승)
+2. **dolai.jpg** - 요리하는 돌아이 (안유성) - 디핀 셰프
+3. **imokase.jpg** - 이모카세 1호 (김도윤)
+4. **triple-star.jpg** - 트리플 스타 (최강록) - 트리드 오너 셰프
 
 ### 백수저 팀 (4명)
 
-5. **edward-lee.jpg** - 에드워드 리
+5. **edward-lee.jpg** - 에드워드 리 - 610 매그놀리아 오너 셰프
 6. **choi-hyun-seok.jpg** - 최현석
 7. **jung-ji-sun.jpg** - 정지선
 8. **jang-ho-jun.jpg** - 장호준

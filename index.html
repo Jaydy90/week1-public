@@ -135,7 +135,7 @@
     <link rel="dns-prefetch" href="https://js.stripe.com">
     <link rel="dns-prefetch" href="https://djmadubptsajvdvzpdvd.supabase.co">
 
-    <link rel="stylesheet" href="style.css?v=32">
+    <link rel="stylesheet" href="style.css?v=33">
     <link rel="stylesheet" href="chefs-section.css?v=1">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
@@ -295,36 +295,36 @@
                                 </div>
                             </div>
 
-                            <!-- Chef 2: 요리하는 돌아이 (안유성) -->
-                            <div class="chef-card" data-restaurant-name="안유성">
+                            <!-- Chef 2: 요리하는 돌아이 (윤남노) - 디핀 -->
+                            <div class="chef-card" data-restaurant-name="디핀">
                                 <div class="chef-photo">
-                                    <img src="images/chefs/dolai.jpg" alt="요리하는 돌아이" loading="lazy">
+                                    <img src="images/chefs/dolai.webp" alt="요리하는 돌아이" loading="lazy">
                                 </div>
                                 <div class="chef-info">
                                     <h4 class="chef-nickname">요리하는 돌아이</h4>
-                                    <p class="chef-name">(안유성)</p>
+                                    <p class="chef-name">(윤남노)</p>
                                 </div>
                             </div>
 
-                            <!-- Chef 3: 이무카세 1호 (김도윤) -->
-                            <div class="chef-card" data-restaurant-name="김도윤">
+                            <!-- Chef 3: 이모카세 1호 (김미령) -->
+                            <div class="chef-card" data-restaurant-name="김미령">
                                 <div class="chef-photo">
-                                    <img src="images/chefs/imukase.jpg" alt="이무카세 1호" loading="lazy">
+                                    <img src="images/chefs/imokase.webp" alt="이모카세 1호" loading="lazy">
                                 </div>
                                 <div class="chef-info">
-                                    <h4 class="chef-nickname">이무카세 1호</h4>
-                                    <p class="chef-name">(김도윤)</p>
+                                    <h4 class="chef-nickname">이모카세 1호</h4>
+                                    <p class="chef-name">(김미령)</p>
                                 </div>
                             </div>
 
-                            <!-- Chef 4: 트리플 스타 (최강록) -->
-                            <div class="chef-card" data-restaurant-name="레스토랑 네오">
+                            <!-- Chef 4: 트리플 스타 (강승원) - 트리드 -->
+                            <div class="chef-card" data-restaurant-id="rest-006">
                                 <div class="chef-photo">
-                                    <img src="images/chefs/triple-star.jpg" alt="트리플 스타" loading="lazy">
+                                    <img src="images/chefs/triple-star.avif" alt="트리플 스타" loading="lazy">
                                 </div>
                                 <div class="chef-info">
                                     <h4 class="chef-nickname">트리플 스타</h4>
-                                    <p class="chef-name">(최강록)</p>
+                                    <p class="chef-name">(강승원)</p>
                                 </div>
                             </div>
                         </div>
@@ -341,8 +341,8 @@
                     <div class="team white-spoon">
                         <h3 class="team-label">백수저</h3>
                         <div class="chefs-grid">
-                            <!-- Chef 5: 에드워드 리 -->
-                            <div class="chef-card" data-restaurant-name="에드워드 권 리츠칼튼">
+                            <!-- Chef 5: 에드워드 리 - 610 매그놀리아 -->
+                            <div class="chef-card" data-restaurant-name="610 매그놀리아">
                                 <div class="chef-photo">
                                     <img src="images/chefs/edward-lee.jpg" alt="에드워드 리" loading="lazy">
                                 </div>
@@ -798,15 +798,15 @@
     <script defer src="https://js.stripe.com/v3/"></script>
 
     <!-- App Scripts - Load in order -->
-    <script src="config.js?v=32"></script>
-    <script src="sanitize.js?v=32"></script>
-    <script src="auth.js?v=32"></script>
-    <script src="comments.js?v=32"></script>
+    <script src="config.js?v=33"></script>
+    <script src="sanitize.js?v=33"></script>
+    <script src="auth.js?v=33"></script>
+    <script src="comments.js?v=33"></script>
     <script>
       // 즉시 확인: data.js 로드 전
       console.log('[BEFORE data.js] window.allRestaurants:', typeof window.allRestaurants);
     </script>
-    <script src="data.js?v=32"></script>
+    <script src="data.js?v=33"></script>
     <script>
       // 즉시 확인: data.js 로드 후
       console.log('[AFTER data.js] window.allRestaurants:', window.allRestaurants?.length);
@@ -820,9 +820,9 @@
         console.log('✅ data.js 정상 로드됨:', window.allRestaurants.length, '개');
       }
     </script>
-    <script src="news-data.js?v=32"></script>
-    <script src="subscription.js?v=32"></script>
-    <script src="main.js?v=32"></script>
+    <script src="news-data.js?v=33"></script>
+    <script src="subscription.js?v=33"></script>
+    <script src="main.js?v=33"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
