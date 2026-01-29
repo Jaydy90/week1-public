@@ -255,8 +255,9 @@
         </div>
     </div>
 
-    <!-- 공통 카테고리 섹션 (홈/리스트 모두 사용, main 외부에 독립적으로 배치) -->
-    <div id="shared-category-sections" style="display: none;">
+    <main class="main-content">
+        <!-- 공통 카테고리 섹션 (홈/리스트 모두 사용) -->
+        <div id="shared-category-sections">
             <!-- 미쉐린 가이드 설명 -->
             <section class="category-intro" id="michelin-intro" style="display: none;">
                 <div class="category-intro-content">
@@ -398,9 +399,8 @@
                     </div>
                 </div>
             </section>
-    </div>
+        </div>
 
-    <main class="main-content">
         <!-- HOME: 홈 화면 -->
         <section class="page-section is-active" id="home" data-section="home">
             <!-- 간소화된 히어로 -->
@@ -443,6 +443,8 @@
                 <button class="settings-toggle-btn" type="button" id="settings-toggle-btn"><span>⚙️</span> 설정</button>
             </div>
 
+            <!-- 공통 카테고리 섹션 컨테이너 -->
+            <div id="list-category-container"></div>
 
             <!-- 고급 필터 (기본 숨김) -->
             <div class="advanced-filters" id="advanced-filters" style="display: none;">
