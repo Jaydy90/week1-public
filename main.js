@@ -233,19 +233,19 @@ const HomeScreen = {
   moveCategorySectionsToScreen(screen) {
     console.log(`[${screen}] moveCategorySectionsToScreen 호출됨`);
     const sharedSections = document.getElementById('shared-category-sections');
-    const targetSection = document.getElementById(screen);
-    const trustTabs = targetSection?.querySelector('.trust-tabs');
+    const targetContainer = document.getElementById(`${screen}-category-container`);
 
     console.log(`[${screen}] sharedSections:`, sharedSections);
-    console.log(`[${screen}] targetSection:`, targetSection);
-    console.log(`[${screen}] trustTabs:`, trustTabs);
+    console.log(`[${screen}] targetContainer:`, targetContainer);
 
-    if (sharedSections && trustTabs) {
-      // trust-tabs 바로 다음에 섹션 삽입
-      trustTabs.parentNode.insertBefore(sharedSections, trustTabs.nextSibling);
-      console.log(`[${screen}] ✅ 섹션 이동 완료`);
+    if (sharedSections && targetContainer) {
+      // 컨테이너에 섹션 추가 (appendChild는 자동으로 기존 위치에서 제거하고 이동)
+      targetContainer.appendChild(sharedSections);
+      console.log(`[${screen}] ✅ 섹션 이동 완료 → ${screen}-category-container`);
     } else {
-      console.error(`[${screen}] ❌ 섹션 이동 실패 - 요소를 찾을 수 없음`);
+      console.error(`[${screen}] ❌ 섹션 이동 실패`);
+      if (!sharedSections) console.error('  → shared-category-sections를 찾을 수 없음');
+      if (!targetContainer) console.error(`  → ${screen}-category-container를 찾을 수 없음`);
     }
   },
 
@@ -762,19 +762,19 @@ const ListScreen = {
   moveCategorySectionsToScreen(screen) {
     console.log(`[${screen}] moveCategorySectionsToScreen 호출됨`);
     const sharedSections = document.getElementById('shared-category-sections');
-    const targetSection = document.getElementById(screen);
-    const trustTabs = targetSection?.querySelector('.trust-tabs');
+    const targetContainer = document.getElementById(`${screen}-category-container`);
 
     console.log(`[${screen}] sharedSections:`, sharedSections);
-    console.log(`[${screen}] targetSection:`, targetSection);
-    console.log(`[${screen}] trustTabs:`, trustTabs);
+    console.log(`[${screen}] targetContainer:`, targetContainer);
 
-    if (sharedSections && trustTabs) {
-      // trust-tabs 바로 다음에 섹션 삽입
-      trustTabs.parentNode.insertBefore(sharedSections, trustTabs.nextSibling);
-      console.log(`[${screen}] ✅ 섹션 이동 완료`);
+    if (sharedSections && targetContainer) {
+      // 컨테이너에 섹션 추가 (appendChild는 자동으로 기존 위치에서 제거하고 이동)
+      targetContainer.appendChild(sharedSections);
+      console.log(`[${screen}] ✅ 섹션 이동 완료 → ${screen}-category-container`);
     } else {
-      console.error(`[${screen}] ❌ 섹션 이동 실패 - 요소를 찾을 수 없음`);
+      console.error(`[${screen}] ❌ 섹션 이동 실패`);
+      if (!sharedSections) console.error('  → shared-category-sections를 찾을 수 없음');
+      if (!targetContainer) console.error(`  → ${screen}-category-container를 찾을 수 없음`);
     }
   },
 
