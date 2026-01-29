@@ -717,8 +717,38 @@ const HomeScreen = {
 const ListScreen = {
   init() {
     console.log('List screen initialized');
+    this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderList();
     this.setupEventListeners();
+  },
+
+  // 카테고리별 섹션 표시/숨김 (홈 화면과 동일한 로직)
+  toggleCategorySections(tabValue) {
+    const michelinIntro = document.getElementById('list-michelin-intro');
+    const celebrityIntro = document.getElementById('list-celebrity-intro');
+    const chefsSection = document.getElementById('list-culinary-class-heroes');
+
+    // 모든 섹션 숨김
+    if (michelinIntro) michelinIntro.style.display = 'none';
+    if (celebrityIntro) celebrityIntro.style.display = 'none';
+    if (chefsSection) chefsSection.style.display = 'none';
+
+    // 선택된 탭에 따라 섹션 표시
+    switch(tabValue) {
+      case 'michelin':
+        if (michelinIntro) michelinIntro.style.display = 'block';
+        break;
+      case 'celebrity':
+        if (celebrityIntro) celebrityIntro.style.display = 'block';
+        break;
+      case 'chef':
+        if (chefsSection) chefsSection.style.display = 'block';
+        break;
+      case 'all':
+      default:
+        // 전체 탭: 모든 특수 섹션 숨김 (전체 맛집 목록만 표시)
+        break;
+    }
   },
 
   renderList() {
@@ -902,10 +932,12 @@ const ListScreen = {
           AppState.filters.badge = 'all';
           trustTabs.forEach(t => t.classList.remove('is-active'));
           document.querySelector('#list .trust-tab[data-tab="all"]')?.classList.add('is-active');
+          this.toggleCategorySections('all'); // 카테고리 섹션 숨김
         } else {
           AppState.filters.badge = tabValue;
           trustTabs.forEach(t => t.classList.remove('is-active'));
           tab.classList.add('is-active');
+          this.toggleCategorySections(tabValue); // 카테고리 섹션 표시
         }
 
         this.renderList();
