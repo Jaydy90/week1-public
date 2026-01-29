@@ -223,9 +223,22 @@ const HomeScreen = {
   init() {
     console.log('Home screen initialized');
     this.updateMapLocation();
+    this.moveCategorySectionsToScreen('home'); // 공통 섹션을 홈으로 이동
     this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderPreviewList();
     this.setupEventListeners();
+  },
+
+  // 공통 카테고리 섹션을 현재 화면으로 이동
+  moveCategorySectionsToScreen(screen) {
+    const sharedSections = document.getElementById('shared-category-sections');
+    const targetSection = document.getElementById(screen);
+    const trustTabs = targetSection?.querySelector('.trust-tabs');
+
+    if (sharedSections && trustTabs) {
+      // trust-tabs 바로 다음에 섹션 삽입
+      trustTabs.parentNode.insertBefore(sharedSections, trustTabs.nextSibling);
+    }
   },
 
   // 카테고리별 섹션 표시/숨김
@@ -717,16 +730,29 @@ const HomeScreen = {
 const ListScreen = {
   init() {
     console.log('List screen initialized');
+    this.moveCategorySectionsToScreen('list'); // 공통 섹션을 리스트로 이동
     this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderList();
     this.setupEventListeners();
   },
 
+  // 공통 카테고리 섹션을 현재 화면으로 이동
+  moveCategorySectionsToScreen(screen) {
+    const sharedSections = document.getElementById('shared-category-sections');
+    const targetSection = document.getElementById(screen);
+    const trustTabs = targetSection?.querySelector('.trust-tabs');
+
+    if (sharedSections && trustTabs) {
+      // trust-tabs 바로 다음에 섹션 삽입
+      trustTabs.parentNode.insertBefore(sharedSections, trustTabs.nextSibling);
+    }
+  },
+
   // 카테고리별 섹션 표시/숨김 (홈 화면과 동일한 로직)
   toggleCategorySections(tabValue) {
-    const michelinIntro = document.getElementById('list-michelin-intro');
-    const celebrityIntro = document.getElementById('list-celebrity-intro');
-    const chefsSection = document.getElementById('list-culinary-class-heroes');
+    const michelinIntro = document.getElementById('michelin-intro');
+    const celebrityIntro = document.getElementById('celebrity-intro');
+    const chefsSection = document.getElementById('culinary-class-heroes');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';

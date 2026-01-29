@@ -256,23 +256,8 @@
     </div>
 
     <main class="main-content">
-        <!-- HOME: 홈 화면 -->
-        <section class="page-section is-active" id="home" data-section="home">
-            <!-- 간소화된 히어로 -->
-            <div class="hero-compact">
-                <h1>지금 갈 맛집, 빠르게 결정하세요</h1>
-                <p class="hero-desc">신뢰할 수 있는 맛집만 추려 길찾기까지 한 번에</p>
-            </div>
-
-            <!-- 신뢰 탭 -->
-            <div class="trust-tabs">
-                <button class="trust-tab is-active" type="button" data-tab="all">전체</button>
-                <button class="trust-tab" type="button" data-tab="michelin">미쉐린</button>
-                <button class="trust-tab" type="button" data-tab="celebrity">유명인</button>
-                <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
-            </div>
-
-            <!-- 카테고리별 설명 섹션 -->
+        <!-- 공통 카테고리 섹션 (홈/리스트 모두 사용) -->
+        <div id="shared-category-sections">
             <!-- 미쉐린 가이드 설명 -->
             <section class="category-intro" id="michelin-intro" style="display: none;">
                 <div class="category-intro-content">
@@ -299,7 +284,7 @@
             </section>
 
             <!-- 흑백요리사 시즌1 Top 8 -->
-            <section class="culinary-class-heroes" id="culinary-class-heroes">
+            <section class="culinary-class-heroes" id="culinary-class-heroes" style="display: none;">
                 <div class="heroes-header">
                     <h2 class="heroes-title">흑백요리사 시즌1 최종 8인!</h2>
                     <p class="heroes-subtitle">셰프를 클릭하면 그들의 음식점으로 이동합니다</p>
@@ -414,6 +399,25 @@
                     </div>
                 </div>
             </section>
+        </div>
+
+        <!-- HOME: 홈 화면 -->
+        <section class="page-section is-active" id="home" data-section="home">
+            <!-- 간소화된 히어로 -->
+            <div class="hero-compact">
+                <h1>지금 갈 맛집, 빠르게 결정하세요</h1>
+                <p class="hero-desc">신뢰할 수 있는 맛집만 추려 길찾기까지 한 번에</p>
+            </div>
+
+            <!-- 신뢰 탭 -->
+            <div class="trust-tabs">
+                <button class="trust-tab is-active" type="button" data-tab="all">전체</button>
+                <button class="trust-tab" type="button" data-tab="michelin">미쉐린</button>
+                <button class="trust-tab" type="button" data-tab="celebrity">유명인</button>
+                <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
+            </div>
+
+            <!-- 공통 카테고리 섹션이 여기에 표시됨 -->
 
             <!-- 카드 미리보기 (맨 위로) -->
             <div class="card-grid" id="home-preview-list"></div>
@@ -438,148 +442,7 @@
                 <button class="settings-toggle-btn" type="button" id="settings-toggle-btn"><span>⚙️</span> 설정</button>
             </div>
 
-            <!-- 카테고리별 설명 섹션 -->
-            <!-- 미쉐린 가이드 설명 -->
-            <section class="category-intro" id="list-michelin-intro" style="display: none;">
-                <div class="category-intro-content">
-                    <div class="category-icon">⭐</div>
-                    <h3 class="category-intro-title">미쉐린 가이드</h3>
-                    <p class="category-intro-text">
-                        세계에서 가장 권위 있는 레스토랑 평가 기준.
-                        익명의 전문 심사위원들이 음식의 질, 조리 기술, 창의성, 가격 대비 가치, 일관성을 엄격하게 평가합니다.
-                        3스타(exceptional), 2스타(excellent), 1스타(very good), 빕 구르망(good value)으로 구분됩니다.
-                    </p>
-                </div>
-            </section>
-
-            <!-- 유명인 추천 설명 -->
-            <section class="category-intro" id="list-celebrity-intro" style="display: none;">
-                <div class="category-intro-content">
-                    <div class="category-icon">🌟</div>
-                    <h3 class="category-intro-title">유명인 추천 맛집</h3>
-                    <p class="category-intro-text">
-                        K-POP 아이돌, 유명 유튜버, 방송인들이 직접 방문하고 공식 채널에서 인증한 맛집.
-                        SNS, 유튜브, TV 방송 등에서 공개적으로 추천한 음식점으로, 출처가 명확히 검증되었습니다.
-                    </p>
-                </div>
-            </section>
-
-            <!-- 흑백요리사 시즌1 Top 8 -->
-            <section class="culinary-class-heroes" id="list-culinary-class-heroes" style="display: none;">
-                <div class="heroes-header">
-                    <h2 class="heroes-title">흑백요리사 시즌1 최종 8인!</h2>
-                    <p class="heroes-subtitle">셰프를 클릭하면 그들의 음식점으로 이동합니다</p>
-                </div>
-
-                <div class="heroes-container">
-                    <!-- 흑수저 팀 (왼쪽) -->
-                    <div class="team black-spoon">
-                        <h3 class="team-label">흑수저</h3>
-                        <div class="chefs-grid">
-                            <!-- Chef 1: 나폴리 맛피아 (권성준) -->
-                            <div class="chef-card" data-restaurant-id="rest-005">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/napoli-matfia.jpg" alt="나폴리 맛피아" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">나폴리 맛피아</h4>
-                                    <p class="chef-name">(권성준)</p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 2: 요리하는 돌아이 (윤남노) - 디핀 -->
-                            <div class="chef-card" data-restaurant-name="디핀">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/dolai.webp" alt="요리하는 돌아이" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">요리하는 돌아이</h4>
-                                    <p class="chef-name">(윤남노)</p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 3: 이모카세 1호 (김미령) -->
-                            <div class="chef-card" data-restaurant-name="김미령">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/imokase.webp" alt="이모카세 1호" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">이모카세 1호</h4>
-                                    <p class="chef-name">(김미령)</p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 4: 트리플 스타 (강승원) - 트리드 -->
-                            <div class="chef-card" data-restaurant-id="rest-006">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/triple-star.avif" alt="트리플 스타" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">트리플 스타</h4>
-                                    <p class="chef-name">(강승원)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 중앙 구분선 -->
-                    <div class="divider-vertical">
-                        <div class="divider-line"></div>
-                        <div class="divider-vs">VS</div>
-                        <div class="divider-line"></div>
-                    </div>
-
-                    <!-- 백수저 팀 (오른쪽) -->
-                    <div class="team white-spoon">
-                        <h3 class="team-label">백수저</h3>
-                        <div class="chefs-grid">
-                            <!-- Chef 5: 에드워드 리 - 610 매그놀리아 -->
-                            <div class="chef-card" data-restaurant-name="610 매그놀리아">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/edward-lee.webp" alt="에드워드 리" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">에드워드 리</h4>
-                                    <p class="chef-name"></p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 6: 최현석 -->
-                            <div class="chef-card" data-restaurant-name="쵸이랩">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/choi-hyun-seok.jpg?v=1" alt="최현석" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">최현석</h4>
-                                    <p class="chef-name"></p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 7: 정지선 -->
-                            <div class="chef-card" data-restaurant-name="티엔미미">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/jung-ji-sun.webp" alt="정지선" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">정지선</h4>
-                                    <p class="chef-name"></p>
-                                </div>
-                            </div>
-
-                            <!-- Chef 8: 장호준 -->
-                            <div class="chef-card" data-restaurant-name="네기 다이닝라운지">
-                                <div class="chef-photo">
-                                    <img src="images/chefs/jang-ho-jun.jpg?v=1" alt="장호준" loading="lazy">
-                                </div>
-                                <div class="chef-info">
-                                    <h4 class="chef-nickname">장호준</h4>
-                                    <p class="chef-name"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <!-- 공통 카테고리 섹션이 여기에 표시됨 -->
 
             <!-- 고급 필터 (기본 숨김) -->
             <div class="advanced-filters" id="advanced-filters" style="display: none;">
