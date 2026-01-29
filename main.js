@@ -223,8 +223,38 @@ const HomeScreen = {
   init() {
     console.log('Home screen initialized');
     this.updateMapLocation();
+    this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderPreviewList();
     this.setupEventListeners();
+  },
+
+  // 카테고리별 섹션 표시/숨김
+  toggleCategorySections(tabValue) {
+    const michelinIntro = document.getElementById('michelin-intro');
+    const celebrityIntro = document.getElementById('celebrity-intro');
+    const chefsSection = document.getElementById('culinary-class-heroes');
+
+    // 모든 섹션 숨김
+    if (michelinIntro) michelinIntro.style.display = 'none';
+    if (celebrityIntro) celebrityIntro.style.display = 'none';
+    if (chefsSection) chefsSection.style.display = 'none';
+
+    // 선택된 탭에 따라 섹션 표시
+    switch(tabValue) {
+      case 'michelin':
+        if (michelinIntro) michelinIntro.style.display = 'block';
+        break;
+      case 'celebrity':
+        if (celebrityIntro) celebrityIntro.style.display = 'block';
+        break;
+      case 'chef':
+        if (chefsSection) chefsSection.style.display = 'block';
+        break;
+      case 'all':
+      default:
+        // 전체 탭: 모든 특수 섹션 숨김 (거리순 맛집만 표시)
+        break;
+    }
   },
 
   // 지도 위치 업데이트
@@ -404,9 +434,14 @@ const HomeScreen = {
     const trustTabs = document.querySelectorAll('#home .trust-tab');
     trustTabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        AppState.filters.trustTab = tab.dataset.tab;
+        const tabValue = tab.dataset.tab;
+        AppState.filters.trustTab = tabValue;
         trustTabs.forEach(t => t.classList.remove('is-active'));
         tab.classList.add('is-active');
+
+        // 카테고리별 섹션 표시/숨김
+        this.toggleCategorySections(tabValue);
+
         this.renderPreviewList();
       });
     });
