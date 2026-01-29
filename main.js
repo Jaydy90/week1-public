@@ -87,7 +87,7 @@ const Router = {
         ListScreen.init();
         break;
       case 'detail':
-        DetailScreen.init(data.restaurantId);
+        DetailScreen.init(data.restaurantId, data);
         break;
       case 'mypage':
         MypageScreen.init();
@@ -1098,8 +1098,8 @@ const ListScreen = {
 const DetailScreen = {
   currentRestaurant: null,
 
-  init(restaurantId) {
-    console.log('Detail screen initialized for:', restaurantId);
+  init(restaurantId, options = {}) {
+    console.log('Detail screen initialized for:', restaurantId, options);
 
     // 레스토랑 데이터 찾기
     this.currentRestaurant = this.findRestaurant(restaurantId);
@@ -1121,6 +1121,17 @@ const DetailScreen = {
 
     this.render();
     this.setupEventListeners();
+
+    // 셰프 카드에서 왔으면 길찾기 버튼으로 스크롤
+    if (options.scrollToDirections) {
+      setTimeout(() => {
+        const directionsBtn = document.getElementById('detail-directions-btn');
+        if (directionsBtn) {
+          console.log('Auto-scrolling to directions button');
+          directionsBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 700);
+    }
   },
 
   // 최근 본 목록에 추가
@@ -2694,28 +2705,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (restaurantId) {
           // ID가 있으면 직접 상세 페이지로 이동
-          Router.navigateTo('detail', { restaurantId });
-          // 길찾기 버튼으로 자동 스크롤
-          setTimeout(() => {
-            const directionsBtn = document.getElementById('detail-directions-btn');
-            if (directionsBtn) {
-              directionsBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          }, 300);
+          Router.navigateTo('detail', { restaurantId, scrollToDirections: true });
         } else if (restaurantName) {
           // 이름으로 검색해서 찾기
           const restaurant = window.allRestaurants?.find(r =>
             r.name.includes(restaurantName) || r.badgeType?.includes(restaurantName)
           );
           if (restaurant) {
-            Router.navigateTo('detail', { restaurantId: restaurant.id });
-            // 길찾기 버튼으로 자동 스크롤
-            setTimeout(() => {
-              const directionsBtn = document.getElementById('detail-directions-btn');
-              if (directionsBtn) {
-                directionsBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
-            }, 300);
+            Router.navigateTo('detail', { restaurantId: restaurant.id, scrollToDirections: true });
           } else {
             // 음식점을 찾을 수 없으면 리스트 화면으로 이동 (흑백요리사 필터 적용)
             Router.navigateTo('list');
