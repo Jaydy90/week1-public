@@ -2695,6 +2695,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (restaurantId) {
           // ID가 있으면 직접 상세 페이지로 이동
           Router.navigateTo('detail', { restaurantId });
+          // 길찾기 버튼으로 자동 스크롤
+          setTimeout(() => {
+            const directionsBtn = document.getElementById('detail-directions-btn');
+            if (directionsBtn) {
+              directionsBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }, 300);
         } else if (restaurantName) {
           // 이름으로 검색해서 찾기
           const restaurant = window.allRestaurants?.find(r =>
@@ -2702,6 +2709,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           );
           if (restaurant) {
             Router.navigateTo('detail', { restaurantId: restaurant.id });
+            // 길찾기 버튼으로 자동 스크롤
+            setTimeout(() => {
+              const directionsBtn = document.getElementById('detail-directions-btn');
+              if (directionsBtn) {
+                directionsBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }, 300);
           } else {
             // 음식점을 찾을 수 없으면 리스트 화면으로 이동 (흑백요리사 필터 적용)
             Router.navigateTo('list');
