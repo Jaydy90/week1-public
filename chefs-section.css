@@ -114,12 +114,20 @@
   transform: scale(1.1);
 }
 
-/* Placeholder for missing images */
-.chef-photo img[src*="images/chefs/"]:not([src*="http"]) {
+/* Image loaded successfully - no placeholder needed */
+.chef-photo img {
+  opacity: 1;
+  display: block;
+}
+
+/* Placeholder only for broken/missing images */
+.chef-photo img[src=""],
+.chef-photo img:not([src]) {
   opacity: 0;
 }
 
-.chef-photo::before {
+.chef-photo:has(img[src=""]) ::before,
+.chef-photo:has(img:not([src])) ::before {
   content: "📸";
   position: absolute;
   top: 50%;
