@@ -223,40 +223,16 @@ const HomeScreen = {
   init() {
     console.log('Home screen initialized');
     this.updateMapLocation();
-    this.moveCategorySectionsToScreen('home'); // 공통 섹션을 홈으로 이동
     this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderPreviewList();
     this.setupEventListeners();
   },
 
-  // 공통 카테고리 섹션을 현재 화면으로 이동
-  moveCategorySectionsToScreen(screen) {
-    console.log(`[${screen}] moveCategorySectionsToScreen 호출됨`);
-    const sharedSections = document.getElementById('shared-category-sections');
-    const targetContainer = document.getElementById(`${screen}-category-container`);
-
-    console.log(`[${screen}] sharedSections:`, sharedSections);
-    console.log(`[${screen}] targetContainer:`, targetContainer);
-
-    if (sharedSections && targetContainer) {
-      // 컨테이너에 섹션 추가 (appendChild는 자동으로 기존 위치에서 제거하고 이동)
-      targetContainer.appendChild(sharedSections);
-      console.log(`[${screen}] ✅ 섹션 이동 완료 → ${screen}-category-container`);
-    } else {
-      console.error(`[${screen}] ❌ 섹션 이동 실패`);
-      if (!sharedSections) console.error('  → shared-category-sections를 찾을 수 없음');
-      if (!targetContainer) console.error(`  → ${screen}-category-container를 찾을 수 없음`);
-    }
-  },
-
   // 카테고리별 섹션 표시/숨김
   toggleCategorySections(tabValue) {
-    console.log(`[HomeScreen] toggleCategorySections 호출됨: ${tabValue}`);
     const michelinIntro = document.getElementById('michelin-intro');
     const celebrityIntro = document.getElementById('celebrity-intro');
     const chefsSection = document.getElementById('culinary-class-heroes');
-
-    console.log('[HomeScreen] 섹션 요소:', { michelinIntro, celebrityIntro, chefsSection });
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
@@ -266,28 +242,17 @@ const HomeScreen = {
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
       case 'michelin':
-        if (michelinIntro) {
-          michelinIntro.style.display = 'block';
-          console.log('[HomeScreen] ✅ 미쉐린 인트로 표시');
-        }
+        if (michelinIntro) michelinIntro.style.display = 'block';
         break;
       case 'celebrity':
-        if (celebrityIntro) {
-          celebrityIntro.style.display = 'block';
-          console.log('[HomeScreen] ✅ 유명인 인트로 표시');
-        }
+        if (celebrityIntro) celebrityIntro.style.display = 'block';
         break;
       case 'chef':
-        if (chefsSection) {
-          chefsSection.style.display = 'block';
-          console.log('[HomeScreen] ✅ 흑백요리사 Top8 표시');
-        } else {
-          console.error('[HomeScreen] ❌ chefsSection을 찾을 수 없음!');
-        }
+        if (chefsSection) chefsSection.style.display = 'block';
         break;
       case 'all':
       default:
-        console.log('[HomeScreen] 전체 탭 - 모든 섹션 숨김');
+        // 전체 탭: 모든 특수 섹션 숨김 (거리순 맛집만 표시)
         break;
     }
   },
@@ -752,40 +717,17 @@ const HomeScreen = {
 const ListScreen = {
   init() {
     console.log('List screen initialized');
-    this.moveCategorySectionsToScreen('list'); // 공통 섹션을 리스트로 이동
-    this.toggleCategorySections('all'); // 초기 상태: 전체 탭
+    this.toggleCategorySections('all');
     this.renderList();
     this.setupEventListeners();
   },
 
-  // 공통 카테고리 섹션을 현재 화면으로 이동
-  moveCategorySectionsToScreen(screen) {
-    console.log(`[${screen}] moveCategorySectionsToScreen 호출됨`);
-    const sharedSections = document.getElementById('shared-category-sections');
-    const targetContainer = document.getElementById(`${screen}-category-container`);
-
-    console.log(`[${screen}] sharedSections:`, sharedSections);
-    console.log(`[${screen}] targetContainer:`, targetContainer);
-
-    if (sharedSections && targetContainer) {
-      // 컨테이너에 섹션 추가 (appendChild는 자동으로 기존 위치에서 제거하고 이동)
-      targetContainer.appendChild(sharedSections);
-      console.log(`[${screen}] ✅ 섹션 이동 완료 → ${screen}-category-container`);
-    } else {
-      console.error(`[${screen}] ❌ 섹션 이동 실패`);
-      if (!sharedSections) console.error('  → shared-category-sections를 찾을 수 없음');
-      if (!targetContainer) console.error(`  → ${screen}-category-container를 찾을 수 없음`);
-    }
-  },
-
-  // 카테고리별 섹션 표시/숨김 (홈 화면과 동일한 로직)
+  // 카테고리별 섹션 표시/숨김 (리스트 전용 ID 사용)
   toggleCategorySections(tabValue) {
-    console.log(`[ListScreen] toggleCategorySections 호출됨: ${tabValue}`);
-    const michelinIntro = document.getElementById('michelin-intro');
-    const celebrityIntro = document.getElementById('celebrity-intro');
-    const chefsSection = document.getElementById('culinary-class-heroes');
-
-    console.log('[ListScreen] 섹션 요소:', { michelinIntro, celebrityIntro, chefsSection });
+    console.log(`[ListScreen] toggleCategorySections: ${tabValue}`);
+    const michelinIntro = document.getElementById('list-michelin-intro');
+    const celebrityIntro = document.getElementById('list-celebrity-intro');
+    const chefsSection = document.getElementById('list-culinary-class-heroes');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
@@ -795,28 +737,21 @@ const ListScreen = {
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
       case 'michelin':
-        if (michelinIntro) {
-          michelinIntro.style.display = 'block';
-          console.log('[ListScreen] ✅ 미쉐린 인트로 표시');
-        }
+        if (michelinIntro) michelinIntro.style.display = 'block';
         break;
       case 'celebrity':
-        if (celebrityIntro) {
-          celebrityIntro.style.display = 'block';
-          console.log('[ListScreen] ✅ 유명인 인트로 표시');
-        }
+        if (celebrityIntro) celebrityIntro.style.display = 'block';
         break;
       case 'chef':
         if (chefsSection) {
           chefsSection.style.display = 'block';
-          console.log('[ListScreen] ✅ 흑백요리사 Top8 표시');
+          console.log('[ListScreen] ✅ Top8 표시');
         } else {
-          console.error('[ListScreen] ❌ chefsSection을 찾을 수 없음!');
+          console.error('[ListScreen] ❌ list-culinary-class-heroes를 찾을 수 없음!');
         }
         break;
       case 'all':
       default:
-        console.log('[ListScreen] 전체 탭 - 모든 섹션 숨김');
         break;
     }
   },
