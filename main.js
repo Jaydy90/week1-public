@@ -385,16 +385,17 @@ const HomeScreen = {
       return `
         <article class="info-card" style="--delay:${Math.min(index * 0.08, 0.5)}s" data-restaurant-id="${item.id}">
           <div class="card-meta">
-            <span class="status-pill">${item.status || '검증 중'}</span>
-            <span>${travelTime}</span>
+            <span class="status-pill">${item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중'}</span>
+            <span>${item.category || travelTime}</span>
           </div>
           <span class="card-title">${item.name}</span>
           <span class="card-location">${location}</span>
           <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
           <div class="card-badges">${badgeMarkup}</div>
           <div class="card-footer">
+            <span>${item.sourceLabel || '출처 확인 중'}</span>
+            <span>확인일: ${item.verifiedAt || '확인 중'}</span>
             <span>${bestRoute}</span>
-            <span>저장 ${saves}회</span>
           </div>
         </article>
       `;
@@ -796,6 +797,7 @@ const ListScreen = {
           <div class="card-footer">
             <span>${item.sourceLabel}</span>
             <span>확인일: ${item.verifiedAt}</span>
+            <span>${item.bestRoute || '경로 확인'}</span>
           </div>
         </article>
       `;
