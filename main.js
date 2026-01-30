@@ -393,9 +393,8 @@ const HomeScreen = {
           <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
           <div class="card-badges">${badgeMarkup}</div>
           <div class="card-footer">
-            <span>${item.sourceLabel || '출처 확인 중'}</span>
+            ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
             <span>확인일: ${item.verifiedAt || '확인 중'}</span>
-            <span>${bestRoute}</span>
           </div>
         </article>
       `;
@@ -795,9 +794,8 @@ const ListScreen = {
           <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
           <div class="card-badges">${badgeHTML}</div>
           <div class="card-footer">
-            <span>${item.sourceLabel}</span>
+            ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
             <span>확인일: ${item.verifiedAt}</span>
-            <span>${item.bestRoute || '경로 확인'}</span>
           </div>
         </article>
       `;
