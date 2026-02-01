@@ -706,12 +706,6 @@ const allRestaurantsRaw = [
   "온지음 | 서울 | 종로구 | 한식 공방 | 조은희 셰프 | 제철 반상 | 출처 확인 중 | 2026-01-19 | chef"
 ];
 
-
-// ========================================
-// Restaurant Reservation Data (Auto-generated)
-// ========================================
-const restaurantReservations = { ... };
-
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
   const parts = line.split(" | ").map((part) => part.trim());
   const name = parts[0];
@@ -739,8 +733,7 @@ const allRestaurants = allRestaurantsRaw.map((line, index) => {
     sourceLabel,
     verifiedAt,
     group,
-    sourceUrl,
-    reservation: restaurantReservations[name] || null
+    sourceUrl
   };
 });
 
