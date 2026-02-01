@@ -2583,6 +2583,229 @@ window.ArticleModalController = ArticleModalController;
 console.log('ArticleModalController exposed globally');
 
 // ========================================
+// ReservationModule - 예약 링크 관리
+// ========================================
+const ReservationModule = {
+  /**
+   * 예약 링크 열기
+   * @param {string} restaurantId - 레스토랑 ID (rest-001 등)
+   * @param {string} platform - 'catchtable', 'naver', 'phone'
+   */
+  async open(restaurantId, platform = 'catchtable') {
+    console.log(`Opening reservation: ${restaurantId} on ${platform}`);
+
+    // 1. 구독자 체크 (phone은 제외)
+    if (platform !== 'phone' && !this.checkSubscription()) {
+      return;
+    }
+
+    // 2. 레스토랑 정보 조회
+    const restaurant = this.getRestaurant(restaurantId);
+    if (!restaurant) {
+      alert('레스토랑 정보를 찾을 수 없습니다.');
+      return;
+    }
+
+    // 3. 예약 링크 가져오기
+    const link = this.getReservationLink(restaurant, platform);
+    if (!link) {
+      alert('예약 링크를 사용할 수 없습니다. 전화 예약을 이용해주세요.');
+      return;
+    }
+
+    // 4. 추적 (Analytics)
+    await this.trackClick(restaurantId, platform);
+
+    // 5. 딥링크 열기
+    this.openLink(link, platform, restaurant);
+  },
+
+  /**
+   * 구독자 체크
+   */
+  checkSubscription() {
+    // AuthModule이 로드되었는지 확인
+    if (typeof AuthModule === 'undefined') {
+      console.error('AuthModule not loaded');
+      alert('인증 시스템을 초기화하는 중입니다. 잠시 후 다시 시도해주세요.');
+      return false;
+    }
+
+    // 구독자 체크
+    const isSubscriber = AuthModule.isSubscriber && AuthModule.isSubscriber();
+
+    if (!isSubscriber) {
+      // 페이월 모달 표시
+      this.showPaywall('reservation');
+      return false;
+    }
+
+    return true;
+  },
+
+  /**
+   * 레스토랑 정보 조회
+   */
+  getRestaurant(restaurantId) {
+    // nearbySpots에서 찾기
+    if (window.nearbySpots) {
+      const found = window.nearbySpots.find(r => r.id === restaurantId);
+      if (found) return found;
+    }
+
+    // allRestaurants에서 찾기
+    if (window.allRestaurants) {
+      const found = window.allRestaurants.find(r => r.id === restaurantId);
+      if (found) return found;
+    }
+
+    return null;
+  },
+
+  /**
+   * 예약 링크 가져오기
+   */
+  getReservationLink(restaurant, platform) {
+    // reservation 객체가 있는 경우 (새 스키마)
+    if (restaurant.reservation && restaurant.reservation.links) {
+      return restaurant.reservation.links[platform] || null;
+    }
+
+    // 레거시: 개별 필드로 저장된 경우
+    switch (platform) {
+      case 'catchtable':
+        return restaurant.catchtableUrl || null;
+      case 'naver':
+        return restaurant.naverPlaceUrl || null;
+      case 'phone':
+        return restaurant.phone ? `tel:${restaurant.phone}` : null;
+      default:
+        return null;
+    }
+  },
+
+  /**
+   * 딥링크 열기
+   */
+  openLink(link, platform, restaurant) {
+    if (platform === 'phone') {
+      // 전화는 바로 실행
+      window.location.href = link;
+    } else {
+      // 웹 링크는 새 창
+      window.open(link, '_blank', 'noopener,noreferrer');
+
+      // 방문 인증 안내 토스트 (1초 후)
+      setTimeout(() => {
+        this.showToast('💡 방문 후 인증하면 만족도 낮을 시 환불 가능!');
+      }, 1000);
+    }
+  },
+
+  /**
+   * 클릭 추적 (Supabase + Google Analytics)
+   */
+  async trackClick(restaurantId, platform) {
+    // Supabase 추적
+    try {
+      if (typeof supabase !== 'undefined' && AuthModule.currentUser) {
+        await supabase.from('reservation_clicks').insert({
+          user_id: AuthModule.currentUser.id,
+          restaurant_id: restaurantId,
+          platform: platform,
+          clicked_at: new Date().toISOString()
+        });
+        console.log('Reservation click tracked in Supabase');
+      }
+    } catch (err) {
+      console.error('Failed to track in Supabase:', err);
+      // 실패해도 계속 진행
+    }
+
+    // Google Analytics 추적
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'reservation_click', {
+        'event_category': '예약',
+        'event_label': restaurantId,
+        'platform': platform,
+        'value': 1
+      });
+      console.log('Reservation click tracked in GA');
+    }
+  },
+
+  /**
+   * 페이월 모달 표시
+   */
+  showPaywall(context = 'reservation') {
+    const messages = {
+      reservation: '예약 링크를 보려면 구독이 필요합니다.',
+      full_list: '전체 100+ 맛집을 보려면 구독하세요.',
+      price: '가격 정보는 구독자만 볼 수 있습니다.',
+      menu: '추천 메뉴는 구독자 전용입니다.'
+    };
+
+    const message = messages[context] || messages.reservation;
+
+    // 간단한 confirm 대화상자 (추후 모달로 개선)
+    const subscribe = confirm(
+      `${message}\n\n월 9,900원 · 7일 무료 체험\n\n지금 구독하시겠습니까?`
+    );
+
+    if (subscribe) {
+      // 구독 페이지로 이동 또는 모달 열기
+      if (typeof SubscriptionModule !== 'undefined' && SubscriptionModule.startCheckout) {
+        SubscriptionModule.startCheckout();
+      } else {
+        Router.navigateTo('mypage');
+      }
+    }
+  },
+
+  /**
+   * 토스트 메시지 표시
+   */
+  showToast(message, duration = 3000) {
+    // 토스트 엘리먼트가 없으면 생성
+    let toast = document.getElementById('reservation-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'reservation-toast';
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.85);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-size: 14px;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s;
+        max-width: 90%;
+        text-align: center;
+      `;
+      document.body.appendChild(toast);
+    }
+
+    // 메시지 표시
+    toast.textContent = message;
+    toast.style.opacity = '1';
+
+    // 지정된 시간 후 숨김
+    setTimeout(() => {
+      toast.style.opacity = '0';
+    }, duration);
+  }
+};
+
+// Expose globally
+window.ReservationModule = ReservationModule;
+console.log('ReservationModule exposed globally');
+
+// ========================================
 // 전역 초기화
 // ========================================
 

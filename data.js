@@ -17,7 +17,54 @@ const nearbySpots = [
     group: "michelin",
     lat: 37.524815,
     lng: 127.044955,
-    mapQuery: "밍글스 서울 강남구"
+    mapQuery: "밍글스 서울 강남구",
+
+    // 예약 정보
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/mingles",
+        naverPlace: "https://map.naver.com/v5/entry/place/159330481",
+        phone: "tel:02-515-7306"
+      },
+      difficulty: "high",
+      advice: "2주 전 예약 필수, 주말은 1개월 전",
+      tips: [
+        "매달 1일 오전 11시에 2개월 후 예약 오픈",
+        "런치가 디너보다 예약 쉬움",
+        "노쇼 시 3개월 예약 제한"
+      ],
+      contact: {
+        phone: "02-515-7306",
+        phoneFormatted: "02-515-7306",
+        hours: "화~토 12:00-22:00",
+        breakTime: "15:00-18:00",
+        closedDays: ["일요일", "월요일"]
+      }
+    },
+
+    // 가격 정보 (구독자 전용)
+    pricing: {
+      range: "150,000-200,000원",
+      category: "파인다이닝",
+      lunchFrom: 70000,
+      dinnerFrom: 150000,
+      note: "1인 기준, 주류 별도"
+    },
+
+    // 추천 메뉴 (구독자 전용)
+    recommendedDishes: [
+      {
+        name: "멸치 국수와 전복",
+        type: "시그니처",
+        description: "밍글스의 대표 요리"
+      },
+      {
+        name: "한우 등심",
+        type: "메인",
+        description: "프리미엄 한우 사용"
+      }
+    ]
   },
   {
     id: "rest-002",
@@ -37,7 +84,52 @@ const nearbySpots = [
     group: "michelin",
     lat: 37.555355,
     lng: 126.914614,
-    mapQuery: "옥동식 서울 마포구"
+    mapQuery: "옥동식 서울 마포구",
+
+    // 예약 정보
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/okdongsik",
+        naverPlace: "https://map.naver.com/v5/entry/place/1113715099",
+        phone: "tel:02-337-8582"
+      },
+      difficulty: "medium",
+      advice: "1주일 전 예약 권장, 웨이팅 가능",
+      tips: [
+        "점심 시간대 웨이팅 1-2시간",
+        "평일 오후 2-3시 한가함",
+        "주말은 오전 11시 오픈 직후 방문 추천"
+      ],
+      contact: {
+        phone: "02-337-8582",
+        phoneFormatted: "02-337-8582",
+        hours: "매일 10:30-21:00",
+        breakTime: null,
+        closedDays: ["일요일"]
+      }
+    },
+
+    pricing: {
+      range: "10,000-15,000원",
+      category: "빕 구르망",
+      lunchFrom: 10000,
+      dinnerFrom: 10000,
+      note: "가성비 좋음"
+    },
+
+    recommendedDishes: [
+      {
+        name: "돼지곰탕",
+        type: "시그니처",
+        description: "옥동식의 대표 메뉴"
+      },
+      {
+        name: "돼지국밥",
+        type: "메인",
+        description: "진한 육수가 특징"
+      }
+    ]
   },
   {
     id: "rest-003",
@@ -57,7 +149,46 @@ const nearbySpots = [
     group: "celebrity",
     lat: 37.564412,
     lng: 126.992811,
-    mapQuery: "을지로보석 서울 중구"
+    mapQuery: "을지로보석 서울 중구",
+
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/euljiro-boseok",
+        naverPlace: null,
+        phone: "tel:02-2277-0584"
+      },
+      difficulty: "medium",
+      advice: "저녁 시간대 예약 권장",
+      tips: [
+        "유명인 방문 이후 예약 어려움",
+        "평일 점심이 저녁보다 여유",
+        "전화 예약 가능"
+      ],
+      contact: {
+        phone: "02-2277-0584",
+        phoneFormatted: "02-2277-0584",
+        hours: "매일 11:30-22:00",
+        breakTime: "15:00-17:00",
+        closedDays: ["일요일"]
+      }
+    },
+
+    pricing: {
+      range: "20,000-40,000원",
+      category: "한식 주점",
+      lunchFrom: 15000,
+      dinnerFrom: 25000,
+      note: "1인당 주류 포함"
+    },
+
+    recommendedDishes: [
+      {
+        name: "들기름 낙지젓 카펠리니",
+        type: "시그니처",
+        description: "정용진 회장 추천 메뉴"
+      }
+    ]
   },
   {
     id: "rest-004",
@@ -77,7 +208,46 @@ const nearbySpots = [
     group: "celebrity",
     lat: 37.557121,
     lng: 127.013033,
-    mapQuery: "금돼지식당 서울 중구"
+    mapQuery: "금돼지식당 서울 중구",
+
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/goldpig",
+        naverPlace: null,
+        phone: "tel:02-2277-5892"
+      },
+      difficulty: "high",
+      advice: "2주 전 예약 필수",
+      tips: [
+        "BTS 정국 방문 이후 예약 폭증",
+        "웨이팅 3시간 이상 가능",
+        "평일 오픈 직후 웨이팅 등록 추천"
+      ],
+      contact: {
+        phone: "02-2277-5892",
+        phoneFormatted: "02-2277-5892",
+        hours: "매일 11:00-22:00",
+        breakTime: null,
+        closedDays: []
+      }
+    },
+
+    pricing: {
+      range: "25,000-40,000원",
+      category: "고기 구이",
+      lunchFrom: 25000,
+      dinnerFrom: 30000,
+      note: "1인분 기준"
+    },
+
+    recommendedDishes: [
+      {
+        name: "본삼겹",
+        type: "시그니처",
+        description: "금돼지식당의 대표 메뉴"
+      }
+    ]
   },
   {
     id: "rest-005",
@@ -97,7 +267,51 @@ const nearbySpots = [
     group: "chef",
     lat: 37.538522,
     lng: 126.971811,
-    mapQuery: "비아 톨레도 파스타바 서울 용산구"
+    mapQuery: "비아 톨레도 파스타바 서울 용산구",
+
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/viatoledo",
+        naverPlace: null,
+        phone: "tel:02-796-0507"
+      },
+      difficulty: "medium",
+      advice: "1주일 전 예약 권장",
+      tips: [
+        "흑백요리사 권성준 셰프 운영",
+        "런치 타임 워크인 가능",
+        "저녁은 예약 필수"
+      ],
+      contact: {
+        phone: "02-796-0507",
+        phoneFormatted: "02-796-0507",
+        hours: "11:30-22:00",
+        breakTime: "15:00-17:30",
+        closedDays: ["월요일"]
+      }
+    },
+
+    pricing: {
+      range: "20,000-40,000원",
+      category: "이탈리안",
+      lunchFrom: 18000,
+      dinnerFrom: 25000,
+      note: "가성비 좋음"
+    },
+
+    recommendedDishes: [
+      {
+        name: "할머니의 라자냐",
+        type: "시그니처",
+        description: "흑백요리사 출연 메뉴"
+      },
+      {
+        name: "알리오 올리오",
+        type: "파스타",
+        description: "기본에 충실한 맛"
+      }
+    ]
   },
   {
     id: "rest-006",
@@ -117,7 +331,46 @@ const nearbySpots = [
     group: "chef",
     lat: 37.523421,
     lng: 127.041355,
-    mapQuery: "트리드 서울 강남구"
+    mapQuery: "트리드 서울 강남구",
+
+    reservation: {
+      links: {
+        primary: "catchtable",
+        catchtable: "https://app.catchtable.co.kr/ct/shop/trid",
+        naverPlace: null,
+        phone: "tel:02-517-4654"
+      },
+      difficulty: "high",
+      advice: "2주 전 예약 필수",
+      tips: [
+        "흑백요리사 강승원 셰프",
+        "런치 코스가 디너보다 저렴",
+        "계절 메뉴 변경"
+      ],
+      contact: {
+        phone: "02-517-4654",
+        phoneFormatted: "02-517-4654",
+        hours: "12:00-22:00",
+        breakTime: "15:00-18:00",
+        closedDays: ["월요일"]
+      }
+    },
+
+    pricing: {
+      range: "80,000-150,000원",
+      category: "이노베이티브",
+      lunchFrom: 80000,
+      dinnerFrom: 120000,
+      note: "코스 요리 전문"
+    },
+
+    recommendedDishes: [
+      {
+        name: "트러플 슈",
+        type: "시그니처",
+        description: "트리드의 대표 메뉴"
+      }
+    ]
   }
 ];
 
