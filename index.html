@@ -648,6 +648,61 @@
                     <div id="detail-trust-cards" class="trust-card-grid"></div>
                 </div>
 
+                <!-- 예약 정보 섹션 -->
+                <div class="reservation-section" id="detail-reservation-section" style="display: none;">
+                    <h2>예약하기</h2>
+
+                    <!-- 예약 난이도 배지 -->
+                    <div class="reservation-difficulty" id="reservation-difficulty">
+                        <span class="difficulty-badge" id="difficulty-badge">난이도: 보통</span>
+                        <p class="difficulty-advice" id="difficulty-advice">예약 안내가 표시됩니다.</p>
+                    </div>
+
+                    <!-- 예약 버튼 그룹 -->
+                    <div class="reservation-buttons">
+                        <button class="reservation-btn reservation-btn--primary" id="reservation-catchtable-btn" style="display: none;">
+                            <span class="reservation-icon">🍽️</span>
+                            <span class="reservation-text">
+                                <strong>캐치테이블 예약</strong>
+                                <small>온라인 즉시 예약</small>
+                            </span>
+                        </button>
+
+                        <button class="reservation-btn reservation-btn--secondary" id="reservation-naver-btn" style="display: none;">
+                            <span class="reservation-icon">🗺️</span>
+                            <span class="reservation-text">
+                                <strong>네이버 플레이스</strong>
+                                <small>매장 정보 확인</small>
+                            </span>
+                        </button>
+
+                        <button class="reservation-btn reservation-btn--phone" id="reservation-phone-btn" style="display: none;">
+                            <span class="reservation-icon">📞</span>
+                            <span class="reservation-text">
+                                <strong>전화 예약</strong>
+                                <small id="reservation-phone-number">연락처 확인</small>
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- 예약 팁 -->
+                    <div class="reservation-tips" id="reservation-tips" style="display: none;">
+                        <h4>💡 예약 팁</h4>
+                        <ul id="reservation-tips-list"></ul>
+                    </div>
+
+                    <!-- 연락처 정보 -->
+                    <div class="reservation-contact" id="reservation-contact" style="display: none;">
+                        <h4>📋 매장 정보</h4>
+                        <div class="contact-info">
+                            <p id="contact-phone"></p>
+                            <p id="contact-hours"></p>
+                            <p id="contact-break"></p>
+                            <p id="contact-closed"></p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 이동 정보 -->
                 <div class="travel-info">
                     <h3>예상 이동 시간</h3>

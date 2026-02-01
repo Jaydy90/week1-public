@@ -1836,6 +1836,172 @@ textarea {
   gap: 1rem;
 }
 
+/* Reservation Section Styles */
+.reservation-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(244, 196, 90, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(244, 196, 90, 0.3);
+}
+
+.reservation-section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--ink);
+}
+
+.reservation-difficulty {
+  margin-bottom: 1.5rem;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #f59e0b;
+  color: white;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.difficulty-advice {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.reservation-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.reservation-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: white;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  width: 100%;
+}
+
+.reservation-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.reservation-btn--primary {
+  border-color: var(--primary);
+  background: rgba(228, 90, 43, 0.04);
+}
+
+.reservation-btn--primary:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.reservation-btn--secondary {
+  border-color: var(--secondary);
+  background: rgba(15, 107, 102, 0.04);
+}
+
+.reservation-btn--secondary:hover {
+  background: var(--secondary);
+  color: white;
+  border-color: var(--secondary);
+}
+
+.reservation-btn--phone {
+  border-color: var(--accent);
+  background: rgba(244, 196, 90, 0.08);
+}
+
+.reservation-btn--phone:hover {
+  background: var(--accent);
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+.reservation-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.reservation-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.reservation-text strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.reservation-text small {
+  font-size: 0.875rem;
+  opacity: 0.75;
+}
+
+.reservation-btn:hover .reservation-text small {
+  opacity: 1;
+}
+
+.reservation-tips {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(15, 107, 102, 0.06);
+  border-radius: 12px;
+  border-left: 4px solid var(--secondary);
+}
+
+.reservation-tips h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: var(--secondary);
+}
+
+.reservation-tips ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.reservation-tips li {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.reservation-contact {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+}
+
+.reservation-contact h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.contact-info p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
 .travel-info {
   margin: 2rem 0;
 }

@@ -1257,6 +1257,9 @@ const DetailScreen = {
     // 신뢰 근거 카드 렌더링
     this.renderTrustCards();
 
+    // 예약 정보 렌더링
+    this.renderReservationSection();
+
     // 이동 시간
     const travelTimeEl = document.getElementById('detail-travel-time');
     if (r.travelTime) {
@@ -1301,6 +1304,136 @@ const DetailScreen = {
     }
   },
 
+  renderReservationSection() {
+    const r = this.currentRestaurant;
+
+    // 예약 정보가 없으면 섹션 숨김
+    if (!r.reservation || !r.reservation.links) {
+      const section = document.getElementById('detail-reservation-section');
+      if (section) section.style.display = 'none';
+      return;
+    }
+
+    // 섹션 표시
+    const section = document.getElementById('detail-reservation-section');
+    if (section) section.style.display = 'block';
+
+    const links = r.reservation.links;
+    const contact = r.reservation.contact || {};
+    const tips = r.reservation.tips || [];
+    const difficulty = r.reservation.difficulty || 'medium';
+    const advice = r.reservation.advice || '예약이 필요합니다.';
+
+    // 난이도 배지 표시
+    const difficultyBadge = document.getElementById('difficulty-badge');
+    const difficultyAdvice = document.getElementById('difficulty-advice');
+
+    const difficultyText = {
+      'high': '높음',
+      'medium': '보통',
+      'low': '낮음'
+    };
+
+    const difficultyColor = {
+      'high': '#ef4444',
+      'medium': '#f59e0b',
+      'low': '#10b981'
+    };
+
+    if (difficultyBadge) {
+      difficultyBadge.textContent = `예약 난이도: ${difficultyText[difficulty] || '보통'}`;
+      difficultyBadge.style.backgroundColor = difficultyColor[difficulty] || '#f59e0b';
+    }
+
+    if (difficultyAdvice) {
+      difficultyAdvice.textContent = advice;
+    }
+
+    // 캐치테이블 버튼
+    const catchtableBtn = document.getElementById('reservation-catchtable-btn');
+    if (catchtableBtn) {
+      if (links.catchtable) {
+        catchtableBtn.style.display = 'flex';
+      } else {
+        catchtableBtn.style.display = 'none';
+      }
+    }
+
+    // 네이버 플레이스 버튼
+    const naverBtn = document.getElementById('reservation-naver-btn');
+    if (naverBtn) {
+      if (links.naverPlace) {
+        naverBtn.style.display = 'flex';
+      } else {
+        naverBtn.style.display = 'none';
+      }
+    }
+
+    // 전화 버튼
+    const phoneBtn = document.getElementById('reservation-phone-btn');
+    const phoneNumber = document.getElementById('reservation-phone-number');
+    if (phoneBtn && phoneNumber) {
+      if (contact.phone) {
+        phoneBtn.style.display = 'flex';
+        phoneNumber.textContent = contact.phoneFormatted || contact.phone;
+      } else {
+        phoneBtn.style.display = 'none';
+      }
+    }
+
+    // 예약 팁 표시
+    const tipsSection = document.getElementById('reservation-tips');
+    const tipsList = document.getElementById('reservation-tips-list');
+    if (tipsSection && tipsList) {
+      if (tips.length > 0) {
+        tipsSection.style.display = 'block';
+        tipsList.innerHTML = tips.map(tip => `<li>${tip}</li>`).join('');
+      } else {
+        tipsSection.style.display = 'none';
+      }
+    }
+
+    // 연락처 정보 표시
+    const contactSection = document.getElementById('reservation-contact');
+    if (contactSection) {
+      const hasContactInfo = contact.phone || contact.hours || contact.breakTime || contact.closedDays;
+
+      if (hasContactInfo) {
+        contactSection.style.display = 'block';
+
+        const phoneEl = document.getElementById('contact-phone');
+        const hoursEl = document.getElementById('contact-hours');
+        const breakEl = document.getElementById('contact-break');
+        const closedEl = document.getElementById('contact-closed');
+
+        if (phoneEl) {
+          phoneEl.textContent = contact.phone ? `전화: ${contact.phone}` : '';
+          phoneEl.style.display = contact.phone ? 'block' : 'none';
+        }
+
+        if (hoursEl) {
+          hoursEl.textContent = contact.hours ? `영업시간: ${contact.hours}` : '';
+          hoursEl.style.display = contact.hours ? 'block' : 'none';
+        }
+
+        if (breakEl) {
+          breakEl.textContent = contact.breakTime ? `브레이크 타임: ${contact.breakTime}` : '';
+          breakEl.style.display = contact.breakTime ? 'block' : 'none';
+        }
+
+        if (closedEl) {
+          const closedText = Array.isArray(contact.closedDays)
+            ? contact.closedDays.join(', ')
+            : contact.closedDays;
+          closedEl.textContent = closedText ? `휴무일: ${closedText}` : '';
+          closedEl.style.display = closedText ? 'block' : 'none';
+        }
+      } else {
+        contactSection.style.display = 'none';
+      }
+    }
+  },
+
   setupEventListeners() {
     // 이벤트 리스너 중복 방지를 위해 버튼을 복제해서 교체
     const replaceButton = (id, handler) => {
@@ -1337,6 +1470,25 @@ const DetailScreen = {
       setTimeout(() => {
         document.getElementById('contact-form-container')?.scrollIntoView({ behavior: 'smooth' });
       }, 300);
+    });
+
+    // 예약 버튼들
+    replaceButton('reservation-catchtable-btn', () => {
+      if (window.ReservationModule) {
+        ReservationModule.open(this.currentRestaurant.id, 'catchtable');
+      }
+    });
+
+    replaceButton('reservation-naver-btn', () => {
+      if (window.ReservationModule) {
+        ReservationModule.open(this.currentRestaurant.id, 'naverPlace');
+      }
+    });
+
+    replaceButton('reservation-phone-btn', () => {
+      if (window.ReservationModule) {
+        ReservationModule.open(this.currentRestaurant.id, 'phone');
+      }
     });
 
     // 댓글 시스템
