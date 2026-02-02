@@ -2746,10 +2746,11 @@ const ReservationModule = {
   async open(restaurantId, platform = 'catchtable') {
     console.log(`Opening reservation: ${restaurantId} on ${platform}`);
 
-    // 1. 구독자 체크 (phone은 제외)
-    if (platform !== 'phone' && !this.checkSubscription()) {
-      return;
-    }
+    // 1. 구독자 체크 (현재 비활성화 - 모든 플랫폼 무료)
+    // 유료화 시 주석 해제:
+    // if (!this.checkSubscription()) {
+    //   return;
+    // }
 
     // 2. 레스토랑 정보 조회
     const restaurant = this.getRestaurant(restaurantId);
@@ -2773,9 +2774,18 @@ const ReservationModule = {
   },
 
   /**
-   * 구독자 체크
+   * 구독자 체크 (현재 비활성화)
+   *
+   * 전략: 먼저 트래픽을 모으고, 나중에 유료화
+   * TODO: 나중에 유료화 시 이 함수를 다시 활성화
    */
   checkSubscription() {
+    // ⚠️ 현재 모든 사용자에게 무료 제공
+    // 트래픽 확보 후 유료화 예정
+    return true;
+
+    /* 유료화 시 아래 코드 활성화:
+
     // AuthModule이 로드되었는지 확인
     if (typeof AuthModule === 'undefined') {
       console.error('AuthModule not loaded');
@@ -2793,6 +2803,7 @@ const ReservationModule = {
     }
 
     return true;
+    */
   },
 
   /**
