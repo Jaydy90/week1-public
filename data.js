@@ -710,7 +710,1402 @@ const allRestaurantsRaw = [
 // ========================================
 // Restaurant Reservation Data (Auto-generated)
 // ========================================
-const restaurantReservations = { ... };
+const restaurantReservations = {
+  "밍글스": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/mingles",
+      "naverPlace": "https://map.naver.com/v5/entry/place/159330481",
+      "phone": "tel:02-515-7306"
+    },
+    "contact": {
+      "phone": "02-515-7306",
+      "phoneFormatted": "02-515-7306"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": true,
+      "phoneVerified": true
+    }
+  },
+  "옥동식": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/okdongsik",
+      "naverPlace": "https://map.naver.com/v5/entry/place/1113715099",
+      "phone": "tel:02-337-8582"
+    },
+    "contact": {
+      "phone": "02-337-8582",
+      "phoneFormatted": "02-337-8582"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": true,
+      "phoneVerified": true
+    }
+  },
+  "정식당": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jungsik",
+      "naverPlace": "https://map.naver.com/v5/entry/place/203294116",
+      "phone": "tel:02-517-4654"
+    },
+    "contact": {
+      "phone": "02-517-4654",
+      "phoneFormatted": "02-517-4654"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": true,
+      "phoneVerified": true
+    }
+  },
+  "고향칼국수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gohyang-kalguksu",
+      "naverPlace": "https://map.naver.com/v5/entry/place/13118895",
+      "phone": "tel:02-735-9247"
+    },
+    "contact": {
+      "phone": "02-735-9247",
+      "phoneFormatted": "02-735-9247"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": true,
+      "phoneVerified": true
+    }
+  },
+  "라연": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/layeon.shilla",
+      "naverPlace": "https://map.naver.com/v5/entry/place/11572065",
+      "phone": "tel:02-2230-3367"
+    },
+    "contact": {
+      "phone": "02-2230-3367",
+      "phoneFormatted": "02-2230-3367"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": true,
+      "phoneVerified": true
+    }
+  },
+  "코지마": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/kojima",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "우래옥": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/wooraeok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "필동면옥": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/pildong-myeonok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "자하 손만두": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jaha-sonmandu",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "진진": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jinjin",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "소이연남마오": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/soi-yeonnam-mao",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "오레노라면": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/orenoramen",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "팩피": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/fackpi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "에그앤플라워": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/eggandflower",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "미진": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/mijin",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "만두집": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/mandujip",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "개성만두 궁": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gaeseong-mandu-gung",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "삼청동 수제비": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/samcheongdong-sujebi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "구복만두": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gubok-mandu",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "황생가 칼국수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/hwangsaengga-kalguksu",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "명동교자": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/myeongdong-gyoja",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "금돼지식당": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/goldpig",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "툭툭소이타이": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/tuktukthai",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "류니끄": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/l-unique",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "스와니예": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/swanieye",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "권숙수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://catchtable.co.kr/kwonsooksoo?lang=ko",
+      "naverPlace": null,
+      "phone": "tel:02-542-6268"
+    },
+    "contact": {
+      "phone": "02-542-6268",
+      "phoneFormatted": "02-542-6268"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "알라 프리마": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/allaprima",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "제로콤플렉스": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/zerocomplex",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "화양연화": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/hwayangflower",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "을지로보석": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/euljiro-boseok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "사랑방칼국수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/sarangbang-kalguksu",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "잭슨피자": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jacksonpizza",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "산수갑산": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/sansugapsan",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "대도식당": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/daedo",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "남포면옥": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/nampomyeonok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "한강껍데기": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/hangang-kkeopdeogi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "호남식당": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/honam",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "진미평양냉면": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jinmi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "영천영화": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/youngchun",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "고기리막국수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gogiri",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "뜨락": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/teurak",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "우진해장국": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/woojin",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "이문설농탕": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/imun",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "대성집": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/daeseongjip",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "마포옥": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/mapooak",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "하동관": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/hadongkwan",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "청담안": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/cheongdam-an",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "새벽집": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/saebyeok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "약수순대": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/yaksu-sundae",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "오통영": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/otongyoung",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "바다식당": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/bada",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "갯벌의진주": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gaetbeol-jinju",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "우정": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/woojeong",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "서린낙지": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/seorin-nakji",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "진주회관": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/jinju-hoegwan",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "한옥집김치찜": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/hanokjip",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "평양면옥": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/pyeongyang-myeonok",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "디핀": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/deepin",
+      "naverPlace": null,
+      "phone": "tel:02-2260-2266"
+    },
+    "contact": {
+      "phone": "02-2260-2266",
+      "phoneFormatted": "02-2260-2266"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "트리드": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/trid",
+      "naverPlace": null,
+      "phone": "tel:02-517-4654"
+    },
+    "contact": {
+      "phone": "02-517-4654",
+      "phoneFormatted": "02-517-4654"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "비아 톨레도 파스타바": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/viatoledo",
+      "naverPlace": null,
+      "phone": "tel:02-796-0507"
+    },
+    "contact": {
+      "phone": "02-796-0507",
+      "phoneFormatted": "02-796-0507"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "레스토랑 네오": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/restaurantneo",
+      "naverPlace": null,
+      "phone": "tel:02-3477-0371"
+    },
+    "contact": {
+      "phone": "02-3477-0371",
+      "phoneFormatted": "02-3477-0371"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "리북방": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/leebukbang",
+      "naverPlace": null,
+      "phone": "tel:02-333-0039"
+    },
+    "contact": {
+      "phone": "02-333-0039",
+      "phoneFormatted": "02-333-0039"
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": true
+    }
+  },
+  "도량": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/doryang",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "로컬릿": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/localeat",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "에드워드 권 리츠칼튼": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/edwardkwon",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "초이닷": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/choidot",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "티엔미미": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/tienmimi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "파브리키친": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/fabrikitchen",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "만찢남": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/manjjiknam",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "구찌 오스테리아": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gucci-osteria",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "쵸이닷": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/choidot",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "보노보노": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/bonobono",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "안성재의 모수": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/mosu",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "띠또": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/tito",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "엘초코 데 테레노": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/elchoco",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "네기 다이닝라운지": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/negi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "가보정": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/gabojeong",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "야키토리 파지": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/yakitoripaji",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "쵸이랩": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/choilab",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "익스퀴진": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/exquissine",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "묘미": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/myomi",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  },
+  "온지음": {
+    "links": {
+      "primary": "catchtable",
+      "catchtable": "https://app.catchtable.co.kr/ct/shop/onjium",
+      "naverPlace": null,
+      "phone": null
+    },
+    "contact": {
+      "phone": null,
+      "phoneFormatted": null
+    },
+    "status": {
+      "catchtableVerified": false,
+      "naverPlaceVerified": false,
+      "phoneVerified": false
+    }
+  }
+};
 
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
   const parts = line.split(" | ").map((part) => part.trim());
