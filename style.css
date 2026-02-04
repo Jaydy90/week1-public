@@ -180,6 +180,10 @@ body.js-enabled .page-section:target {
 
 #home.is-active .card-grid {
   display: grid !important;
+  min-height: 200px !important; /* DEBUG: Ensure visible area */
+  background: rgba(228, 90, 43, 0.05) !important; /* DEBUG: Show grid area */
+  border: 2px dashed rgba(228, 90, 43, 0.3) !important; /* DEBUG: Show boundaries */
+  padding: 1rem !important; /* DEBUG: Add spacing */
 }
 
 .hero {

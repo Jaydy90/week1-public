@@ -414,7 +414,7 @@ const HomeScreen = {
     console.log('');
 
     // 전체 표시 (슬라이스 제거하여 모든 맛집 표시)
-    container.innerHTML = items.map((item, index) => {
+    const htmlContent = items.map((item, index) => {
       const badges = item.badges || [];
       const badgeMarkup = badges.map(badge => `<span class="badge-chip">${badge}</span>`).join('');
 
@@ -441,6 +441,14 @@ const HomeScreen = {
         </article>
       `;
     }).join('');
+
+    container.innerHTML = htmlContent;
+
+    console.log(`✅ container.innerHTML 설정 완료! HTML length: ${htmlContent.length} characters, ${items.length} cards`);
+    console.log(`✅ container element:`, container);
+    console.log(`✅ container.innerHTML 첫 100자:`, container.innerHTML.substring(0, 100));
+    console.log(`✅ container display style:`, window.getComputedStyle(container).display);
+    console.log(`✅ #home has is-active class:`, document.getElementById('home')?.classList.contains('is-active'));
 
     // 카드 클릭 이벤트
     this.attachCardClickHandlers();
