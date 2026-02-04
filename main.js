@@ -222,10 +222,52 @@ const Router = {
 const HomeScreen = {
   init() {
     console.log('Home screen initialized');
+    this.initAnnouncementBanner();
     this.updateMapLocation();
     this.toggleCategorySections('all'); // 초기 상태: 전체 탭
     this.renderPreviewList();
     this.setupEventListeners();
+  },
+
+  // 공지사항 배너 초기화
+  initAnnouncementBanner() {
+    const banner = document.getElementById('main-announcement');
+    const closeBtn = document.getElementById('announcement-close-btn');
+
+    if (!banner || !closeBtn) return;
+
+    // localStorage에서 닫힘 상태 확인
+    const announcementId = 'reservation-feature-update-2024-02';
+    const isClosed = localStorage.getItem(`announcement-closed-${announcementId}`);
+
+    if (isClosed === 'true') {
+      banner.style.display = 'none';
+    } else {
+      banner.style.display = 'flex';
+    }
+
+    // 닫기 버튼 이벤트 (중복 방지를 위해 버튼 재생성)
+    const newCloseBtn = closeBtn.cloneNode(true);
+    closeBtn.parentNode.replaceChild(newCloseBtn, closeBtn);
+
+    newCloseBtn.addEventListener('click', () => {
+      banner.style.animation = 'fadeOut 0.3s ease';
+      setTimeout(() => {
+        banner.style.display = 'none';
+      }, 300);
+
+      // localStorage에 저장
+      localStorage.setItem(`announcement-closed-${announcementId}`, 'true');
+
+      // Google Analytics 이벤트 (있는 경우)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'announcement_close', {
+          'event_category': 'UI',
+          'event_label': announcementId,
+          'value': 1
+        });
+      }
+    });
   },
 
   // 카테고리별 섹션 표시/숨김
