@@ -364,7 +364,7 @@ const HomeScreen = {
 
     // 전역 변수 확인
     console.log('[HomeScreen DEBUG] window.allRestaurants:', window.allRestaurants?.length);
-    console.log('[HomeScreen DEBUG] window.window.nearbySpots:', window.window.nearbySpots?.length);
+    console.log('[HomeScreen DEBUG] window.nearbySpots:', window.nearbySpots?.length);
 
     // allRestaurants가 로드되었으면 사용
     if (Array.isArray(window.allRestaurants) && window.allRestaurants.length > 0) {
@@ -379,9 +379,9 @@ const HomeScreen = {
       }));
     }
     // 폴백: window.nearbySpots 사용
-    else if (Array.isArray(window.window.nearbySpots) && window.window.nearbySpots.length > 0) {
+    else if (Array.isArray(window.nearbySpots) && window.nearbySpots.length > 0) {
       console.warn('[HomeScreen] allRestaurants 로드 실패, window.nearbySpots 사용');
-      allItems = [...window.window.nearbySpots];
+      allItems = [...window.nearbySpots];
     }
 
     // 디버깅: 전체 개수 확인
