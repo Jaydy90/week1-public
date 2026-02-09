@@ -145,17 +145,37 @@ const AuthModule = {
   // 구글 로그인
   async signInWithGoogle() {
     const supabase = getSupabaseClient();
-    if (!supabase) throw new Error('Supabase not initialized');
+    if (!supabase) {
+      console.error('Supabase client not initialized');
+      throw new Error('Supabase not initialized');
+    }
 
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: APP_CONFIG.url
+    console.log('Starting Google OAuth login...');
+    console.log('Redirect URL:', window.location.origin + window.location.pathname);
+
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + window.location.pathname,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        }
+      });
+
+      if (error) {
+        console.error('Google OAuth error:', error);
+        throw error;
       }
-    });
 
-    if (error) throw error;
-    return data;
+      console.log('Google OAuth initiated successfully');
+      return data;
+    } catch (err) {
+      console.error('signInWithGoogle failed:', err);
+      throw err;
+    }
   },
 
   // 로그아웃

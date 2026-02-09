@@ -2451,9 +2451,12 @@ const ModalController = {
     if (googleBtn) {
       googleBtn.addEventListener('click', async () => {
         try {
+          console.log('Google login button clicked');
           await AuthModule.signInWithGoogle();
+          // OAuth는 리다이렉트되므로 여기까지 오지 않음
         } catch (err) {
-          alert(err.message || '구글 로그인에 실패했습니다.');
+          console.error('Google login error:', err);
+          alert('구글 로그인 오류: ' + (err.message || '알 수 없는 오류가 발생했습니다.'));
         }
       });
     }
@@ -2513,9 +2516,12 @@ const ModalController = {
     if (googleBtn) {
       googleBtn.addEventListener('click', async () => {
         try {
+          console.log('Google signup button clicked');
           await AuthModule.signInWithGoogle();
+          // OAuth는 리다이렉트되므로 여기까지 오지 않음
         } catch (err) {
-          alert(err.message || '구글 가입에 실패했습니다.');
+          console.error('Google signup error:', err);
+          alert('구글 가입 오류: ' + (err.message || '알 수 없는 오류가 발생했습니다.'));
         }
       });
     }
