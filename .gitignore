@@ -46,6 +46,13 @@ wrangler.toml
 # Temporary files
 *.tmp
 .cache/
+*.backup
+geocode.html
+
+# Screenshots and large images
+*.png
+!assets/images/**/*.png
+!favicon.ico
 
 # Claude Code (keep configurations, exclude logs)
 .claude/*.log
