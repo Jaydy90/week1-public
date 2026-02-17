@@ -1,0 +1,13 @@
+{
+  "name": "trust-route-functions",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Cloudflare Pages Functions for Trust Route (Stripe + Supabase)",
+  "dependencies": {
+    "stripe": "^14.11.0",
+    "@supabase/supabase-js": "^2.39.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
