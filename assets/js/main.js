@@ -783,6 +783,14 @@ const HomeScreen = {
 const ListScreen = {
   init() {
     console.log('List screen initialized');
+
+    // 탭 상태 초기화 (리스트 재진입 시 항상 '전체' 탭으로 리셋)
+    AppState.filters.badge = 'all';
+    const trustTabs = document.querySelectorAll('#list .trust-tab');
+    trustTabs.forEach(t => t.classList.remove('is-active'));
+    const allTab = document.querySelector('#list .trust-tab[data-tab="all"]');
+    if (allTab) allTab.classList.add('is-active');
+
     this.toggleCategorySections('all');
     this.renderList();
     this.setupEventListeners();
