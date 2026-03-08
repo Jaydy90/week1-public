@@ -230,9 +230,17 @@ const Router = {
 const HomeScreen = {
   init() {
     console.log('Home screen initialized');
+
+    // 탭 상태 초기화 (홈 재진입 시 항상 '전체' 탭으로 리셋)
+    AppState.filters.trustTab = 'all';
+    const trustTabs = document.querySelectorAll('#home .trust-tab');
+    trustTabs.forEach(t => t.classList.remove('is-active'));
+    const allTab = document.querySelector('#home .trust-tab[data-tab="all"]');
+    if (allTab) allTab.classList.add('is-active');
+
     this.initAnnouncementBanner();
     this.updateMapLocation();
-    this.toggleCategorySections('all'); // 초기 상태: 전체 탭
+    this.toggleCategorySections('all');
     this.renderPreviewList();
     this.setupEventListeners();
   },
