@@ -471,6 +471,9 @@ const HomeScreen = {
   },
 
   setupEventListeners() {
+    if (this._listenersSetup) return;
+    this._listenersSetup = true;
+
     // 지도 토글 버튼
     const toggleMapBtn = document.getElementById('toggle-map-btn');
     const mapSection = document.getElementById('map-section');
@@ -1000,6 +1003,9 @@ const ListScreen = {
   },
 
   setupEventListeners() {
+    if (this._listenersSetup) return;
+    this._listenersSetup = true;
+
     // 신뢰 탭 (리스트 화면)
     const trustTabs = document.querySelectorAll('#list .trust-tab');
     trustTabs.forEach(tab => {
