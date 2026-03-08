@@ -39,6 +39,14 @@ const Router = {
       section.classList.remove('is-active');
     });
 
+    // 홈 카테고리 섹션 인라인 스타일 초기화 (다른 페이지에 노출 방지)
+    const homeChefs = document.getElementById('culinary-class-heroes');
+    const homeMichelin = document.getElementById('michelin-intro');
+    const homeCelebrity = document.getElementById('celebrity-intro');
+    if (homeChefs) homeChefs.style.display = 'none';
+    if (homeMichelin) homeMichelin.style.display = 'none';
+    if (homeCelebrity) homeCelebrity.style.display = 'none';
+
     // 대상 섹션 표시
     const targetSection = document.querySelector(`[data-section="${screen}"]`);
     if (targetSection) {

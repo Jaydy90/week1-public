@@ -153,8 +153,7 @@ body.js-enabled .page-section {
   display: none;
 }
 
-body.js-enabled .page-section.is-active,
-body.js-enabled .page-section:target {
+body.js-enabled .page-section.is-active {
   display: block;
 }
 
@@ -164,6 +163,13 @@ body.js-enabled .page-section:target {
 #home .trust-tabs,
 #home .card-grid,
 #home #inline-detail-container {
+  display: none !important;
+}
+
+/* 홈 카테고리 섹션: is-active 없을 때 항상 숨김 */
+#home:not(.is-active) #culinary-class-heroes,
+#home:not(.is-active) #michelin-intro,
+#home:not(.is-active) #celebrity-intro {
   display: none !important;
 }
 
