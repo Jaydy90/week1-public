@@ -3110,15 +3110,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   console.log('Trust Route App Initialized');
   document.body.classList.add('js-enabled');
 
-  // 인증 시스템 초기화 (에러가 나도 계속 진행)
-  try {
-    console.log('Initializing AuthModule...');
-    await AuthModule.init();
-    console.log('AuthModule initialized');
-  } catch (err) {
+  // 인증 시스템 초기화 (백그라운드에서 실행 - UI를 블록하지 않음)
+  AuthModule.init().catch(err => {
     console.error('AuthModule initialization failed:', err);
-    console.log('Continuing without auth...');
-  }
+  });
 
   // 모달 컨트롤러 초기화 (이벤트 리스너 설정)
   // ModalController는 이미 전역으로 노출되어 있음
