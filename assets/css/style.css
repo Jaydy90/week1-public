@@ -5046,3 +5046,261 @@ textarea {
     font-size: 2rem;
   }
 }
+
+/* ========================================================
+   MOBILE OPTIMIZATION — Comprehensive
+   모바일 전면 최적화 (기존 규칙 전체 덮어쓰기)
+   ======================================================== */
+
+/* ── 768px : 태블릿 / 모바일 기본 ── */
+@media (max-width: 768px) {
+
+  /* ── 헤더: sticky 유지 + 2행 컴팩트 레이아웃 ── */
+  .site-header {
+    position: sticky !important;
+    top: 0;
+    padding: 0.75rem 1rem;
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "brand hamburger user"
+      "search search search";
+    gap: 0.4rem 0.6rem;
+    z-index: 200;
+  }
+
+  .brand      { grid-area: brand; gap: 0.05rem; }
+  .search-bar { grid-area: search; width: 100%; max-width: none; margin-top: 0; }
+  .hamburger-menu { grid-area: hamburger; display: flex; }
+  .user-menu  { grid-area: user; }
+
+  .title-link  { font-size: 1.45rem; }
+  .brand-tag   { font-size: 0.7rem; }
+
+  /* ── 모바일 풀스크린 네비 오버레이 ── */
+  .top-nav {
+    position: fixed !important;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 2rem;
+    display: none !important;
+    z-index: 999;
+  }
+
+  .top-nav.is-open {
+    display: flex !important;
+  }
+
+  .nav-button {
+    font-size: 1.15rem;
+    font-weight: 600;
+    padding: 0.9rem 2rem;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    border-radius: 14px;
+    border: 1.5px solid rgba(0,0,0,0.1);
+  }
+
+  .nav-button.is-active {
+    background: var(--ink);
+    color: #fff;
+    border-color: transparent;
+  }
+
+  /* 메뉴 열렸을 때 body 스크롤 방지 */
+  body.nav-open { overflow: hidden; }
+
+  /* ── 햄버거 X 애니메이션 ── */
+  .hamburger-menu.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger-menu.is-active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .hamburger-menu.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* ── 신뢰 탭: 가로 스크롤 캐러셀 ── */
+  .trust-tabs {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    gap: 0.5rem;
+    /* 좌우 여백이 탭 끝에 닿도록 */
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  .trust-tabs::-webkit-scrollbar { display: none; }
+
+  .trust-tab,
+  .settings-toggle-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 0.83rem;
+    padding: 0.44rem 0.95rem;
+    min-height: 36px;
+  }
+
+  /* 설정 버튼: 탭처럼 인라인 처리 */
+  .settings-toggle-btn {
+    width: auto !important;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  /* ── 카드 그리드: 1컬럼 ── */
+  .card-grid,
+  #home-preview-list,
+  #list-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem;
+  }
+
+  /* ── info-card 컴팩트 ── */
+  .info-card {
+    padding: 1.1rem 1.15rem;
+    gap: 0.6rem;
+  }
+  .card-title  { font-size: 1.05rem; }
+  .card-location { font-size: 0.88rem; }
+  .card-context  { font-size: 0.85rem; }
+
+  /* ── 레시피 카드 컴팩트 ── */
+  .recipe-card {
+    padding: 1.1rem 1.15rem;
+    gap: 0.65rem;
+  }
+  .recipe-title   { font-size: 1rem; }
+  .recipe-summary { font-size: 0.83rem; }
+
+  /* ── 홈 섹션 패딩 ── */
+  #home { padding: 0 0.5rem; }
+  .hero-compact { padding: 1.3rem 0 0.7rem; }
+  .hero-compact h1 { font-size: clamp(1.35rem, 5vw, 1.7rem); }
+  .hero-desc { font-size: 0.88rem; }
+  .home-cta { padding: 0.75rem 0 1.5rem; }
+  .home-cta .primary-button { width: 100%; }
+
+  /* ── 리스트 섹션 패딩 ── */
+  #list { padding: 0 0.5rem; }
+  .section-head { padding: 1.1rem 0 0.7rem; }
+  .section-lead { font-size: 0.88rem; }
+
+  /* ── 인라인 상세: 여백 줄이기 ── */
+  .inline-detail { margin: 0.75rem 0; }
+  .inline-detail-header { padding: 1.6rem 1.2rem 1rem; }
+  .inline-detail-title  { font-size: 1.55rem; }
+  .inline-detail-content { padding: 1.2rem; }
+  .inline-detail-actions { padding: 1.2rem; gap: 0.6rem; }
+  .inline-action-button  { padding: 0.85rem 1rem; font-size: 0.9rem; }
+
+  /* ── 레시피 인라인 상세 ── */
+  .recipe-inline-detail { padding: 1.3rem 1.1rem; }
+  .recipe-inline-title  { font-size: 1.15rem; }
+
+  /* ── 예약 버튼 ── */
+  .inline-reservation-buttons {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .inline-reservation-btn { width: 100%; justify-content: center; }
+
+  /* ── FAQ / 파트너 / 뉴스 ── */
+  .faq-container      { padding: 1.5rem 0.5rem; }
+  .news-container     { padding: 1.5rem 0.5rem 3rem; }
+  .partnership-section { padding: 1.5rem 0.5rem; }
+  .partnership-lead   { font-size: 0.9rem; }
+  .package-grid       { grid-template-columns: 1fr; gap: 0.75rem; }
+  .package-card       { padding: 1.2rem; }
+
+  /* ── 규칙 페이지 ── */
+  .rules-page  { padding: 1rem 0.5rem 3rem; }
+  .rules-hero  { padding: 1.5rem 0 2rem; }
+  .rules-hero-title { font-size: 1.8rem; }
+  .rules-hero-desc  { font-size: 0.9rem; }
+  .rules-philosophy-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+  .rules-standard-card { padding: 1.2rem 1.2rem 1.2rem 1.4rem; }
+
+  /* ── 카테고리 인트로 배너 ── */
+  .category-intro, .recipe-intro { margin: 0.5rem 0; padding: 1rem 1.1rem; }
+  .category-intro-text { font-size: 0.88rem; }
+
+  /* ── 구독 카드 ── */
+  .subscription-card { padding: 1.4rem; }
+
+  /* ── 검색 인풋 ── */
+  .search-bar input { font-size: 0.9rem; padding: 0.6rem 1rem; }
+}
+
+/* ── 480px : 소형 폰 ── */
+@media (max-width: 480px) {
+  .site-header { padding: 0.65rem 0.85rem; }
+  .title-link  { font-size: 1.3rem; }
+  .brand-tag   { display: none; }
+
+  /* 신뢰 탭 더 작게 */
+  .trust-tab { font-size: 0.78rem; padding: 0.38rem 0.82rem; }
+
+  /* 카드 */
+  .info-card   { padding: 1rem; }
+  .card-title  { font-size: 0.98rem; }
+  .recipe-card { padding: 0.95rem; }
+  .recipe-title { font-size: 0.92rem; }
+  .recipe-rank-badge { width: 2rem; height: 2rem; font-size: 0.72rem; }
+  .recipe-rank-badge.top3 { font-size: 0.9rem; }
+
+  /* 인라인 상세 */
+  .inline-detail-title { font-size: 1.3rem; }
+  .inline-detail-menu,
+  .inline-detail-address { font-size: 0.92rem; padding: 0.9rem 1rem; }
+
+  /* 규칙 */
+  .rules-standard-name { font-size: 0.95rem; }
+  .rules-standard-desc { font-size: 0.82rem; }
+  .rules-std-tag { font-size: 0.7rem; }
+  .rules-philosophy-num { font-size: 3rem; }
+  .rules-philosophy-text { font-size: 0.95rem; }
+  .rules-block-title { font-size: 1.5rem; }
+
+  /* 네비 오버레이 버튼 */
+  .nav-button { font-size: 1.05rem; padding: 0.8rem 1.5rem; }
+
+  /* 홈 헤더 */
+  .hero-compact h1 { font-size: 1.25rem; }
+
+  /* 레시피 인라인 */
+  .recipe-inline-title { font-size: 1.05rem; }
+  .recipe-inline-youtube { font-size: 0.88rem; padding: 0.75rem 1rem; }
+}
+
+/* ── 터치 장치: hover 효과 제거 ── */
+@media (hover: none) and (pointer: coarse) {
+  .info-card:hover,
+  .recipe-card:hover {
+    transform: none;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.1);
+  }
+  .trust-tab:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .nav-button:hover {
+    background: transparent;
+    color: var(--ink);
+  }
+  .nav-button:hover.is-active,
+  .nav-button.is-active {
+    background: var(--ink);
+    color: #fff;
+  }
+}

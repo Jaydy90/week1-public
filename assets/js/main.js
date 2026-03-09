@@ -3525,6 +3525,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     hamburger.addEventListener('click', () => {
       topNav.classList.toggle('is-open');
       hamburger.classList.toggle('is-active');
+      document.body.classList.toggle('nav-open');
+    });
+    // 네비 링크 클릭 시 메뉴 닫기
+    topNav.querySelectorAll('.nav-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        topNav.classList.remove('is-open');
+        hamburger.classList.remove('is-active');
+        document.body.classList.remove('nav-open');
+      });
     });
   }
 
