@@ -587,11 +587,47 @@ const HomeScreen = {
   createInlineDetailHTML(r) {
     const badgeHTML = r.badgeType ? `<span class="badge-chip">${r.badgeType}</span>` : '';
 
+    // 주소
+    const addressHTML = r.address ? `<p class="inline-detail-address">📍 ${r.address}</p>` : '';
+
+    // 출처 링크
+    const sourceHTML = (r.sourceUrl && r.sourceLabel)
+      ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener" class="evidence-link">🔗 ${r.sourceLabel}</a>`
+      : '';
+
+    // 예약 버튼
+    let reservationHTML = '';
+    if (r.reservation && r.reservation.links) {
+      const links = r.reservation.links;
+      const contact = r.reservation.contact || {};
+      const advice = r.reservation.advice || '';
+      const catchtableBtn = links.catchtable
+        ? `<a href="${links.catchtable}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--catchtable">🍽️ 캐치테이블 예약</a>`
+        : '';
+      const naverBtn = links.naverPlace
+        ? `<a href="${links.naverPlace}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--naver">🗺️ 네이버 플레이스</a>`
+        : '';
+      const phoneBtn = contact.phone
+        ? `<a href="tel:${contact.phone}" class="inline-reservation-btn inline-reservation-btn--phone">📞 ${contact.phoneFormatted || contact.phone}</a>`
+        : '';
+      if (catchtableBtn || naverBtn || phoneBtn) {
+        reservationHTML = `
+          <div class="inline-reservation-section">
+            <h3>예약</h3>
+            ${advice ? `<p class="inline-reservation-advice">${advice}</p>` : ''}
+            <div class="inline-reservation-buttons">
+              ${catchtableBtn}${naverBtn}${phoneBtn}
+            </div>
+          </div>`;
+      }
+    }
+
     return `
       <div class="inline-detail-header">
         <div class="inline-detail-title-section">
           <h2 class="inline-detail-title">${r.name}</h2>
           <p class="inline-detail-location">${r.location || `${r.region} ${r.area}`}</p>
+          ${addressHTML}
         </div>
         <button class="inline-detail-close" id="inline-detail-close">✕ 닫기</button>
       </div>
@@ -605,7 +641,10 @@ const HomeScreen = {
         <div class="inline-trust-evidence">
           <h3>신뢰 근거</h3>
           <p>${r.context || r.category || '신뢰할 수 있는 출처에서 확인되었습니다.'}</p>
+          ${sourceHTML}
         </div>
+
+        ${reservationHTML}
 
         <div class="inline-detail-actions">
           <button class="inline-action-button" id="inline-save-btn">
@@ -616,12 +655,6 @@ const HomeScreen = {
           </button>
           <button class="inline-action-button primary" id="inline-directions-btn">
             <span>🗺️</span> 바로 길찾기
-          </button>
-        </div>
-
-        <div class="inline-detail-more-section">
-          <button class="inline-action-button secondary" id="inline-more-btn">
-            <span>📋</span> 더 보기 (상세 정보)
           </button>
         </div>
       </div>
@@ -666,14 +699,6 @@ const HomeScreen = {
       });
     }
 
-    // 더 보기 버튼
-    const moreBtn = detailDiv.querySelector('#inline-more-btn');
-    if (moreBtn) {
-      moreBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        Router.navigateTo('detail', { restaurantId: restaurant.id });
-      });
-    }
   },
 
   // 인라인 저장 기능

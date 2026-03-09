@@ -1767,10 +1767,69 @@ textarea {
   transform: scale(1.02);
 }
 
-.inline-detail-more-section {
-  margin-top: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+/* 인라인 주소 */
+.inline-detail-address {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0.4rem 0 0;
+}
+
+/* 인라인 예약 섹션 */
+.inline-reservation-section {
+  background: linear-gradient(135deg, rgba(228, 90, 43, 0.05) 0%, rgba(15, 107, 102, 0.05) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 0 2.5rem 2rem;
+}
+
+.inline-reservation-section h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+
+.inline-reservation-advice {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.inline-reservation-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.inline-reservation-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.inline-reservation-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.inline-reservation-btn--catchtable {
+  background: var(--primary);
+  color: #fff;
+}
+
+.inline-reservation-btn--naver {
+  background: #03c75a;
+  color: #fff;
+}
+
+.inline-reservation-btn--phone {
+  background: var(--secondary);
+  color: #fff;
 }
 
 /* 트러스트 루트 서비스 섹션 */
