@@ -599,32 +599,26 @@ const HomeScreen = {
       ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener" class="evidence-link">🔗 ${r.sourceLabel}</a>`
       : '';
 
-    // 예약 버튼
-    let reservationHTML = '';
-    if (r.reservation && r.reservation.links) {
-      const links = r.reservation.links;
-      const contact = r.reservation.contact || {};
-      const advice = r.reservation.advice || '';
-      const catchtableBtn = links.catchtable
-        ? `<a href="${links.catchtable}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--catchtable">🍽️ 캐치테이블 예약</a>`
-        : '';
-      const naverBtn = links.naverPlace
-        ? `<a href="${links.naverPlace}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--naver">🗺️ 네이버 플레이스</a>`
-        : '';
-      const phoneBtn = contact.phone
-        ? `<a href="tel:${contact.phone}" class="inline-reservation-btn inline-reservation-btn--phone">📞 ${contact.phoneFormatted || contact.phone}</a>`
-        : '';
-      if (catchtableBtn || naverBtn || phoneBtn) {
-        reservationHTML = `
-          <div class="inline-reservation-section">
-            <h3>예약</h3>
-            ${advice ? `<p class="inline-reservation-advice">${advice}</p>` : ''}
-            <div class="inline-reservation-buttons">
-              ${catchtableBtn}${naverBtn}${phoneBtn}
-            </div>
-          </div>`;
-      }
-    }
+    // 예약 버튼 (네이버 플레이스는 항상 표시)
+    const links = (r.reservation && r.reservation.links) ? r.reservation.links : {};
+    const contact = (r.reservation && r.reservation.contact) ? r.reservation.contact : {};
+    const advice = (r.reservation && r.reservation.advice) ? r.reservation.advice : '';
+    const catchtableBtn = links.catchtable
+      ? `<a href="${links.catchtable}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--catchtable">🍽️ 캐치테이블 예약</a>`
+      : '';
+    const naverUrl = links.naverPlace || `https://map.naver.com/p/search/${encodeURIComponent(r.name)}`;
+    const naverBtn = `<a href="${naverUrl}" target="_blank" rel="noopener" class="inline-reservation-btn inline-reservation-btn--naver">🗺️ 네이버 플레이스</a>`;
+    const phoneBtn = contact.phone
+      ? `<a href="tel:${contact.phone}" class="inline-reservation-btn inline-reservation-btn--phone">📞 ${contact.phoneFormatted || contact.phone}</a>`
+      : '';
+    const reservationHTML = `
+      <div class="inline-reservation-section">
+        <h3>예약</h3>
+        ${advice ? `<p class="inline-reservation-advice">${advice}</p>` : ''}
+        <div class="inline-reservation-buttons">
+          ${catchtableBtn}${naverBtn}${phoneBtn}
+        </div>
+      </div>`;
 
     return `
       <div class="inline-detail-header">
@@ -754,9 +748,12 @@ const HomeScreen = {
         window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
       }
     } else {
-      // 좌표 없는 경우: 음식점 이름으로 검색 폴백
+      // 좌표 없는 경우: naverPlace URL이 있으면 직접, 없으면 이름 검색
+      const naverPlaceUrl = restaurant.reservation?.links?.naverPlace;
       const encodedQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`);
-      if (isMobile) {
+      if (naverPlaceUrl) {
+        window.open(naverPlaceUrl, '_blank');
+      } else if (isMobile) {
         window.location.href = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
         setTimeout(() => {
           window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
@@ -1418,16 +1415,20 @@ const DetailScreen = {
   renderReservationSection() {
     const r = this.currentRestaurant;
 
-    // 예약 정보가 없으면 섹션 숨김
-    if (!r.reservation || !r.reservation.links) {
-      const section = document.getElementById('detail-reservation-section');
-      if (section) section.style.display = 'none';
-      return;
-    }
-
-    // 섹션 표시
+    // 섹션 항상 표시 (네이버 플레이스 버튼은 항상 보여줌)
     const section = document.getElementById('detail-reservation-section');
     if (section) section.style.display = 'block';
+
+    // 예약 정보가 없으면 네이버 플레이스 버튼만 표시
+    if (!r.reservation || !r.reservation.links) {
+      const catchtableBtn = document.getElementById('reservation-catchtable-btn');
+      if (catchtableBtn) catchtableBtn.style.display = 'none';
+      const naverBtn2 = document.getElementById('reservation-naver-btn');
+      if (naverBtn2) naverBtn2.style.display = 'flex';
+      const phoneBtn2 = document.getElementById('reservation-phone-btn');
+      if (phoneBtn2) phoneBtn2.style.display = 'none';
+      return;
+    }
 
     const links = r.reservation.links;
     const contact = r.reservation.contact || {};
@@ -1470,14 +1471,10 @@ const DetailScreen = {
       }
     }
 
-    // 네이버 플레이스 버튼
+    // 네이버 플레이스 버튼 - 항상 표시
     const naverBtn = document.getElementById('reservation-naver-btn');
     if (naverBtn) {
-      if (links.naverPlace) {
-        naverBtn.style.display = 'flex';
-      } else {
-        naverBtn.style.display = 'none';
-      }
+      naverBtn.style.display = 'flex';
     }
 
     // 전화 버튼
@@ -1712,9 +1709,12 @@ const DetailScreen = {
         window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
       }
     } else {
-      // 좌표 없는 경우: 음식점 이름으로 검색 폴백
+      // 좌표 없는 경우: naverPlace URL이 있으면 직접, 없으면 이름 검색
+      const naverPlaceUrl = restaurant.reservation?.links?.naverPlace;
       const encodedQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`);
-      if (isMobile) {
+      if (naverPlaceUrl) {
+        window.open(naverPlaceUrl, '_blank');
+      } else if (isMobile) {
         window.location.href = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
         setTimeout(() => {
           window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
@@ -2947,15 +2947,18 @@ const ReservationModule = {
   getReservationLink(restaurant, platform) {
     // reservation 객체가 있는 경우 (새 스키마)
     if (restaurant.reservation && restaurant.reservation.links) {
-      return restaurant.reservation.links[platform] || null;
+      const link = restaurant.reservation.links[platform];
+      if (link) return link;
     }
 
     // 레거시: 개별 필드로 저장된 경우
     switch (platform) {
       case 'catchtable':
         return restaurant.catchtableUrl || null;
-      case 'naver':
-        return restaurant.naverPlaceUrl || null;
+      case 'naverPlace':
+        // naverPlace 링크가 없으면 네이버 검색 폴백 (항상 연결 가능)
+        return restaurant.naverPlaceUrl ||
+          `https://map.naver.com/p/search/${encodeURIComponent(restaurant.name)}`;
       case 'phone':
         return restaurant.phone ? `tel:${restaurant.phone}` : null;
       default:
