@@ -597,15 +597,13 @@ const HomeScreen = {
     });
   },
 
-  // 레시피 인라인 상세 표시
+  // 레시피 인라인 상세 표시 (클릭한 카드 바로 아래)
   showInlineRecipeDetail(recipeId, clickedCard) {
     const recipe = (window.recipesData || []).find(r => r.id === recipeId);
     if (!recipe) return;
 
-    const detailContainer = document.getElementById('inline-detail-container');
-    if (!detailContainer) return;
-
-    const existing = detailContainer.querySelector('.inline-detail');
+    const grid = document.getElementById('home-preview-list');
+    const existing = grid ? grid.querySelector('.inline-detail') : null;
     if (existing) {
       if (existing.dataset.recipeId === recipeId) {
         existing.remove();
@@ -650,7 +648,8 @@ const HomeScreen = {
       </a>
     `;
 
-    detailContainer.appendChild(detailDiv);
+    // 클릭한 카드 바로 뒤에 삽입
+    clickedCard.after(detailDiv);
 
     const closeBtn = detailDiv.querySelector('#recipe-inline-close');
     if (closeBtn) {
@@ -665,7 +664,7 @@ const HomeScreen = {
     }, 150);
   },
 
-  // 인라인 상세 정보 표시 (그리드 밖 컨테이너에)
+  // 인라인 상세 정보 표시 (클릭한 카드 바로 아래)
   showInlineDetail(restaurantId, clickedCard) {
     // 레스토랑 데이터 찾기
     let restaurant = window.nearbySpots.find(r => r.id === restaurantId);
@@ -678,14 +677,10 @@ const HomeScreen = {
       return;
     }
 
-    // 상세 정보 컨테이너
-    const detailContainer = document.getElementById('inline-detail-container');
-    if (!detailContainer) return;
-
-    // 이전에 열린 상세 정보 제거
-    const existingDetail = detailContainer.querySelector('.inline-detail');
+    // 그리드 내 기존 상세 정보 제거
+    const grid = document.getElementById('home-preview-list');
+    const existingDetail = grid ? grid.querySelector('.inline-detail') : null;
     if (existingDetail) {
-      // 같은 카드를 다시 클릭한 경우 닫기
       if (existingDetail.dataset.restaurantId === restaurantId) {
         existingDetail.remove();
         return;
@@ -702,8 +697,8 @@ const HomeScreen = {
     detailDiv.dataset.restaurantId = restaurantId;
     detailDiv.innerHTML = detailHTML;
 
-    // 컨테이너에 삽입
-    detailContainer.appendChild(detailDiv);
+    // 클릭한 카드 바로 뒤에 삽입 (그리드 내에서 전체 너비 차지)
+    clickedCard.after(detailDiv);
 
     // 이벤트 리스너 설정
     this.setupInlineDetailListeners(restaurant, detailDiv);
