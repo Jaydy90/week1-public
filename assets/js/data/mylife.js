@@ -8,7 +8,7 @@ const mylifeData = [
   // ──────────── 아침 ────────────
 
   {
-    id: "mylife-001", num: 1,
+    id: "mylife-001", num: 1, imageUrl: "https://images.unsplash.com/photo-1517673400267-0251440c45dc?auto=format&fit=crop&w=600&q=80",
     mealTime: "아침", emoji: "🌅", color: "#f97316",
     title: "그릭 요거트 볼",
     tagline: "혈당 잡고 공복 오래 — 완벽한 하루의 시작",
@@ -40,7 +40,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-002", num: 2,
+    id: "mylife-002", num: 2, imageUrl: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=600&q=80",
     mealTime: "아침", emoji: "🌅", color: "#f97316",
     title: "오버나이트 오트밀",
     tagline: "자는 동안 완성되는 — 전날 10분으로 끝내는 아침",
@@ -73,7 +73,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-003", num: 3,
+    id: "mylife-003", num: 3, imageUrl: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
     mealTime: "아침", emoji: "🌅", color: "#f97316",
     title: "치아씨드 푸딩",
     tagline: "하룻밤이면 완성 — 가장 게으른 건강식",
@@ -108,7 +108,7 @@ const mylifeData = [
   // ──────────── 브런치 ────────────
 
   {
-    id: "mylife-004", num: 4,
+    id: "mylife-004", num: 4, imageUrl: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=600&q=80",
     mealTime: "브런치", emoji: "🍳", color: "#ec4899",
     title: "아보카도 수란 토스트",
     tagline: "주말 아침의 작은 사치 — 카페 퀄리티를 집에서",
@@ -145,7 +145,7 @@ const mylifeData = [
   // ──────────── 점심 ────────────
 
   {
-    id: "mylife-005", num: 5,
+    id: "mylife-005", num: 5, imageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80",
     mealTime: "점심", emoji: "☕", color: "#0f6b66",
     title: "감성 빵 + 올리브오일 디핑 + 커피",
     tagline: "자극 없이 깊은 맛 — 유럽식 심플 런치",
@@ -181,7 +181,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-006", num: 6,
+    id: "mylife-006", num: 6, imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
     mealTime: "점심", emoji: "☕", color: "#0f6b66",
     title: "훈제연어 아보카도 볼",
     tagline: "한 그릇에 오메가3 + 건강지방 — 두뇌 점심",
@@ -216,7 +216,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-007", num: 7,
+    id: "mylife-007", num: 7, imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
     mealTime: "점심", emoji: "☕", color: "#0f6b66",
     title: "퀴노아 샐러드 볼",
     tagline: "완전 단백질 곡물 — 고기 없이 근육 채우기",
@@ -253,7 +253,7 @@ const mylifeData = [
   // ──────────── 음료 ────────────
 
   {
-    id: "mylife-008", num: 8,
+    id: "mylife-008", num: 8, imageUrl: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80",
     mealTime: "음료", emoji: "🥤", color: "#06b6d4",
     title: "핸드드립 스페셜티 커피",
     tagline: "의식(儀式)이 되는 커피 — 하루의 리셋 버튼",
@@ -283,7 +283,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-009", num: 9,
+    id: "mylife-009", num: 9, imageUrl: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80",
     mealTime: "음료", emoji: "🥤", color: "#06b6d4",
     title: "아침 그린 스무디",
     tagline: "마시는 채소 — 5가지 영양소를 한 번에",
@@ -319,7 +319,7 @@ const mylifeData = [
   // ──────────── 간식 ────────────
 
   {
-    id: "mylife-010", num: 10,
+    id: "mylife-010", num: 10, imageUrl: "https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&w=600&q=80",
     mealTime: "간식", emoji: "🍫", color: "#f59e0b",
     title: "다크초콜릿 + 아몬드 + 치즈",
     tagline: "완벽한 트리오 — 30분의 집중력을 되살리는 간식",
@@ -347,7 +347,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-011", num: 11,
+    id: "mylife-011", num: 11, imageUrl: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=600&q=80",
     mealTime: "간식", emoji: "🍫", color: "#f59e0b",
     title: "후무스 + 야채스틱",
     tagline: "중동의 디핑 소스 — 채소가 과자보다 맛있어지는 마법",
@@ -381,7 +381,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-012", num: 12,
+    id: "mylife-012", num: 12, imageUrl: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80",
     mealTime: "간식", emoji: "🍫", color: "#f59e0b",
     title: "그릭 요거트 + 꿀 + 견과류",
     tagline: "야식을 건강하게 — 10시 이후의 완벽한 해결책",
@@ -413,7 +413,7 @@ const mylifeData = [
   // ──────────── 저녁 ────────────
 
   {
-    id: "mylife-013", num: 13,
+    id: "mylife-013", num: 13, imageUrl: "https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=600&q=80",
     mealTime: "저녁", emoji: "🌙", color: "#6366f1",
     title: "닭가슴살 그린 샐러드",
     tagline: "저녁 단백질 충전 — 가장 지속 가능한 저녁 루틴",
@@ -447,7 +447,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-014", num: 14,
+    id: "mylife-014", num: 14, imageUrl: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80",
     mealTime: "저녁", emoji: "🌙", color: "#6366f1",
     title: "알리오 올리오 파스타",
     tagline: "재료 4가지로 완성하는 이탈리아의 정수",
@@ -485,7 +485,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-015", num: 15,
+    id: "mylife-015", num: 15, imageUrl: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=600&q=80",
     mealTime: "저녁", emoji: "🌙", color: "#6366f1",
     title: "두부 스테이크 + 버섯 볶음",
     tagline: "고기 없이 스테이크 감성 — 식물성 저녁의 정점",
@@ -518,7 +518,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-016", num: 16,
+    id: "mylife-016", num: 16, imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=600&q=80",
     mealTime: "저녁", emoji: "🌙", color: "#6366f1",
     title: "구운 연어 + 레몬 채소",
     tagline: "15분으로 완성하는 — 오메가3 풀코스",
@@ -552,7 +552,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-017", num: 17,
+    id: "mylife-017", num: 17, imageUrl: "https://images.unsplash.com/photo-1555126634-323283e090fa?auto=format&fit=crop&w=600&q=80",
     mealTime: "저녁", emoji: "🌙", color: "#6366f1",
     title: "현미밥 + 미역국",
     tagline: "가장 한국적인 치유식 — 위장을 쉬게 하는 저녁",
@@ -588,7 +588,7 @@ const mylifeData = [
   // ──────────── 야식 / 마무리 ────────────
 
   {
-    id: "mylife-018", num: 18,
+    id: "mylife-018", num: 18, imageUrl: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80",
     mealTime: "야식", emoji: "🌙", color: "#8b5cf6",
     title: "캐모마일 티 + 다크초콜릿",
     tagline: "하루의 끝 — 수면을 위한 마지막 의식",
@@ -618,7 +618,7 @@ const mylifeData = [
   // ──────────── 디저트 ────────────
 
   {
-    id: "mylife-019", num: 19,
+    id: "mylife-019", num: 19, imageUrl: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80",
     mealTime: "디저트", emoji: "🍮", color: "#a855f7",
     title: "코코넛 치아씨드 무스",
     tagline: "죄책감 없는 달콤함 — 건강한 디저트의 새로운 기준",
@@ -651,7 +651,7 @@ const mylifeData = [
   },
 
   {
-    id: "mylife-020", num: 20,
+    id: "mylife-020", num: 20, imageUrl: "https://images.unsplash.com/photo-1525351326368-efbb5cb6814d?auto=format&fit=crop&w=600&q=80",
     mealTime: "브런치", emoji: "🍳", color: "#ec4899",
     title: "홈메이드 에그 베네딕트",
     tagline: "주말의 특별한 사치 — 집에서 만드는 5성급 브런치",

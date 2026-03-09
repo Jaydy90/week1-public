@@ -682,11 +682,16 @@ const HomeScreen = {
   // 나의 픽 카드 HTML 생성
   createMylifeCardHTML(card, index) {
     const tagsHTML = (card.tags || []).map(t => `<span class="mylife-tag">${t}</span>`).join('');
+    const imgHTML = card.imageUrl
+      ? `<img src="${card.imageUrl}" alt="${card.title}" loading="lazy">`
+      : '';
     return `
       <article class="mylife-card" style="--delay:${Math.min(index * 0.05, 0.8)}s" data-mylife-id="${card.id}">
-        <div class="mylife-card-bar" style="background:${card.color}"></div>
-        <div class="mylife-card-body">
+        <div class="mylife-card-image">
+          ${imgHTML}
           <span class="mylife-meal-badge" style="background:${card.color}">${card.emoji} ${card.mealTime}</span>
+        </div>
+        <div class="mylife-card-body">
           <h3 class="mylife-card-title">${card.title}</h3>
           <p class="mylife-card-tagline">${card.tagline}</p>
           <div class="mylife-stats-row">
