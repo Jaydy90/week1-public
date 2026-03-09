@@ -1052,9 +1052,75 @@ const ListScreen = {
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const recipeId = card.dataset.recipeId;
-        this.showRecipeDetail(recipeId);
+        this.showInlineRecipeDetail(recipeId, card);
       });
     });
+  },
+
+  // 레시피 인라인 상세 표시 (클릭한 카드 바로 아래)
+  showInlineRecipeDetail(recipeId, clickedCard) {
+    const recipe = (window.recipesData || []).find(r => r.id === recipeId);
+    if (!recipe) return;
+
+    const grid = document.getElementById('list-grid');
+    const existing = grid ? grid.querySelector('.inline-detail') : null;
+    if (existing) {
+      if (existing.dataset.recipeId === recipeId) {
+        existing.remove();
+        return;
+      }
+      existing.remove();
+    }
+
+    const isTop3 = recipe.rank <= 3;
+    const rankLabel = isTop3 ? ['🥇', '🥈', '🥉'][recipe.rank - 1] : `#${recipe.rank}`;
+    const ingredientChips = (recipe.ingredients || []).map(
+      ing => `<span class="recipe-inline-ingredient">${ing}</span>`
+    ).join('');
+
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'inline-detail recipe-inline-detail';
+    detailDiv.dataset.recipeId = recipeId;
+    detailDiv.innerHTML = `
+      <div class="recipe-inline-header">
+        <div>
+          <h2 class="recipe-inline-title">${rankLabel} ${recipe.title}</h2>
+          <span class="recipe-inline-channel">${recipe.channel}</span>
+        </div>
+        <button class="recipe-inline-close" id="recipe-inline-close">✕ 닫기</button>
+      </div>
+      <div class="recipe-inline-chips">
+        <span class="recipe-category-chip">${recipe.category}</span>
+        <span class="recipe-views-chip">👁 ${recipe.views}</span>
+        <span class="recipe-time-chip">⏱ ${recipe.cookingTime}</span>
+        <span class="recipe-difficulty-chip">${recipe.difficulty}</span>
+      </div>
+      <div class="recipe-inline-section">
+        <h3>요약</h3>
+        <p>${recipe.summary}</p>
+      </div>
+      <div class="recipe-inline-section">
+        <h3>재료</h3>
+        <div class="recipe-inline-ingredients">${ingredientChips}</div>
+      </div>
+      <a href="${recipe.youtubeUrl}" target="_blank" rel="noopener" class="recipe-inline-youtube">
+        ▶ YouTube에서 레시피 영상 보기
+      </a>
+    `;
+
+    clickedCard.after(detailDiv);
+
+    const closeBtn = detailDiv.querySelector('#recipe-inline-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        detailDiv.remove();
+      });
+    }
+
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   },
 
   // 레시피 상세 정보 표시 (리스트 화면 우측 패널)
@@ -1340,9 +1406,8 @@ const ListScreen = {
     });
   },
 
-  // 인라인 상세 정보 표시
+  // 인라인 상세 정보 표시 (클릭한 카드 바로 아래)
   showInlineDetail(restaurantId, clickedCard) {
-    // HomeScreen의 메서드 재사용
     let restaurant = window.allRestaurants ? window.allRestaurants.find(r => r.id === restaurantId) : null;
     if (!restaurant) {
       restaurant = window.nearbySpots.find(r => r.id === restaurantId);
@@ -1353,12 +1418,9 @@ const ListScreen = {
       return;
     }
 
-    // 상세 정보 컨테이너
-    const detailContainer = document.getElementById('list-inline-detail-container');
-    if (!detailContainer) return;
-
-    // 이전에 열린 상세 정보 제거
-    const existingDetail = detailContainer.querySelector('.inline-detail');
+    // 그리드 내 기존 상세 정보 제거
+    const grid = document.getElementById('list-grid');
+    const existingDetail = grid ? grid.querySelector('.inline-detail') : null;
     if (existingDetail) {
       if (existingDetail.dataset.restaurantId === restaurantId) {
         existingDetail.remove();
@@ -1376,8 +1438,8 @@ const ListScreen = {
     detailDiv.dataset.restaurantId = restaurantId;
     detailDiv.innerHTML = detailHTML;
 
-    // 컨테이너에 삽입
-    detailContainer.appendChild(detailDiv);
+    // 클릭한 카드 바로 뒤에 삽입
+    clickedCard.after(detailDiv);
 
     // 이벤트 리스너 설정
     HomeScreen.setupInlineDetailListeners(restaurant, detailDiv);
