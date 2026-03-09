@@ -3246,11 +3246,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Router initialization failed:', err);
   }
 
-  // 브랜드 로고 클릭
+  // 브랜드 로고 클릭 - F5처럼 전체 새로고침
   const titleLink = document.querySelector('.title-link');
   if (titleLink) {
     titleLink.addEventListener('click', () => {
-      Router.navigateTo('home');
+      window.location.reload();
     });
   }
 
