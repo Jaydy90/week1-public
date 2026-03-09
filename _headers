@@ -8,6 +8,10 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(self), microphone=(), camera=()
 
+# 루트 URL (index.html) 캐싱 전략
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
 # HTML 파일 캐싱 전략
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
