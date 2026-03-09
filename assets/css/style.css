@@ -5283,6 +5283,337 @@ textarea {
   .recipe-inline-youtube { font-size: 0.88rem; padding: 0.75rem 1rem; }
 }
 
+/* ========================================
+   나의 픽 (My Life Picks) — 식단 카드
+   ======================================== */
+
+/* 나의 픽 인트로 섹션 */
+.mylife-intro {
+  background: linear-gradient(135deg, #1c1916 0%, #2d2520 100%);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-align: center;
+}
+.mylife-intro .category-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.mylife-intro h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+.mylife-intro p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.72);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* 나의 픽 카드 */
+.mylife-card {
+  background: var(--surface);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  animation: fadeInCard 0.4s ease both;
+  animation-delay: var(--delay, 0s);
+  border: 1.5px solid transparent;
+}
+.mylife-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+}
+
+/* 상단 컬러 바 */
+.mylife-card-bar {
+  height: 5px;
+  width: 100%;
+}
+
+/* 카드 바디 */
+.mylife-card-body {
+  padding: 1.2rem 1.25rem 1rem;
+}
+
+/* 식사 시간 뱃지 */
+.mylife-meal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  border-radius: 99px;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+/* 카드 제목 & 태그라인 */
+.mylife-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+  line-height: 1.3;
+}
+.mylife-card-tagline {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+/* 통계 행 */
+.mylife-stats-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.mylife-stat {
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 0.22rem 0.65rem;
+  border-radius: 99px;
+}
+
+/* 태그 */
+.mylife-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.mylife-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+  background: var(--bg-strong);
+  color: var(--muted);
+}
+
+/* ── 나의 픽 인라인 상세 ── */
+.mylife-inline-detail {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border-radius: 20px;
+  border: 2px solid var(--bg-strong);
+  padding: 2rem 2.25rem;
+  margin: 0.5rem 0 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  animation: fadeInCard 0.3s ease both;
+}
+
+/* 상세 헤더 */
+.mylife-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1.5px solid var(--bg-strong);
+}
+.mylife-detail-meal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 99px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.mylife-detail-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+  line-height: 1.2;
+}
+.mylife-detail-tagline {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
+}
+.mylife-detail-close {
+  background: none;
+  border: 1.5px solid var(--bg-strong);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.mylife-detail-close:hover { background: var(--bg); }
+
+/* 상세 메타 */
+.mylife-detail-meta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.mylife-detail-stat {
+  font-size: 0.82rem;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 0.28rem 0.75rem;
+  border-radius: 99px;
+}
+
+/* 상세 섹션 */
+.mylife-detail-section {
+  margin-bottom: 1.5rem;
+}
+.mylife-detail-section h3 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.85rem;
+}
+
+/* 재료 목록 */
+.mylife-ingredient-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.mylife-ingredient-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+.mylife-ingredient-main {
+  flex: 1;
+  min-width: 180px;
+}
+.mylife-ingredient-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.mylife-ingredient-amount {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+.mylife-ingredient-tip {
+  font-size: 0.78rem;
+  color: var(--secondary);
+  margin-top: 0.3rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+.mylife-buy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f97316;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: auto;
+  align-self: center;
+  transition: background 0.18s ease;
+}
+.mylife-buy-btn:hover { background: #c14b25; }
+.mylife-buy-btn-text { font-size: 0.68rem; }
+
+/* 단계별 조리법 */
+.mylife-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  counter-reset: step-counter;
+}
+.mylife-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  counter-increment: step-counter;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.mylife-step-item::before {
+  content: counter(step-counter);
+  min-width: 24px;
+  height: 24px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* 이유 + 팁 박스 */
+.mylife-reason-box {
+  background: linear-gradient(135deg, rgba(15,107,102,0.07) 0%, rgba(15,107,102,0.12) 100%);
+  border-left: 3px solid var(--secondary);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.7;
+}
+.mylife-tip-box {
+  background: linear-gradient(135deg, rgba(244,196,90,0.1) 0%, rgba(244,196,90,0.18) 100%);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.7;
+}
+.mylife-tip-box strong,
+.mylife-reason-box strong {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
 /* ── 터치 장치: hover 효과 제거 ── */
 @media (hover: none) and (pointer: coarse) {
   .info-card:hover,

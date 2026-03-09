@@ -4,7 +4,7 @@
 // Version: 2.1 (Modal fix with global handler)
 // ========================================
 
-console.log('Trust Route main.js loaded - Version 2.1 (v51 - recipe category)');
+console.log('Trust Route main.js loaded - Version 2.1 (v55 - mylife category)');
 
 // 전역 상태
 const AppState = {
@@ -292,12 +292,14 @@ const HomeScreen = {
     const celebrityIntro = document.getElementById('celebrity-intro');
     const chefsSection = document.getElementById('culinary-class-heroes');
     const recipeIntro = document.getElementById('recipe-intro');
+    const mylifeIntro = document.getElementById('mylife-intro');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
     if (celebrityIntro) celebrityIntro.style.display = 'none';
     if (chefsSection) chefsSection.style.display = 'none';
     if (recipeIntro) recipeIntro.style.display = 'none';
+    if (mylifeIntro) mylifeIntro.style.display = 'none';
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -314,6 +316,9 @@ const HomeScreen = {
         break;
       case 'recipe':
         if (recipeIntro) recipeIntro.style.display = 'block';
+        break;
+      case 'mylife':
+        if (mylifeIntro) mylifeIntro.style.display = 'block';
         break;
       case 'all':
       default:
@@ -423,6 +428,16 @@ const HomeScreen = {
       console.log('==========================================');
       container.innerHTML = recipes.map((recipe, index) => this.createRecipeCardHTML(recipe, index)).join('');
       this.attachRecipeCardClickHandlers();
+      return;
+    }
+
+    // 나의 픽 탭 처리 (별도 데이터 소스)
+    if (AppState.filters.trustTab === 'mylife') {
+      const cards = Array.isArray(window.mylifeData) ? window.mylifeData : [];
+      console.log(`나의 픽 탭: ${cards.length}개`);
+      console.log('==========================================');
+      container.innerHTML = cards.map((card, index) => this.createMylifeCardHTML(card, index)).join('');
+      this.attachMylifeCardClickHandlers();
       return;
     }
 
@@ -658,6 +673,110 @@ const HomeScreen = {
         detailDiv.remove();
       });
     }
+
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  },
+
+  // 나의 픽 카드 HTML 생성
+  createMylifeCardHTML(card, index) {
+    const tagsHTML = (card.tags || []).map(t => `<span class="mylife-tag">${t}</span>`).join('');
+    return `
+      <article class="mylife-card" style="--delay:${Math.min(index * 0.05, 0.8)}s" data-mylife-id="${card.id}">
+        <div class="mylife-card-bar" style="background:${card.color}"></div>
+        <div class="mylife-card-body">
+          <span class="mylife-meal-badge" style="background:${card.color}">${card.emoji} ${card.mealTime}</span>
+          <h3 class="mylife-card-title">${card.title}</h3>
+          <p class="mylife-card-tagline">${card.tagline}</p>
+          <div class="mylife-stats-row">
+            <span class="mylife-stat">⏱ ${card.prepTime}</span>
+            <span class="mylife-stat">🔥 ${card.calories}</span>
+          </div>
+          <div class="mylife-tags">${tagsHTML}</div>
+        </div>
+      </article>
+    `;
+  },
+
+  // 나의 픽 카드 클릭 핸들러
+  attachMylifeCardClickHandlers() {
+    const cards = document.querySelectorAll('#home-preview-list .mylife-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        this.showInlineMylifeDetail(card.dataset.mylifeId, card);
+      });
+    });
+  },
+
+  // 나의 픽 인라인 상세 표시 (클릭한 카드 바로 아래)
+  showInlineMylifeDetail(cardId, clickedCard) {
+    const card = (window.mylifeData || []).find(c => c.id === cardId);
+    if (!card) return;
+
+    const grid = document.getElementById('home-preview-list');
+    const existing = grid ? grid.querySelector('.mylife-inline-detail') : null;
+    if (existing) {
+      if (existing.dataset.mylifeId === cardId) { existing.remove(); return; }
+      existing.remove();
+    }
+
+    const ingredientsHTML = (card.ingredients || []).map(ing => {
+      const buyBtn = ing.buyUrl
+        ? `<a href="${ing.buyUrl}" target="_blank" rel="noopener" class="mylife-buy-btn" onclick="event.stopPropagation()">🛒 <span class="mylife-buy-btn-text">쿠팡</span></a>`
+        : '';
+      const tipHTML = ing.tip ? `<p class="mylife-ingredient-tip">💡 ${ing.tip}</p>` : '';
+      return `<li class="mylife-ingredient-item">
+        <div class="mylife-ingredient-main">
+          <div class="mylife-ingredient-name">${ing.name}</div>
+          <div class="mylife-ingredient-amount">${ing.amount}</div>
+          ${tipHTML}
+        </div>
+        ${buyBtn}
+      </li>`;
+    }).join('');
+
+    const stepsHTML = (card.steps || []).map(step => `<li class="mylife-step-item">${step}</li>`).join('');
+
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'mylife-inline-detail';
+    detailDiv.dataset.mylifeId = cardId;
+    detailDiv.innerHTML = `
+      <div class="mylife-detail-header">
+        <div>
+          <span class="mylife-detail-meal-badge" style="background:${card.color}">${card.emoji} ${card.mealTime}</span>
+          <h2 class="mylife-detail-title">${card.title}</h2>
+          <p class="mylife-detail-tagline">${card.tagline}</p>
+        </div>
+        <button class="mylife-detail-close">✕ 닫기</button>
+      </div>
+      <div class="mylife-detail-meta">
+        <span class="mylife-detail-stat">⏱ ${card.prepTime}</span>
+        <span class="mylife-detail-stat">🔥 ${card.calories}</span>
+        ${(card.tags || []).map(t => `<span class="mylife-detail-stat">${t}</span>`).join('')}
+      </div>
+      <div class="mylife-detail-section">
+        <h3>재료 & 구매처</h3>
+        <ul class="mylife-ingredient-list">${ingredientsHTML}</ul>
+      </div>
+      <div class="mylife-detail-section">
+        <h3>만드는 법</h3>
+        <ol class="mylife-steps-list">${stepsHTML}</ol>
+      </div>
+      <div class="mylife-detail-section">
+        <div class="mylife-reason-box"><strong>나의 선택 이유</strong>${card.reason}</div>
+      </div>
+      <div class="mylife-detail-section">
+        <div class="mylife-tip-box"><strong>나만의 팁</strong>${card.myTip}</div>
+      </div>
+    `;
+
+    clickedCard.after(detailDiv);
+
+    detailDiv.querySelector('.mylife-detail-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      detailDiv.remove();
+    });
 
     setTimeout(() => {
       detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -953,12 +1072,14 @@ const ListScreen = {
     const celebrityIntro = document.getElementById('list-celebrity-intro');
     const chefsSection = document.getElementById('list-culinary-class-heroes');
     const recipeIntro = document.getElementById('list-recipe-intro');
+    const mylifeIntro = document.getElementById('list-mylife-intro');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
     if (celebrityIntro) celebrityIntro.style.display = 'none';
     if (chefsSection) chefsSection.style.display = 'none';
     if (recipeIntro) recipeIntro.style.display = 'none';
+    if (mylifeIntro) mylifeIntro.style.display = 'none';
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -981,6 +1102,9 @@ const ListScreen = {
       case 'recipe':
         if (recipeIntro) recipeIntro.style.display = 'block';
         break;
+      case 'mylife':
+        if (mylifeIntro) mylifeIntro.style.display = 'block';
+        break;
       case 'all':
       default:
         break;
@@ -998,6 +1122,16 @@ const ListScreen = {
       if (countText) countText.textContent = `전체 ${recipes.length}개`;
       container.innerHTML = recipes.map((recipe, index) => HomeScreen.createRecipeCardHTML(recipe, index)).join('');
       this.attachRecipeCardClickHandlers();
+      return;
+    }
+
+    // 나의 픽 탭 처리 (별도 데이터 소스)
+    if (AppState.filters.badge === 'mylife') {
+      const cards = Array.isArray(window.mylifeData) ? window.mylifeData : [];
+      const countText = document.getElementById('list-count-text');
+      if (countText) countText.textContent = `전체 ${cards.length}개`;
+      container.innerHTML = cards.map((card, index) => HomeScreen.createMylifeCardHTML(card, index)).join('');
+      this.attachMylifeCardClickHandlers();
       return;
     }
 
@@ -1117,6 +1251,90 @@ const ListScreen = {
         detailDiv.remove();
       });
     }
+
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+  },
+
+  // 나의 픽 카드 클릭 핸들러 (리스트 화면)
+  attachMylifeCardClickHandlers() {
+    const cards = document.querySelectorAll('#list-grid .mylife-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        this.showInlineMylifeDetail(card.dataset.mylifeId, card);
+      });
+    });
+  },
+
+  // 나의 픽 인라인 상세 표시 (클릭한 카드 바로 아래) — 리스트 화면
+  showInlineMylifeDetail(cardId, clickedCard) {
+    const card = (window.mylifeData || []).find(c => c.id === cardId);
+    if (!card) return;
+
+    const grid = document.getElementById('list-grid');
+    const existing = grid ? grid.querySelector('.mylife-inline-detail') : null;
+    if (existing) {
+      if (existing.dataset.mylifeId === cardId) { existing.remove(); return; }
+      existing.remove();
+    }
+
+    const ingredientsHTML = (card.ingredients || []).map(ing => {
+      const buyBtn = ing.buyUrl
+        ? `<a href="${ing.buyUrl}" target="_blank" rel="noopener" class="mylife-buy-btn" onclick="event.stopPropagation()">🛒 <span class="mylife-buy-btn-text">쿠팡</span></a>`
+        : '';
+      const tipHTML = ing.tip ? `<p class="mylife-ingredient-tip">💡 ${ing.tip}</p>` : '';
+      return `<li class="mylife-ingredient-item">
+        <div class="mylife-ingredient-main">
+          <div class="mylife-ingredient-name">${ing.name}</div>
+          <div class="mylife-ingredient-amount">${ing.amount}</div>
+          ${tipHTML}
+        </div>
+        ${buyBtn}
+      </li>`;
+    }).join('');
+
+    const stepsHTML = (card.steps || []).map(step => `<li class="mylife-step-item">${step}</li>`).join('');
+
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'mylife-inline-detail';
+    detailDiv.dataset.mylifeId = cardId;
+    detailDiv.innerHTML = `
+      <div class="mylife-detail-header">
+        <div>
+          <span class="mylife-detail-meal-badge" style="background:${card.color}">${card.emoji} ${card.mealTime}</span>
+          <h2 class="mylife-detail-title">${card.title}</h2>
+          <p class="mylife-detail-tagline">${card.tagline}</p>
+        </div>
+        <button class="mylife-detail-close">✕ 닫기</button>
+      </div>
+      <div class="mylife-detail-meta">
+        <span class="mylife-detail-stat">⏱ ${card.prepTime}</span>
+        <span class="mylife-detail-stat">🔥 ${card.calories}</span>
+        ${(card.tags || []).map(t => `<span class="mylife-detail-stat">${t}</span>`).join('')}
+      </div>
+      <div class="mylife-detail-section">
+        <h3>재료 & 구매처</h3>
+        <ul class="mylife-ingredient-list">${ingredientsHTML}</ul>
+      </div>
+      <div class="mylife-detail-section">
+        <h3>만드는 법</h3>
+        <ol class="mylife-steps-list">${stepsHTML}</ol>
+      </div>
+      <div class="mylife-detail-section">
+        <div class="mylife-reason-box"><strong>나의 선택 이유</strong>${card.reason}</div>
+      </div>
+      <div class="mylife-detail-section">
+        <div class="mylife-tip-box"><strong>나만의 팁</strong>${card.myTip}</div>
+      </div>
+    `;
+
+    clickedCard.after(detailDiv);
+
+    detailDiv.querySelector('.mylife-detail-close').addEventListener('click', (e) => {
+      e.stopPropagation();
+      detailDiv.remove();
+    });
 
     setTimeout(() => {
       detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });

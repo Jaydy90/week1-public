@@ -135,7 +135,7 @@
     <link rel="dns-prefetch" href="https://js.stripe.com">
     <link rel="dns-prefetch" href="https://djmadubptsajvdvzpdvd.supabase.co">
 
-    <link rel="stylesheet" href="assets/css/style.css?v=43">
+    <link rel="stylesheet" href="assets/css/style.css?v=44">
     <link rel="stylesheet" href="assets/css/chefs-section.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
@@ -283,7 +283,15 @@
                 <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
                 <button class="trust-tab" type="button" data-tab="bakery">베이커리 카페</button>
                 <button class="trust-tab" type="button" data-tab="recipe">🎬 레시피 Top100</button>
+                <button class="trust-tab" type="button" data-tab="mylife">🌿 나의 픽</button>
             </div>
+
+            <!-- 나의 픽 인트로 -->
+            <section class="mylife-intro" id="mylife-intro" style="display: none;">
+                <div class="category-icon">🌿</div>
+                <h3>나의 픽 — 내가 진정 좋아하는 20가지 식단</h3>
+                <p>혈당 관리부터 유럽 감성 브런치까지. 직접 고른 재료, 직접 검증한 레시피, 직접 찾은 구매처까지 — 나만의 식탁 이야기.</p>
+            </section>
 
             <!-- 레시피 인트로 -->
             <section class="recipe-intro" id="recipe-intro" style="display: none;">
@@ -457,8 +465,16 @@
                 <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
                 <button class="trust-tab" type="button" data-tab="bakery">베이커리 카페</button>
                 <button class="trust-tab" type="button" data-tab="recipe">🎬 레시피 Top100</button>
+                <button class="trust-tab" type="button" data-tab="mylife">🌿 나의 픽</button>
                 <button class="settings-toggle-btn" type="button" id="settings-toggle-btn"><span>⚙️</span> 설정</button>
             </div>
+
+            <!-- 나의 픽 인트로 (리스트 화면용) -->
+            <section class="mylife-intro" id="list-mylife-intro" style="display: none;">
+                <div class="category-icon">🌿</div>
+                <h3>나의 픽 — 내가 진정 좋아하는 20가지 식단</h3>
+                <p>혈당 관리부터 유럽 감성 브런치까지. 직접 고른 재료, 직접 검증한 레시피, 직접 찾은 구매처까지 — 나만의 식탁 이야기.</p>
+            </section>
 
             <!-- 레시피 인트로 (리스트 화면용) -->
             <section class="recipe-intro" id="list-recipe-intro" style="display: none;">
@@ -1195,6 +1211,7 @@
     </script>
     <script src="assets/js/data/restaurants.js?v=41"></script>
     <script src="assets/js/data/recipes.js?v=1"></script>
+    <script src="assets/js/data/mylife.js?v=1"></script>
     <script>
       // 즉시 확인: data.js 로드 후
       console.log('[AFTER data.js] window.allRestaurants:', window.allRestaurants?.length);
@@ -1210,7 +1227,7 @@
     </script>
     <script src="assets/js/data/news.js?v=39"></script>
     <script src="assets/js/features/subscription.js?v=40"></script>
-    <script src="assets/js/main.js?v=54"></script>
+    <script src="assets/js/main.js?v=55"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
