@@ -227,6 +227,92 @@ const Router = {
 // ========================================
 // 홈 화면
 // ========================================
+// ========================================
+// 레스토랑 사진 URL 반환 (카테고리/메뉴 키워드 기반)
+// ========================================
+function getRestaurantPhotoUrl(item) {
+  const t = `${item.category || ''} ${item.mainMenu || ''} ${item.name || ''}`.toLowerCase();
+
+  // 베이커리 / 빵
+  if (/베이커리|빵|크루아상|소금빵|식빵|바게트|사워도우|베이글|케이크|타르트|스콘|무화과/.test(t))
+    return 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80';
+
+  // 파인다이닝 / 코스 / 이노베이티브
+  if (/파인|이노베이티브|하이브리드|에피소드|창작|코스|오마카세/.test(t))
+    return 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80';
+
+  // 스시 / 일식
+  if (/스시|사시미|야키토리|일식|스시 오마카세/.test(t))
+    return 'https://images.unsplash.com/photo-1617196034183-421b4040ed20?auto=format&fit=crop&w=600&q=80';
+
+  // 이탈리안 / 파스타
+  if (/파스타|이탈리안|라자냐|알리오|까르보나라|리조또/.test(t))
+    return 'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=600&q=80';
+
+  // 피자
+  if (/피자/.test(t))
+    return 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80';
+
+  // 중식 / 딤섬 / 훠궈
+  if (/중식|딤섬|훠궈|동파육|멘보샤/.test(t))
+    return 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80';
+
+  // 태국 음식
+  if (/태국|팟타이|똠양/.test(t))
+    return 'https://images.unsplash.com/photo-1559314809-0d155014e29e?auto=format&fit=crop&w=600&q=80';
+
+  // 라면
+  if (/라면|라멘|파이탄|토리빠이탄/.test(t))
+    return 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=600&q=80';
+
+  // 냉면 / 막국수
+  if (/냉면|막국수/.test(t))
+    return 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?auto=format&fit=crop&w=600&q=80';
+
+  // 칼국수 / 수제비 / 국수
+  if (/칼국수|수제비|국수/.test(t))
+    return 'https://images.unsplash.com/photo-1498654896293-37aaa4f08e7b?auto=format&fit=crop&w=600&q=80';
+
+  // 한국 BBQ / 삼겹살 / 갈비 / 소고기
+  if (/삼겹살|갈비|구이|한우|육회|껍데기|돼지/.test(t))
+    return 'https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80';
+
+  // 해산물 / 낙지 / 조개
+  if (/낙지|해산물|조개|굴|새우|꽃게|전복/.test(t))
+    return 'https://images.unsplash.com/photo-1615361200141-f45040f367be?auto=format&fit=crop&w=600&q=80';
+
+  // 만두 / 교자
+  if (/만두|교자/.test(t))
+    return 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80';
+
+  // 곰탕 / 설렁탕 / 해장국 / 국밥
+  if (/곰탕|설렁탕|국밥|해장|도가니|사골/.test(t))
+    return 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=600&q=80';
+
+  // 찌개 / 전골
+  if (/부대찌개|찌개|전골/.test(t))
+    return 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80';
+
+  // 순대
+  if (/순대/.test(t))
+    return 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=600&q=80';
+
+  // 멕시칸 / 타코
+  if (/멕시칸|타코/.test(t))
+    return 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80';
+
+  // 스페인
+  if (/스페인/.test(t))
+    return 'https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=600&q=80';
+
+  // 미쉐린 기본 (파인다이닝 분위기)
+  if (item.group === 'michelin')
+    return 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80';
+
+  // 기본 한식
+  return 'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=600&q=80';
+}
+
 const HomeScreen = {
   init() {
     console.log('Home screen initialized');
@@ -472,19 +558,25 @@ const HomeScreen = {
       const bestRoute = item.bestRoute || '경로 확인';
       const saves = item.saves || 0;
 
+      const photoUrl = getRestaurantPhotoUrl(item);
+      const groupLabel = item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중';
       return `
         <article class="info-card" style="--delay:${Math.min(index * 0.08, 0.5)}s" data-restaurant-id="${item.id}">
-          <div class="card-meta">
-            <span class="status-pill">${item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중'}</span>
-            <span>${item.category || travelTime}</span>
+          <div class="info-card-image">
+            <img src="${photoUrl}" alt="${item.name}" loading="lazy">
+            <span class="info-card-group-badge ${item.group || ''}">${groupLabel}</span>
           </div>
-          <span class="card-title">${item.name}</span>
-          <span class="card-location">${location}</span>
-          <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
-          <div class="card-badges">${badgeMarkup}</div>
-          <div class="card-footer">
-            ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
-            <span>확인일: ${item.verifiedAt || '확인 중'}</span>
+          <div class="info-card-body">
+            <div class="card-meta">
+              <span>${item.category || travelTime}</span>
+            </div>
+            <span class="card-title">${item.name}</span>
+            <span class="card-location">${location}</span>
+            <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
+            <div class="card-badges">${badgeMarkup}</div>
+            <div class="card-footer">
+              ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
+            </div>
           </div>
         </article>
       `;
@@ -1160,22 +1252,27 @@ const ListScreen = {
 
     // 렌더링
     container.innerHTML = items.map((item, index) => {
-      // 배지 생성
       const badgeHTML = item.badgeType ? `<span class="badge-chip">${item.badgeType}</span>` : '';
+      const photoUrl = getRestaurantPhotoUrl(item);
+      const groupLabel = item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중';
 
       return `
         <article class="info-card" style="--delay:${index * 0.05}s" data-restaurant-id="${item.id}">
-          <div class="card-meta">
-            <span class="status-pill">${item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : '흑백요리사'}</span>
-            <span>${item.category}</span>
+          <div class="info-card-image">
+            <img src="${photoUrl}" alt="${item.name}" loading="lazy">
+            <span class="info-card-group-badge ${item.group || ''}">${groupLabel}</span>
           </div>
-          <span class="card-title">${item.name}</span>
-          <span class="card-location">${item.region} ${item.area}</span>
-          <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
-          <div class="card-badges">${badgeHTML}</div>
-          <div class="card-footer">
-            ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
-            <span>확인일: ${item.verifiedAt}</span>
+          <div class="info-card-body">
+            <div class="card-meta">
+              <span>${item.category}</span>
+            </div>
+            <span class="card-title">${item.name}</span>
+            <span class="card-location">${item.region} ${item.area}</span>
+            <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
+            <div class="card-badges">${badgeHTML}</div>
+            <div class="card-footer">
+              ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
+            </div>
           </div>
         </article>
       `;
