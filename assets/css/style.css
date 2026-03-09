@@ -4750,3 +4750,295 @@ textarea {
   margin: 0;
   line-height: 1.6;
 }
+
+/* ========================================
+   Rules Page (규칙)
+   ======================================== */
+
+.rules-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+/* Hero */
+.rules-hero {
+  text-align: center;
+  padding: 3.5rem 1rem 3rem;
+  position: relative;
+}
+
+.rules-hero::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+  margin: 1.8rem auto 0;
+}
+
+.rules-hero-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: rgba(228, 90, 43, 0.1);
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.rules-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  color: var(--ink);
+  margin: 0 0 1rem 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.rules-hero-desc {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Block sections */
+.rules-block {
+  margin-bottom: 3.5rem;
+}
+
+.rules-block-header {
+  margin-bottom: 2rem;
+}
+
+.rules-block-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.rules-block-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  color: var(--ink);
+  margin: 0 0 0.45rem 0;
+  letter-spacing: -0.01em;
+}
+
+.rules-block-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Divider */
+.rules-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(28, 25, 22, 0.12), transparent);
+  margin: 0 0 3.5rem;
+}
+
+/* Philosophy grid */
+.rules-philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+
+.rules-philosophy-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 2rem 1.8rem 2rem;
+  border: 1px solid rgba(28, 25, 22, 0.07);
+  box-shadow: 0 8px 24px rgba(28, 25, 22, 0.07);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.rules-philosophy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(28, 25, 22, 0.12);
+}
+
+.rules-philosophy-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(228, 90, 43, 0.12);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.03em;
+  user-select: none;
+  position: absolute;
+  top: 0.8rem;
+  right: 1.2rem;
+}
+
+.rules-philosophy-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  margin: 0;
+  padding-top: 0.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Standards list */
+.rules-standards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rules-standard-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+  border: 1px solid rgba(28, 25, 22, 0.07);
+  box-shadow: 0 6px 20px rgba(28, 25, 22, 0.06);
+  border-left-width: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rules-standard-card:hover {
+  transform: translateX(4px);
+  box-shadow: 0 10px 28px rgba(28, 25, 22, 0.1);
+}
+
+/* Category accent colors */
+.rules-standard--michelin { border-left-color: #d4af37; }
+.rules-standard--celebrity { border-left-color: #6366f1; }
+.rules-standard--chef { border-left-color: #1c1916; }
+.rules-standard--bakery { border-left-color: #e67e22; }
+.rules-standard--recipe { border-left-color: #e53935; }
+
+.rules-standard-icon-wrap {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.rules-standard--michelin .rules-standard-icon-wrap { background: rgba(212, 175, 55, 0.12); }
+.rules-standard--celebrity .rules-standard-icon-wrap { background: rgba(99, 102, 241, 0.1); }
+.rules-standard--chef .rules-standard-icon-wrap { background: rgba(28, 25, 22, 0.07); }
+.rules-standard--bakery .rules-standard-icon-wrap { background: rgba(230, 126, 34, 0.1); }
+.rules-standard--recipe .rules-standard-icon-wrap { background: rgba(229, 57, 53, 0.08); }
+
+.rules-standard-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rules-standard-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 0.45rem 0;
+}
+
+.rules-standard-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 0 0 0.75rem 0;
+}
+
+.rules-standard-desc strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.rules-standard-desc em {
+  font-style: normal;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.rules-standard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.rules-std-tag {
+  font-size: 0.73rem;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 0.2rem 0.65rem;
+  background: rgba(28, 25, 22, 0.06);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.rules-standard--michelin .rules-std-tag { background: rgba(212, 175, 55, 0.1); color: #a07c10; }
+.rules-standard--celebrity .rules-std-tag { background: rgba(99, 102, 241, 0.1); color: #4f46e5; }
+.rules-standard--chef .rules-std-tag { background: rgba(28, 25, 22, 0.08); color: var(--muted); }
+.rules-standard--bakery .rules-std-tag { background: rgba(230, 126, 34, 0.1); color: #c0611a; }
+.rules-standard--recipe .rules-std-tag { background: rgba(229, 57, 53, 0.08); color: #c62828; }
+
+/* Footer note */
+.rules-footer-note {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(228, 90, 43, 0.05);
+  border-radius: var(--radius);
+  border: 1px dashed rgba(228, 90, 43, 0.25);
+}
+
+.rules-footer-note p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .rules-philosophy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rules-philosophy-card {
+    padding: 1.5rem;
+  }
+
+  .rules-philosophy-num {
+    font-size: 3.5rem;
+  }
+
+  .rules-standard-card {
+    padding: 1.2rem 1.2rem 1.2rem 1.4rem;
+    gap: 1rem;
+  }
+
+  .rules-hero {
+    padding: 2rem 0.5rem 2.5rem;
+  }
+
+  .rules-hero-title {
+    font-size: 2rem;
+  }
+}
