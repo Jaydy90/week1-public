@@ -308,6 +308,9 @@ const HomeScreen = {
       case 'chef':
         if (chefsSection) chefsSection.style.display = 'block';
         break;
+      case 'bakery':
+        // 베이커리 카페: 별도 인트로 섹션 없음
+        break;
       case 'all':
       default:
         // 전체 탭: 모든 특수 섹션 숨김 (거리순 맛집만 표시)
@@ -407,6 +410,7 @@ const HomeScreen = {
     console.log(`- michelin: ${allItems.filter(r => r.group === 'michelin').length}개`);
     console.log(`- celebrity: ${allItems.filter(r => r.group === 'celebrity').length}개`);
     console.log(`- chef: ${allItems.filter(r => r.group === 'chef').length}개`);
+    console.log(`- bakery: ${allItems.filter(r => r.group === 'bakery').length}개`);
     console.log(`현재 필터: ${AppState.filters.trustTab}`);
 
     // trustTab 필터 적용 (검증 중 맛집도 포함)
@@ -850,6 +854,9 @@ const ListScreen = {
         } else {
           console.error('[ListScreen] ❌ list-culinary-class-heroes를 찾을 수 없음!');
         }
+        break;
+      case 'bakery':
+        // 베이커리 카페: 별도 인트로 섹션 없음
         break;
       case 'all':
       default:
