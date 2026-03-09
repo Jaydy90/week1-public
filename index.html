@@ -135,7 +135,7 @@
     <link rel="dns-prefetch" href="https://js.stripe.com">
     <link rel="dns-prefetch" href="https://djmadubptsajvdvzpdvd.supabase.co">
 
-    <link rel="stylesheet" href="assets/css/style.css?v=39">
+    <link rel="stylesheet" href="assets/css/style.css?v=40">
     <link rel="stylesheet" href="assets/css/chefs-section.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
@@ -281,7 +281,15 @@
                 <button class="trust-tab" type="button" data-tab="celebrity">유명인</button>
                 <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
                 <button class="trust-tab" type="button" data-tab="bakery">베이커리 카페</button>
+                <button class="trust-tab" type="button" data-tab="recipe">🎬 레시피</button>
             </div>
+
+            <!-- 레시피 인트로 -->
+            <section class="recipe-intro" id="recipe-intro" style="display: none;">
+                <div class="category-icon">🎬</div>
+                <h3>유튜브 인기 한국 레시피 TOP 100</h3>
+                <p>유튜브 조회수를 기준으로 선정한 인기 한국 요리 레시피입니다. 각 레시피를 클릭해 재료와 요약을 확인하고, YouTube 버튼으로 영상을 바로 시청하세요.</p>
+            </section>
 
             <!-- 카테고리별 설명 섹션 -->
             <!-- 미쉐린 가이드 설명 -->
@@ -447,8 +455,16 @@
                 <button class="trust-tab" type="button" data-tab="celebrity">유명인</button>
                 <button class="trust-tab" type="button" data-tab="chef">흑백요리사</button>
                 <button class="trust-tab" type="button" data-tab="bakery">베이커리 카페</button>
+                <button class="trust-tab" type="button" data-tab="recipe">🎬 레시피</button>
                 <button class="settings-toggle-btn" type="button" id="settings-toggle-btn"><span>⚙️</span> 설정</button>
             </div>
+
+            <!-- 레시피 인트로 (리스트 화면용) -->
+            <section class="recipe-intro" id="list-recipe-intro" style="display: none;">
+                <div class="category-icon">🎬</div>
+                <h3>유튜브 인기 한국 레시피 TOP 100</h3>
+                <p>유튜브 조회수를 기준으로 선정한 인기 한국 요리 레시피입니다. 각 레시피를 클릭해 재료와 요약을 확인하고, YouTube 버튼으로 영상을 바로 시청하세요.</p>
+            </section>
 
             <!-- 카테고리별 설명 섹션 -->
             <!-- 미쉐린 가이드 설명 -->
@@ -1042,6 +1058,7 @@
       console.log('[BEFORE data.js] window.allRestaurants:', typeof window.allRestaurants);
     </script>
     <script src="assets/js/data/restaurants.js?v=41"></script>
+    <script src="assets/js/data/recipes.js?v=1"></script>
     <script>
       // 즉시 확인: data.js 로드 후
       console.log('[AFTER data.js] window.allRestaurants:', window.allRestaurants?.length);
@@ -1057,7 +1074,7 @@
     </script>
     <script src="assets/js/data/news.js?v=39"></script>
     <script src="assets/js/features/subscription.js?v=40"></script>
-    <script src="assets/js/main.js?v=50"></script>
+    <script src="assets/js/main.js?v=51"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>

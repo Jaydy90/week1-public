@@ -4,7 +4,7 @@
 // Version: 2.1 (Modal fix with global handler)
 // ========================================
 
-console.log('Trust Route main.js loaded - Version 2.1');
+console.log('Trust Route main.js loaded - Version 2.1 (v51 - recipe category)');
 
 // 전역 상태
 const AppState = {
@@ -291,11 +291,13 @@ const HomeScreen = {
     const michelinIntro = document.getElementById('michelin-intro');
     const celebrityIntro = document.getElementById('celebrity-intro');
     const chefsSection = document.getElementById('culinary-class-heroes');
+    const recipeIntro = document.getElementById('recipe-intro');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
     if (celebrityIntro) celebrityIntro.style.display = 'none';
     if (chefsSection) chefsSection.style.display = 'none';
+    if (recipeIntro) recipeIntro.style.display = 'none';
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -309,11 +311,12 @@ const HomeScreen = {
         if (chefsSection) chefsSection.style.display = 'block';
         break;
       case 'bakery':
-        // 베이커리 카페: 별도 인트로 섹션 없음
+        break;
+      case 'recipe':
+        if (recipeIntro) recipeIntro.style.display = 'block';
         break;
       case 'all':
       default:
-        // 전체 탭: 모든 특수 섹션 숨김 (거리순 맛집만 표시)
         break;
     }
   },
@@ -412,6 +415,16 @@ const HomeScreen = {
     console.log(`- chef: ${allItems.filter(r => r.group === 'chef').length}개`);
     console.log(`- bakery: ${allItems.filter(r => r.group === 'bakery').length}개`);
     console.log(`현재 필터: ${AppState.filters.trustTab}`);
+
+    // 레시피 탭 처리 (별도 데이터 소스)
+    if (AppState.filters.trustTab === 'recipe') {
+      const recipes = Array.isArray(window.recipesData) ? window.recipesData : [];
+      console.log(`레시피 탭: ${recipes.length}개`);
+      console.log('==========================================');
+      container.innerHTML = recipes.map((recipe, index) => this.createRecipeCardHTML(recipe, index)).join('');
+      this.attachRecipeCardClickHandlers();
+      return;
+    }
 
     // trustTab 필터 적용 (검증 중 맛집도 포함)
     let items = allItems;
@@ -536,6 +549,120 @@ const HomeScreen = {
         this.showInlineDetail(restaurantId, card);
       });
     });
+  },
+
+  // 레시피 카드 HTML 생성
+  createRecipeCardHTML(recipe, index) {
+    const isTop3 = recipe.rank <= 3;
+    const rankLabel = isTop3
+      ? ['🥇', '🥈', '🥉'][recipe.rank - 1]
+      : `#${recipe.rank}`;
+    const rankClass = `recipe-rank-badge${isTop3 ? ' top3' : ''}`;
+    const ingredientTags = (recipe.ingredients || []).slice(0, 5).map(
+      ing => `<span class="recipe-ingredient-tag">${ing}</span>`
+    ).join('');
+
+    return `
+      <article class="recipe-card" style="--delay:${Math.min(index * 0.05, 0.8)}s" data-recipe-id="${recipe.id}">
+        <div class="recipe-card-header">
+          <div class="${rankClass}">${rankLabel}</div>
+          <div class="recipe-title-block">
+            <p class="recipe-title">${recipe.title}</p>
+            <span class="recipe-channel">${recipe.channel}</span>
+          </div>
+        </div>
+        <div class="recipe-meta-row">
+          <span class="recipe-category-chip">${recipe.category}</span>
+          <span class="recipe-views-chip">👁 ${recipe.views}</span>
+          <span class="recipe-time-chip">⏱ ${recipe.cookingTime}</span>
+          <span class="recipe-difficulty-chip">${recipe.difficulty}</span>
+        </div>
+        <p class="recipe-summary">${recipe.summary}</p>
+        <div class="recipe-ingredients">${ingredientTags}</div>
+        <a href="${recipe.youtubeUrl}" target="_blank" rel="noopener" class="recipe-youtube-btn" onclick="event.stopPropagation()">
+          ▶ YouTube에서 보기
+        </a>
+      </article>
+    `;
+  },
+
+  // 레시피 카드 클릭 핸들러
+  attachRecipeCardClickHandlers() {
+    const cards = document.querySelectorAll('#home-preview-list .recipe-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const recipeId = card.dataset.recipeId;
+        this.showInlineRecipeDetail(recipeId, card);
+      });
+    });
+  },
+
+  // 레시피 인라인 상세 표시
+  showInlineRecipeDetail(recipeId, clickedCard) {
+    const recipe = (window.recipesData || []).find(r => r.id === recipeId);
+    if (!recipe) return;
+
+    const detailContainer = document.getElementById('inline-detail-container');
+    if (!detailContainer) return;
+
+    const existing = detailContainer.querySelector('.inline-detail');
+    if (existing) {
+      if (existing.dataset.recipeId === recipeId) {
+        existing.remove();
+        return;
+      }
+      existing.remove();
+    }
+
+    const isTop3 = recipe.rank <= 3;
+    const rankLabel = isTop3 ? ['🥇', '🥈', '🥉'][recipe.rank - 1] : `#${recipe.rank}`;
+    const ingredientChips = (recipe.ingredients || []).map(
+      ing => `<span class="recipe-inline-ingredient">${ing}</span>`
+    ).join('');
+
+    const detailDiv = document.createElement('div');
+    detailDiv.className = 'inline-detail recipe-inline-detail';
+    detailDiv.dataset.recipeId = recipeId;
+    detailDiv.innerHTML = `
+      <div class="recipe-inline-header">
+        <div>
+          <h2 class="recipe-inline-title">${rankLabel} ${recipe.title}</h2>
+          <span class="recipe-inline-channel">${recipe.channel}</span>
+        </div>
+        <button class="recipe-inline-close" id="recipe-inline-close">✕ 닫기</button>
+      </div>
+      <div class="recipe-inline-chips">
+        <span class="recipe-category-chip">${recipe.category}</span>
+        <span class="recipe-views-chip">👁 ${recipe.views}</span>
+        <span class="recipe-time-chip">⏱ ${recipe.cookingTime}</span>
+        <span class="recipe-difficulty-chip">${recipe.difficulty}</span>
+      </div>
+      <div class="recipe-inline-section">
+        <h3>요약</h3>
+        <p>${recipe.summary}</p>
+      </div>
+      <div class="recipe-inline-section">
+        <h3>재료</h3>
+        <div class="recipe-inline-ingredients">${ingredientChips}</div>
+      </div>
+      <a href="${recipe.youtubeUrl}" target="_blank" rel="noopener" class="recipe-inline-youtube">
+        ▶ YouTube에서 레시피 영상 보기
+      </a>
+    `;
+
+    detailContainer.appendChild(detailDiv);
+
+    const closeBtn = detailDiv.querySelector('#recipe-inline-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        detailDiv.remove();
+      });
+    }
+
+    setTimeout(() => {
+      detailDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
   },
 
   // 인라인 상세 정보 표시 (그리드 밖 컨테이너에)
@@ -830,11 +957,13 @@ const ListScreen = {
     const michelinIntro = document.getElementById('list-michelin-intro');
     const celebrityIntro = document.getElementById('list-celebrity-intro');
     const chefsSection = document.getElementById('list-culinary-class-heroes');
+    const recipeIntro = document.getElementById('list-recipe-intro');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
     if (celebrityIntro) celebrityIntro.style.display = 'none';
     if (chefsSection) chefsSection.style.display = 'none';
+    if (recipeIntro) recipeIntro.style.display = 'none';
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -853,7 +982,9 @@ const ListScreen = {
         }
         break;
       case 'bakery':
-        // 베이커리 카페: 별도 인트로 섹션 없음
+        break;
+      case 'recipe':
+        if (recipeIntro) recipeIntro.style.display = 'block';
         break;
       case 'all':
       default:
@@ -864,6 +995,16 @@ const ListScreen = {
   renderList() {
     const container = document.getElementById('list-grid');
     if (!container) return;
+
+    // 레시피 탭 처리 (별도 데이터 소스)
+    if (AppState.filters.badge === 'recipe') {
+      const recipes = Array.isArray(window.recipesData) ? window.recipesData : [];
+      const countText = document.getElementById('list-count-text');
+      if (countText) countText.textContent = `전체 ${recipes.length}개`;
+      container.innerHTML = recipes.map((recipe, index) => HomeScreen.createRecipeCardHTML(recipe, index)).join('');
+      this.attachRecipeCardClickHandlers();
+      return;
+    }
 
     // allRestaurants에서 필터링된 데이터 가져오기
     let items = this.getFilteredRestaurants();
@@ -908,6 +1049,59 @@ const ListScreen = {
 
     // 카드 클릭 이벤트
     this.attachCardClickHandlers();
+  },
+
+  // 레시피 카드 클릭 핸들러 (리스트 화면)
+  attachRecipeCardClickHandlers() {
+    const cards = document.querySelectorAll('#list-grid .recipe-card');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const recipeId = card.dataset.recipeId;
+        this.showRecipeDetail(recipeId);
+      });
+    });
+  },
+
+  // 레시피 상세 정보 표시 (리스트 화면 우측 패널)
+  showRecipeDetail(recipeId) {
+    const recipe = (window.recipesData || []).find(r => r.id === recipeId);
+    if (!recipe) return;
+
+    const detailPanel = document.getElementById('detail-panel');
+    if (!detailPanel) return;
+    detailPanel.classList.add('is-visible');
+
+    const isTop3 = recipe.rank <= 3;
+    const rankLabel = isTop3 ? ['🥇', '🥈', '🥉'][recipe.rank - 1] : `#${recipe.rank}`;
+    const ingredientChips = (recipe.ingredients || []).map(
+      ing => `<span class="recipe-inline-ingredient">${ing}</span>`
+    ).join('');
+
+    const nameEl = document.getElementById('detail-name');
+    const locationEl = document.getElementById('detail-location');
+    const badgeEl = document.getElementById('detail-badge');
+    const menuEl = document.getElementById('detail-main-menu');
+    const contextEl = document.getElementById('detail-context');
+    const sourceEl = document.getElementById('detail-source');
+    const addressEl = document.getElementById('detail-address');
+    const reservationSection = document.getElementById('detail-reservation-section');
+
+    if (nameEl) nameEl.textContent = `${rankLabel} ${recipe.title}`;
+    if (locationEl) locationEl.textContent = recipe.channel;
+    if (badgeEl) badgeEl.innerHTML = `
+      <span class="recipe-category-chip">${recipe.category}</span>
+      <span class="recipe-views-chip">👁 ${recipe.views}</span>
+      <span class="recipe-time-chip">⏱ ${recipe.cookingTime}</span>
+      <span class="recipe-difficulty-chip">${recipe.difficulty}</span>
+    `;
+    if (menuEl) menuEl.innerHTML = `<strong>요약:</strong> ${recipe.summary}`;
+    if (contextEl) contextEl.innerHTML = `
+      <strong>재료</strong><br>
+      <div class="recipe-inline-ingredients" style="margin-top:0.5rem">${ingredientChips}</div>
+    `;
+    if (sourceEl) sourceEl.innerHTML = `<a href="${recipe.youtubeUrl}" target="_blank" rel="noopener" class="recipe-inline-youtube" style="display:inline-flex;margin-top:0.5rem">▶ YouTube에서 보기</a>`;
+    if (addressEl) addressEl.textContent = '';
+    if (reservationSection) reservationSection.style.display = 'none';
   },
 
   getFilteredRestaurants() {
