@@ -729,40 +729,39 @@ const HomeScreen = {
     }
   },
 
-  // 네이버 지도 길찾기 바로 열기
+  // 네이버 지도 길찾기 바로 열기 (현재 위치 → 음식점)
   openNaverDirections(restaurant) {
-    // 모바일 기기 감지
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const destName = encodeURIComponent(restaurant.name);
 
-    let naverUrl;
+    if (restaurant.lat && restaurant.lng) {
+      const dLat = restaurant.lat;
+      const dLng = restaurant.lng;
 
-    // 항상 검색 URL 형식 사용 (음식점 정보와 지도가 함께 보임)
-    const searchQuery = restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`;
-    const encodedQuery = encodeURIComponent(searchQuery);
-
-    if (isMobile) {
-      // 모바일: 앱 URL 스키마 사용
-      naverUrl = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
-
-      // 앱이 없을 경우를 대비한 웹 URL 폴백
-      setTimeout(() => {
+      if (isMobile) {
+        // 모바일: nmap 앱 스키마로 대중교통 길찾기 (출발지 생략 = 현재 GPS 위치 자동 사용)
+        window.location.href = `nmap://route.public?dlat=${dLat}&dlng=${dLng}&dname=${destName}&appname=kpopeats`;
+        // 앱 없을 경우 웹으로 폴백
+        setTimeout(() => {
+          window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
+        }, 1500);
+      } else {
+        // 데스크톱: 네이버 지도 웹 길찾기 (현재 위치 → 음식점)
+        window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
+      }
+    } else {
+      // 좌표 없는 경우: 음식점 이름으로 검색 폴백
+      const encodedQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`);
+      if (isMobile) {
+        window.location.href = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
+        setTimeout(() => {
+          window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
+        }, 1500);
+      } else {
         window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
-      }, 500);
-    } else {
-      // 데스크톱: 검색 URL 사용 (음식점 정보 + 지도 함께 표시)
-      naverUrl = `https://map.naver.com/p/search/${encodedQuery}`;
+      }
     }
 
-    // 새 창으로 열기
-    if (isMobile) {
-      // 모바일 앱 URL은 현재 창에서 시도 (앱이 열리고 페이지는 그대로 유지됨)
-      window.location.href = naverUrl;
-    } else {
-      // 데스크톱 웹 URL은 새 탭에서 열기
-      window.open(naverUrl, '_blank');
-    }
-
-    // Google Analytics 이벤트 (있는 경우)
     if (typeof gtag !== 'undefined') {
       gtag('event', 'click', {
         'event_category': '길찾기',
@@ -1685,40 +1684,39 @@ const DetailScreen = {
     });
   },
 
-  // 네이버 지도 길찾기 바로 열기
+  // 네이버 지도 길찾기 바로 열기 (현재 위치 → 음식점)
   openNaverDirections(restaurant) {
-    // 모바일 기기 감지
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const destName = encodeURIComponent(restaurant.name);
 
-    let naverUrl;
+    if (restaurant.lat && restaurant.lng) {
+      const dLat = restaurant.lat;
+      const dLng = restaurant.lng;
 
-    // 항상 검색 URL 형식 사용 (음식점 정보와 지도가 함께 보임)
-    const searchQuery = restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`;
-    const encodedQuery = encodeURIComponent(searchQuery);
-
-    if (isMobile) {
-      // 모바일: 앱 URL 스키마 사용
-      naverUrl = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
-
-      // 앱이 없을 경우를 대비한 웹 URL 폴백
-      setTimeout(() => {
+      if (isMobile) {
+        // 모바일: nmap 앱 스키마로 대중교통 길찾기 (출발지 생략 = 현재 GPS 위치 자동 사용)
+        window.location.href = `nmap://route.public?dlat=${dLat}&dlng=${dLng}&dname=${destName}&appname=kpopeats`;
+        // 앱 없을 경우 웹으로 폴백
+        setTimeout(() => {
+          window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
+        }, 1500);
+      } else {
+        // 데스크톱: 네이버 지도 웹 길찾기 (현재 위치 → 음식점)
+        window.open(`https://map.naver.com/p/directions/-/${dLng},${dLat},${destName},-1/-/-/transit`, '_blank');
+      }
+    } else {
+      // 좌표 없는 경우: 음식점 이름으로 검색 폴백
+      const encodedQuery = encodeURIComponent(restaurant.mapQuery || `${restaurant.name} ${restaurant.location || restaurant.region || '서울'}`);
+      if (isMobile) {
+        window.location.href = `nmap://search?query=${encodedQuery}&appname=kpopeats`;
+        setTimeout(() => {
+          window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
+        }, 1500);
+      } else {
         window.open(`https://map.naver.com/p/search/${encodedQuery}`, '_blank');
-      }, 500);
-    } else {
-      // 데스크톱: 검색 URL 사용 (음식점 정보 + 지도 함께 표시)
-      naverUrl = `https://map.naver.com/p/search/${encodedQuery}`;
+      }
     }
 
-    // 새 창으로 열기
-    if (isMobile) {
-      // 모바일 앱 URL은 현재 창에서 시도 (앱이 열리고 페이지는 그대로 유지됨)
-      window.location.href = naverUrl;
-    } else {
-      // 데스크톱 웹 URL은 새 탭에서 열기
-      window.open(naverUrl, '_blank');
-    }
-
-    // Google Analytics 이벤트 (있는 경우)
     if (typeof gtag !== 'undefined') {
       gtag('event', 'click', {
         'event_category': '길찾기',
