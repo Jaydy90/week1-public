@@ -43,7 +43,7 @@ const AuthModule = {
       // hash fragment 제거 (깨끗한 URL로 만들기)
       if (window.location.hash.includes('access_token')) {
         console.log('Cleaning up URL hash...');
-        window.history.replaceState(null, '', window.location.pathname + '#home');
+        window.history.replaceState(null, '', window.location.pathname);
       }
     } else {
       // 세션이 없으면 로그아웃 상태 UI 표시
@@ -59,7 +59,7 @@ const AuthModule = {
       // 로그인 성공 시 hash 정리
       if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
         console.log('Sign in successful, cleaning URL...');
-        window.history.replaceState(null, '', window.location.pathname + '#home');
+        window.history.replaceState(null, '', window.location.pathname);
       }
     });
   },
