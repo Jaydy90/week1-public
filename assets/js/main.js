@@ -2492,6 +2492,7 @@ const NewsScreen = {
 
     const featured = window.newsArticles
       .filter(article => article.featured)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 2);
 
     if (featured.length === 0) {
@@ -2573,8 +2574,7 @@ const NewsScreen = {
       }
     });
 
-    // Remove featured articles from regular grid
-    filtered = filtered.filter(article => !article.featured);
+    // Sort articles by date (featured articles also appear in regular grid)
 
     const displayArticles = filtered.slice(0, this.displayedCount);
     const hasMore = filtered.length > this.displayedCount;
