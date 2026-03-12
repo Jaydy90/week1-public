@@ -2144,6 +2144,33 @@ const restaurantReservations = {
 // 레스토랑별 대표 이미지 오버라이드
 const restaurantImageOverrides = {
   "밍글스": "assets/images/restaurants/mingles.jpg",
+  "옥동식": "assets/images/restaurants/okdongsik.jpg",
+  "정식당": "assets/images/restaurants/jungsik.jpg",
+  "고향칼국수": "assets/images/restaurants/gohyang.jpg",
+  "라연": "assets/images/restaurants/layeon.jpg",
+  "코지마": "assets/images/restaurants/kojima.jpg",
+  "우래옥": "assets/images/restaurants/uraeok.jpg",
+  "필동면옥": "assets/images/restaurants/pildong.jpg",
+  "자하 손만두": "assets/images/restaurants/jaha.jpg",
+  "진진": "assets/images/restaurants/jinjin.jpg",
+  "소이연남마오": "assets/images/restaurants/soi.jpg",
+  "오레노라면": "assets/images/restaurants/orenoramen.jpg",
+  "팩피": "assets/images/restaurants/pakpak.jpg",
+  "에그앤플라워": "assets/images/restaurants/eggandflower.jpg",
+  "미진": "assets/images/restaurants/mijin.jpg",
+  "만두집": "assets/images/restaurants/mandujip.jpg",
+  "개성만두 궁": "assets/images/restaurants/gaesong.jpg",
+  "삼청동 수제비": "assets/images/restaurants/samcheong.jpg",
+  "구복만두": "assets/images/restaurants/gubok.jpg",
+  "황생가 칼국수": "assets/images/restaurants/hwangsaeng.jpg",
+  "명동교자": "assets/images/restaurants/myungdong.jpg",
+  "금돼지식당": "assets/images/restaurants/goldpig.jpg",
+  "툭툭소이타이": "assets/images/restaurants/tuktuk.jpg",
+  "류니끄": "assets/images/restaurants/ryunique.jpg",
+  "스와니예": "assets/images/restaurants/soigne.jpg",
+  "권숙수": "assets/images/restaurants/kwonsooksu.jpg",
+  "알라 프리마": "assets/images/restaurants/alaprima.jpg",
+  "제로콤플렉스": "assets/images/restaurants/zerocomplex.jpg",
 };
 
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
