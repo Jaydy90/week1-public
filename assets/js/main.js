@@ -231,6 +231,9 @@ const Router = {
 // 레스토랑 사진 URL 반환 (카테고리/메뉴 키워드 기반)
 // ========================================
 function getRestaurantPhotoUrl(item) {
+  // 레스토랑별 지정 이미지가 있으면 우선 사용
+  if (item.image) return item.image;
+
   const t = `${item.category || ''} ${item.mainMenu || ''} ${item.name || ''}`.toLowerCase();
 
   // 베이커리 / 빵

@@ -15,6 +15,7 @@ const nearbySpots = [
     status: "검증 완료",
     updatedAt: "2026-02-01",
     group: "michelin",
+    image: "assets/images/restaurants/mingles.jpg",
     lat: 37.524815,
     lng: 127.044955,
     mapQuery: "밍글스 서울 강남구",
@@ -435,6 +436,7 @@ const michelinSpots = [
     sourceLabel: "미쉐린 가이드",
     sourceUrl: "https://guide.michelin.com/kr/ko/seoul-capital-area/kr-seoul/restaurant/mingles",
     verifiedAt: "2026-02-01",
+    image: "assets/images/restaurants/mingles.jpg",
     lat: 37.524815,
     lng: 127.044955,
     mapQuery: "밍글스 서울 강남구"
@@ -2139,6 +2141,11 @@ const restaurantReservations = {
   }
 };
 
+// 레스토랑별 대표 이미지 오버라이드
+const restaurantImageOverrides = {
+  "밍글스": "assets/images/restaurants/mingles.jpg",
+};
+
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
   const parts = line.split(" | ").map((part) => part.trim());
   const name = parts[0];
@@ -2167,7 +2174,8 @@ const allRestaurants = allRestaurantsRaw.map((line, index) => {
     verifiedAt,
     group,
     sourceUrl,
-    reservation: restaurantReservations[name] || null
+    reservation: restaurantReservations[name] || null,
+    image: restaurantImageOverrides[name] || null
   };
 });
 
