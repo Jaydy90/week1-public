@@ -689,7 +689,6 @@ const allRestaurantsRaw = [
   "도량 | 서울 | 종로구 | 중식 | 임태훈 셰프 | 훠궈 | 출처 확인 중 | 2026-01-19 | chef",
   "로컬릿 | 서울 | 성동구 | 이탈리안 | 남정석 셰프 | 채소 테린 | 출처 확인 중 | 2026-01-19 | chef",
   "에드워드 권 리츠칼튼 | 서울 | 강남구 | 파인 다이닝 | 에드워드 권 셰프 | 창작 코스 | 출처 확인 중 | 2026-01-19 | chef",
-  "초이닷 | 서울 | 강남구 | 이탈리안 다이닝 | 최현석 셰프 | 무 코스 | 출처 확인 중 | 2026-01-19 | chef",
   "티엔미미 | 서울 | 서초구 | 중식 | 정지선 셰프 | 딤섬 | 출처 확인 중 | 2026-01-19 | chef",
   "파브리키친 | 서울 | 용산구 | 이탈리안 가스트로 | 파브리 셰프 | 파스타 | 출처 확인 중 | 2026-01-19 | chef",
   "만찢남 | 서울 | 강남구 | 중식 주점 | 조광효 셰프 | 동파육 | 출처 확인 중 | 2026-01-19 | chef",
@@ -1850,23 +1849,6 @@ const restaurantReservations = {
       "phoneVerified": false
     }
   },
-  "초이닷": {
-    "links": {
-      "primary": "catchtable",
-      "catchtable": "https://app.catchtable.co.kr/ct/shop/choidot",
-      "naverPlace": null,
-      "phone": null
-    },
-    "contact": {
-      "phone": null,
-      "phoneFormatted": null
-    },
-    "status": {
-      "catchtableVerified": false,
-      "naverPlaceVerified": false,
-      "phoneVerified": false
-    }
-  },
   "티엔미미": {
     "links": {
       "primary": "catchtable",
@@ -2207,7 +2189,6 @@ const restaurantImageOverrides = {
   "리북방": "assets/images/restaurants/leebukbang.jpg",
   "도량": "assets/images/restaurants/doryang.jpg",
   "로컬릿": "assets/images/restaurants/localeat.jpg",
-  "초이닷": "assets/images/restaurants/choidot.jpg",
   "티엔미미": "assets/images/restaurants/tienmimi.jpg",
   "파브리키친": "assets/images/restaurants/fabrikitchen.jpg",
   "만찢남": "assets/images/restaurants/manchitnam.jpg",
