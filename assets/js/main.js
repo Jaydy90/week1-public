@@ -599,6 +599,11 @@ const HomeScreen = {
         groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
         groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
       } else { groupLabel = '검증 중'; groupBadgeClass = item.group || ''; }
+      const reviewHTML = item.review ? `
+        <div class="card-review">
+          <p class="card-review-summary">${item.review.summary}</p>
+          <div class="card-review-keywords">${item.review.keywords.map(kw => `<span class="review-kw">${kw}</span>`).join('')}</div>
+        </div>` : '';
       return `
         <article class="info-card" style="--delay:${Math.min(index * 0.08, 0.5)}s" data-restaurant-id="${item.id}">
           <div class="info-card-image">
@@ -612,6 +617,7 @@ const HomeScreen = {
             <span class="card-title">${item.name}</span>
             <span class="card-location">${location}</span>
             <p class="card-context">대표 메뉴: ${item.mainMenu || '정보 없음'}</p>
+            ${reviewHTML}
             <div class="card-badges">${badgeMarkup}</div>
             <div class="card-footer">
               ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
@@ -1333,6 +1339,11 @@ const ListScreen = {
         groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
         groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
       } else { groupLabel = '검증 중'; groupBadgeClass = item.group || ''; }
+      const reviewHTML = item.review ? `
+        <div class="card-review">
+          <p class="card-review-summary">${item.review.summary}</p>
+          <div class="card-review-keywords">${item.review.keywords.map(kw => `<span class="review-kw">${kw}</span>`).join('')}</div>
+        </div>` : '';
 
       return `
         <article class="info-card" style="--delay:${index * 0.05}s" data-restaurant-id="${item.id}">
@@ -1347,6 +1358,7 @@ const ListScreen = {
             <span class="card-title">${item.name}</span>
             <span class="card-location">${item.region} ${item.area}</span>
             <p class="card-context">대표 메뉴: ${item.mainMenu}</p>
+            ${reviewHTML}
             <div class="card-badges">${badgeHTML}</div>
             <div class="card-footer">
               ${item.sourceLabel && item.sourceLabel !== '출처 확인 중' ? `<span>${item.sourceLabel}</span>` : ''}
