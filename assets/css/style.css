@@ -581,10 +581,14 @@ body.js-enabled .page-section.is-active {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
-.info-card-group-badge.michelin  { background: rgba(230,50,30,0.85); }
-.info-card-group-badge.celebrity { background: rgba(15,107,102,0.85); }
-.info-card-group-badge.chef      { background: rgba(28,25,22,0.85); }
-.info-card-group-badge.bakery    { background: rgba(236,72,153,0.85); }
+.info-card-group-badge.michelin      { background: rgba(230,50,30,0.85); }
+.info-card-group-badge.celebrity     { background: rgba(15,107,102,0.85); }
+.info-card-group-badge.chef          { background: rgba(28,25,22,0.85); }
+.info-card-group-badge.bakery        { background: rgba(236,72,153,0.85); }
+/* 베이커리 서브타입별 배지 색상 */
+.info-card-group-badge.bakery-bread  { background: rgba(161,85,30,0.88); }   /* 빵집형 — 따뜻한 갈색 */
+.info-card-group-badge.bakery-cafe   { background: rgba(214,60,140,0.88); }  /* 카페형 — 핑크 */
+.info-card-group-badge.bakery-outlet { background: rgba(79,70,229,0.90); }   /* 콘센트 있음 — 인디고 */
 
 /* 카드 바디 (기존 padding 복원) */
 .info-card-body {
@@ -1422,6 +1426,60 @@ textarea {
 
 .trust-tab.is-active::before {
   opacity: 0;
+}
+
+/* ========================================
+   베이커리 카페 인트로 & 서브 카테고리 필터
+   ======================================== */
+
+/* 베이커리 신뢰 근거 뱃지 */
+.bakery-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  background: rgba(236,72,153,0.10);
+  border: 1px solid rgba(236,72,153,0.25);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(214,60,140,1);
+}
+
+/* 베이커리 서브 카테고리 필터 행 */
+.bakery-sub-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 0 0.5rem;
+}
+
+/* 서브 카테고리 버튼 */
+.bakery-sub-btn {
+  border: 1.5px solid rgba(214,60,140,0.25);
+  background: rgba(255,255,255,0.95);
+  color: rgba(100,60,80,0.9);
+  padding: 0.38rem 1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bakery-sub-btn:hover {
+  background: rgba(236,72,153,0.08);
+  border-color: rgba(214,60,140,0.5);
+  transform: translateY(-1px);
+}
+
+.bakery-sub-btn.is-active {
+  background: rgba(214,60,140,1);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 3px 10px rgba(214,60,140,0.3);
 }
 
 /* 설정 토글 버튼 */

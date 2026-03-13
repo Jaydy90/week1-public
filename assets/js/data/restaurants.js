@@ -2234,6 +2234,25 @@ const restaurantImageOverrides = {
   "아티잔 베이커스": "assets/images/restaurants/artisan.jpg",
 };
 
+// ========================================
+// 베이커리 카페 서브타입 맵핑
+// bread-only: 테이크아웃 전용 빵집
+// cafe-outlet: 카페형 + 콘센트 있음 (노트북 작업 가능)
+// cafe: 카페형 (기본값, 좌석 있음)
+// ========================================
+const bakerySubTypeMap = {
+  // 빵집형 (테이크아웃 전용)
+  '푸하하크림빵':   'bread-only',
+  '어글리베이커리': 'bread-only',
+  '황남빵':         'bread-only',
+  '쟝블랑제리':     'bread-only',
+
+  // 콘센트 있음 (카페형 + 노트북 가능)
+  '카페 레이어드':  'cafe-outlet',
+  '누데이크':       'cafe-outlet',
+  '제주당':         'cafe-outlet',
+};
+
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
   const parts = line.split(" | ").map((part) => part.trim());
   const name = parts[0];
@@ -2262,6 +2281,7 @@ const allRestaurants = allRestaurantsRaw.map((line, index) => {
     verifiedAt,
     group,
     sourceUrl,
+    bakerySubType: group === 'bakery' ? (bakerySubTypeMap[name] || 'cafe') : null,
     reservation: restaurantReservations[name] || null,
     image: restaurantImageOverrides[name] || null
   };

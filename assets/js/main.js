@@ -17,7 +17,8 @@ const AppState = {
     trustTab: 'all',
     status: 'all',
     price: 'all',
-    badge: 'all'
+    badge: 'all',
+    bakerySubFilter: 'all' // 베이커리 서브 카테고리: 'all', 'bread-only', 'cafe', 'cafe-outlet'
   },
   sort: 'distance'
 };
@@ -382,6 +383,8 @@ const HomeScreen = {
     const chefsSection = document.getElementById('culinary-class-heroes');
     const recipeIntro = document.getElementById('recipe-intro');
     const mylifeIntro = document.getElementById('mylife-intro');
+    const bakeryIntro = document.getElementById('bakery-intro');
+    const bakerySubFilters = document.getElementById('bakery-sub-filters');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
@@ -389,6 +392,16 @@ const HomeScreen = {
     if (chefsSection) chefsSection.style.display = 'none';
     if (recipeIntro) recipeIntro.style.display = 'none';
     if (mylifeIntro) mylifeIntro.style.display = 'none';
+    if (bakeryIntro) bakeryIntro.style.display = 'none';
+    if (bakerySubFilters) bakerySubFilters.style.display = 'none';
+
+    // 베이커리 탭이 아니면 서브필터 초기화
+    if (tabValue !== 'bakery') {
+      AppState.filters.bakerySubFilter = 'all';
+      document.querySelectorAll('#home .bakery-sub-btn').forEach(b => b.classList.remove('is-active'));
+      const allBtn = document.querySelector('#home .bakery-sub-btn[data-sub="all"]');
+      if (allBtn) allBtn.classList.add('is-active');
+    }
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -402,6 +415,8 @@ const HomeScreen = {
         if (chefsSection) chefsSection.style.display = 'block';
         break;
       case 'bakery':
+        if (bakeryIntro) bakeryIntro.style.display = 'block';
+        if (bakerySubFilters) bakerySubFilters.style.display = 'flex';
         break;
       case 'recipe':
         if (recipeIntro) recipeIntro.style.display = 'block';
@@ -547,6 +562,19 @@ const HomeScreen = {
         items.forEach(item => console.log(`  - ${item.name} (${item.group})`));
       }
     }
+
+    // 베이커리 서브 필터 적용
+    if (AppState.filters.trustTab === 'bakery' && AppState.filters.bakerySubFilter !== 'all') {
+      const sub = AppState.filters.bakerySubFilter;
+      if (sub === 'bread-only') {
+        items = items.filter(item => item.bakerySubType === 'bread-only');
+      } else if (sub === 'cafe') {
+        items = items.filter(item => item.bakerySubType === 'cafe' || item.bakerySubType === 'cafe-outlet');
+      } else if (sub === 'cafe-outlet') {
+        items = items.filter(item => item.bakerySubType === 'cafe-outlet');
+      }
+    }
+
     console.log('==========================================');
     console.log('');
 
@@ -562,12 +590,20 @@ const HomeScreen = {
       const saves = item.saves || 0;
 
       const photoUrl = getRestaurantPhotoUrl(item);
-      const groupLabel = item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중';
+      let groupLabel, groupBadgeClass;
+      if (item.group === 'michelin') { groupLabel = '미쉐린'; groupBadgeClass = 'michelin'; }
+      else if (item.group === 'celebrity') { groupLabel = '유명인'; groupBadgeClass = 'celebrity'; }
+      else if (item.group === 'chef') { groupLabel = '흑백요리사'; groupBadgeClass = 'chef'; }
+      else if (item.group === 'bakery') {
+        const sub = item.bakerySubType || 'cafe';
+        groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
+        groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
+      } else { groupLabel = '검증 중'; groupBadgeClass = item.group || ''; }
       return `
         <article class="info-card" style="--delay:${Math.min(index * 0.08, 0.5)}s" data-restaurant-id="${item.id}">
           <div class="info-card-image">
             <img src="${photoUrl}" alt="${item.name}" loading="lazy">
-            <span class="info-card-group-badge ${item.group || ''}">${groupLabel}</span>
+            <span class="info-card-group-badge ${groupBadgeClass}">${groupLabel}</span>
           </div>
           <div class="info-card-body">
             <div class="card-meta">
@@ -638,6 +674,18 @@ const HomeScreen = {
         // 카테고리별 섹션 표시/숨김
         this.toggleCategorySections(tabValue);
 
+        this.renderPreviewList();
+      });
+    });
+
+    // 베이커리 서브 카테고리 버튼 (홈 화면)
+    const bakerySubBtns = document.querySelectorAll('#home .bakery-sub-btn');
+    bakerySubBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const subValue = btn.dataset.sub;
+        AppState.filters.bakerySubFilter = subValue;
+        bakerySubBtns.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
         this.renderPreviewList();
       });
     });
@@ -1178,6 +1226,8 @@ const ListScreen = {
     const chefsSection = document.getElementById('list-culinary-class-heroes');
     const recipeIntro = document.getElementById('list-recipe-intro');
     const mylifeIntro = document.getElementById('list-mylife-intro');
+    const bakeryIntro = document.getElementById('list-bakery-intro');
+    const bakerySubFilters = document.getElementById('list-bakery-sub-filters');
 
     // 모든 섹션 숨김
     if (michelinIntro) michelinIntro.style.display = 'none';
@@ -1185,6 +1235,16 @@ const ListScreen = {
     if (chefsSection) chefsSection.style.display = 'none';
     if (recipeIntro) recipeIntro.style.display = 'none';
     if (mylifeIntro) mylifeIntro.style.display = 'none';
+    if (bakeryIntro) bakeryIntro.style.display = 'none';
+    if (bakerySubFilters) bakerySubFilters.style.display = 'none';
+
+    // 베이커리 탭이 아니면 서브필터 초기화
+    if (tabValue !== 'bakery') {
+      AppState.filters.bakerySubFilter = 'all';
+      document.querySelectorAll('#list .bakery-sub-btn').forEach(b => b.classList.remove('is-active'));
+      const allBtn = document.querySelector('#list .bakery-sub-btn[data-sub="all"]');
+      if (allBtn) allBtn.classList.add('is-active');
+    }
 
     // 선택된 탭에 따라 섹션 표시
     switch(tabValue) {
@@ -1203,6 +1263,8 @@ const ListScreen = {
         }
         break;
       case 'bakery':
+        if (bakeryIntro) bakeryIntro.style.display = 'block';
+        if (bakerySubFilters) bakerySubFilters.style.display = 'flex';
         break;
       case 'recipe':
         if (recipeIntro) recipeIntro.style.display = 'block';
@@ -1262,13 +1324,21 @@ const ListScreen = {
     container.innerHTML = items.map((item, index) => {
       const badgeHTML = item.badgeType ? `<span class="badge-chip">${item.badgeType}</span>` : '';
       const photoUrl = getRestaurantPhotoUrl(item);
-      const groupLabel = item.group === 'michelin' ? '미쉐린' : item.group === 'celebrity' ? '유명인' : item.group === 'chef' ? '흑백요리사' : '검증 중';
+      let groupLabel, groupBadgeClass;
+      if (item.group === 'michelin') { groupLabel = '미쉐린'; groupBadgeClass = 'michelin'; }
+      else if (item.group === 'celebrity') { groupLabel = '유명인'; groupBadgeClass = 'celebrity'; }
+      else if (item.group === 'chef') { groupLabel = '흑백요리사'; groupBadgeClass = 'chef'; }
+      else if (item.group === 'bakery') {
+        const sub = item.bakerySubType || 'cafe';
+        groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
+        groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
+      } else { groupLabel = '검증 중'; groupBadgeClass = item.group || ''; }
 
       return `
         <article class="info-card" style="--delay:${index * 0.05}s" data-restaurant-id="${item.id}">
           <div class="info-card-image">
             <img src="${photoUrl}" alt="${item.name}" loading="lazy">
-            <span class="info-card-group-badge ${item.group || ''}">${groupLabel}</span>
+            <span class="info-card-group-badge ${groupBadgeClass}">${groupLabel}</span>
           </div>
           <div class="info-card-body">
             <div class="card-meta">
@@ -1533,6 +1603,18 @@ const ListScreen = {
       });
     }
 
+    // 베이커리 서브 필터
+    if (AppState.filters.badge === 'bakery' && AppState.filters.bakerySubFilter !== 'all') {
+      const sub = AppState.filters.bakerySubFilter;
+      if (sub === 'bread-only') {
+        items = items.filter(item => item.bakerySubType === 'bread-only');
+      } else if (sub === 'cafe') {
+        items = items.filter(item => item.bakerySubType === 'cafe' || item.bakerySubType === 'cafe-outlet');
+      } else if (sub === 'cafe-outlet') {
+        items = items.filter(item => item.bakerySubType === 'cafe-outlet');
+      }
+    }
+
     // 영업 상태 필터
     if (AppState.filters.status !== 'all') {
       items = items.filter(item => item.status === 'open');
@@ -1636,6 +1718,18 @@ const ListScreen = {
           this.toggleCategorySections(tabValue); // 카테고리 섹션 표시
         }
 
+        this.renderList();
+      });
+    });
+
+    // 베이커리 서브 카테고리 버튼 (리스트 화면)
+    const listBakerySubBtns = document.querySelectorAll('#list .bakery-sub-btn');
+    listBakerySubBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const subValue = btn.dataset.sub;
+        AppState.filters.bakerySubFilter = subValue;
+        listBakerySubBtns.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
         this.renderList();
       });
     });
