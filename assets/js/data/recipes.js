@@ -16,7 +16,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["배추", "고춧가루", "마늘", "생강", "젓갈", "파", "무", "소금"],
     summary: "마앙치가 알려주는 정통 통배추 김치 담그기. 재료 손질부터 양념 버무리기까지 완벽한 가이드.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+traditional+kimchi+recipe"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+traditional+kimchi+recipe",
+    thumbnail: "https://img.youtube.com/vi/eTucCw1w6Ak/hqdefault.jpg"
   },
   {
     id: "recipe-002", rank: 2,
@@ -30,7 +31,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["돼지고기", "김치", "두부", "파", "고춧가루", "다진마늘", "참기름"],
     summary: "백종원이 알려주는 집밥 김치찌개 황금 레시피. 신 김치를 활용한 깊은 맛 비결 공개.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+초간단+김치찌개"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+초간단+김치찌개",
+    thumbnail: "https://img.youtube.com/vi/DnQ09ZZCjCs/hqdefault.jpg"
   },
   {
     id: "recipe-003", rank: 3,
@@ -44,7 +46,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭고기", "감자전분", "간장", "설탕", "고추장", "마늘", "생강", "참기름"],
     summary: "바삭하게 튀긴 닭에 달콤매콤 소스를 입힌 한국식 닭강정. 집에서 만드는 완벽한 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+dakgangjeong+korean+fried+chicken"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+dakgangjeong+korean+fried+chicken",
+    thumbnail: "https://img.youtube.com/vi/jSh6VJYRV-g/hqdefault.jpg"
   },
   {
     id: "recipe-004", rank: 4,
@@ -58,7 +61,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["밥", "달걀", "파", "간장", "참기름", "식용유", "소금"],
     summary: "백종원의 고소하고 맛있는 계란볶음밥 비법. 밥알이 살아있는 볶음밥을 만드는 핵심 팁.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란볶음밥"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란볶음밥",
+    thumbnail: "https://img.youtube.com/vi/nmLO04GfA0k/hqdefault.jpg"
   },
   {
     id: "recipe-005", rank: 5,
@@ -72,7 +76,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["밥", "고사리", "시금치", "당근", "콩나물", "달걀", "고추장", "참기름"],
     summary: "각종 나물과 고추장으로 만드는 전통 비빔밥. 나물 손질부터 고명 올리기까지 완벽한 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bibimbap+recipe"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bibimbap+recipe",
+    thumbnail: "https://img.youtube.com/vi/6QQ67F8y2b8/hqdefault.jpg"
   },
   {
     id: "recipe-006", rank: 6,
@@ -86,7 +91,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["떡", "어묵", "고추장", "설탕", "간장", "파", "다진마늘"],
     summary: "백종원이 만드는 쫄깃하고 매콤달콤한 떡볶이. 분식집 맛을 집에서 그대로 재현.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+떡볶이+레시피"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+떡볶이+레시피",
+    thumbnail: "https://img.youtube.com/vi/t4Es8mwdYlE/hqdefault.jpg"
   },
   {
     id: "recipe-007", rank: 7,
@@ -100,7 +106,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["파", "부침가루", "달걀", "물", "식용유", "간장", "식초"],
     summary: "바삭하고 고소한 파전 만들기. 비가 오는 날 생각나는 그 파전을 완벽하게 만드는 법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+pajeon+korean+pancake"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+pajeon+korean+pancake",
+    thumbnail: "https://img.youtube.com/vi/G8wuo4K7cmE/hqdefault.jpg"
   },
   {
     id: "recipe-008", rank: 8,
@@ -114,7 +121,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["순두부", "돼지고기", "달걀", "고춧가루", "다진마늘", "파", "참기름", "국간장"],
     summary: "칼칼하고 부드러운 순두부찌개의 비밀. 해장으로도 완벽한 백종원의 황금 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+순두부찌개"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+순두부찌개",
+    thumbnail: "https://img.youtube.com/vi/nj-DjQFEZb0/hqdefault.jpg"
   },
   {
     id: "recipe-009", rank: 9,
@@ -128,7 +136,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["소고기", "간장", "설탕", "참기름", "마늘", "배", "파", "깨"],
     summary: "달콤한 양념이 배어든 한국식 불고기. 배를 넣어 고기를 부드럽게 만드는 핵심 비법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bulgogi+korean+bbq"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bulgogi+korean+bbq",
+    thumbnail: "https://img.youtube.com/vi/3qBjL_HGvco/hqdefault.jpg"
   },
   {
     id: "recipe-010", rank: 10,
@@ -142,7 +151,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["된장", "두부", "애호박", "감자", "버섯", "파", "마늘", "멸치육수"],
     summary: "구수하고 깊은 맛의 된장찌개. 멸치 육수로 베이스를 만드는 기본기부터 완벽하게.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+된장찌개+레시피"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+된장찌개+레시피",
+    thumbnail: "https://img.youtube.com/vi/ffuakdFmuh4/hqdefault.jpg"
   },
   {
     id: "recipe-011", rank: 11,
@@ -156,7 +166,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["소갈비", "무", "당근", "간장", "설탕", "마늘", "생강", "배"],
     summary: "명절 음식의 대표! 부드럽게 양념이 배어든 갈비찜. 오랜 시간의 정성이 만드는 깊은 맛.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbi+jjim+braised+ribs"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbi+jjim+braised+ribs",
+    thumbnail: "https://img.youtube.com/vi/vtGzj6cUn7Q/hqdefault.jpg"
   },
   {
     id: "recipe-012", rank: 12,
@@ -170,7 +181,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["당면", "시금치", "당근", "버섯", "소고기", "간장", "설탕", "참기름"],
     summary: "명절마다 빠질 수 없는 잡채. 각 재료를 따로 볶아 완성하는 정통 잡채 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+japchae+glass+noodles"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+japchae+glass+noodles",
+    thumbnail: "https://img.youtube.com/vi/i1djfV9uigc/hqdefault.jpg"
   },
   {
     id: "recipe-013", rank: 13,
@@ -184,7 +196,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["라면", "물", "달걀", "파", "스프"],
     summary: "백종원이 가르쳐주는 라면을 더 맛있게 끓이는 비법. 면 탄력과 국물의 황금 비율.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+라면+끓이기"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+라면+끓이기",
+    thumbnail: "https://img.youtube.com/vi/Gs5ztGSIC7o/hqdefault.jpg"
   },
   {
     id: "recipe-014", rank: 14,
@@ -198,7 +211,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["밀가루", "달걀", "설탕", "버터", "생크림", "딸기", "바닐라에센스"],
     summary: "쿠킹트리의 화려한 딸기 케이크. 폭신한 스폰지 케이크에 생크림과 딸기를 층층이 쌓은 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+딸기+케이크+레시피"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+딸기+케이크+레시피",
+    thumbnail: "https://img.youtube.com/vi/-G5aIVNYHPQ/hqdefault.jpg"
   },
   {
     id: "recipe-015", rank: 15,
@@ -212,7 +226,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["크림치즈", "달걀", "설탕", "생크림", "밀가루"],
     summary: "겉은 타고 속은 촉촉한 바스크 치즈케이크. 쿠킹트리식 완벽 레시피로 집에서도 카페 퀄리티.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+바스크+치즈케이크"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+바스크+치즈케이크",
+    thumbnail: "https://img.youtube.com/vi/epqSe-OxkXA/hqdefault.jpg"
   },
   {
     id: "recipe-016", rank: 16,
@@ -226,7 +241,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["햄", "소시지", "김치", "두부", "라면", "고추장", "고춧가루", "육수"],
     summary: "부대찌개의 원조 맛! 햄과 소시지, 김치의 조화. 라면 사리까지 넣어 푸짐하게.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+부대찌개"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+부대찌개",
+    thumbnail: "https://img.youtube.com/vi/-MvfUUPB5-Y/hqdefault.jpg"
   },
   {
     id: "recipe-017", rank: 17,
@@ -240,7 +256,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["돼지고기", "양파", "대파", "고추장", "간장", "설탕", "참기름", "마늘"],
     summary: "밥도둑 제육볶음의 비법. 고기를 부드럽게 하는 양념 비율과 볶는 타이밍의 핵심.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+제육볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+제육볶음",
+    thumbnail: "https://img.youtube.com/vi/j7s9VRsrm9o/hqdefault.jpg"
   },
   {
     id: "recipe-018", rank: 18,
@@ -254,7 +271,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭", "감자", "당근", "양파", "고추장", "간장", "설탕", "마늘"],
     summary: "매콤하게 조린 닭볶음탕. 감자와 당근이 어우러진 국물까지 맛있는 한국식 매운 닭조림.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+dak+bokkeum+tang+spicy+chicken"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+dak+bokkeum+tang+spicy+chicken",
+    thumbnail: "https://img.youtube.com/vi/T7icxr899qc/hqdefault.jpg"
   },
   {
     id: "recipe-019", rank: 19,
@@ -268,7 +286,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["두부", "간장", "고춧가루", "파", "마늘", "참기름", "설탕"],
     summary: "짭조름하고 고소한 두부조림. 노릇하게 구운 두부에 양념이 쏙쏙 배어드는 반찬의 정석.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+두부조림"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+두부조림",
+    thumbnail: "https://img.youtube.com/vi/Eino3yP-Wk0/hqdefault.jpg"
   },
   {
     id: "recipe-020", rank: 20,
@@ -282,7 +301,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["달걀", "물", "국간장", "파", "소금", "참기름"],
     summary: "뚝배기에서 폭신하게 만드는 달걀찜. 불 조절이 포인트인 부드러운 계란찜 황금 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란찜"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란찜",
+    thumbnail: "https://img.youtube.com/vi/W5j_feDwvOc/hqdefault.jpg"
   },
   {
     id: "recipe-021", rank: 21,
@@ -296,7 +316,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["소갈비", "무", "마늘", "파", "대파", "국간장", "소금", "후추"],
     summary: "맑고 깊은 갈비탕. 진하고 구수한 국물을 만드는 비결과 갈비를 부드럽게 삶는 방법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbitang+beef+rib+soup"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbitang+beef+rib+soup",
+    thumbnail: "https://img.youtube.com/vi/MeTwuomNAV0/hqdefault.jpg"
   },
   {
     id: "recipe-022", rank: 22,
@@ -310,7 +331,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["밥", "김치", "김치국물", "돼지고기", "달걀", "참기름", "파", "간장"],
     summary: "신 김치로 만드는 깊은 맛의 김치볶음밥. 달걀 프라이를 올려 완성하는 최고의 볶음밥.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kimchi+fried+rice"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kimchi+fried+rice",
+    thumbnail: "https://img.youtube.com/vi/Lf44Fk7H24s/hqdefault.jpg"
   },
   {
     id: "recipe-023", rank: 23,
@@ -324,7 +346,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["다진소고기", "두부", "간장", "설탕", "버터", "마늘", "파", "참기름"],
     summary: "버터가 들어가 더욱 풍부한 맛의 떡갈비. 촉촉하고 부드러운 식감을 완성하는 비법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+떡갈비+레시피"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+떡갈비+레시피",
+    thumbnail: "https://img.youtube.com/vi/gNCTCFmnUDw/hqdefault.jpg"
   },
   {
     id: "recipe-024", rank: 24,
@@ -338,7 +361,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["밥", "닭가슴살", "달걀", "양파", "당근", "간장", "굴소스", "버터"],
     summary: "팬 하나로 뚝딱 만드는 닭볶음밥. 바쁜 일상에 딱 맞는 간단하고 맛있는 한 끼.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+닭볶음밥"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+닭볶음밥",
+    thumbnail: "https://img.youtube.com/vi/dncvMBwS1p8/hqdefault.jpg"
   },
   {
     id: "recipe-025", rank: 25,
@@ -352,7 +376,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["소고기", "고사리", "토란대", "파", "고춧가루", "마늘", "국간장", "참기름"],
     summary: "얼큰하고 시원한 육개장. 쇠고기와 각종 나물이 어우러진 진한 맛의 국물 요리.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+yukgaejang+spicy+beef+soup"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+yukgaejang+spicy+beef+soup",
+    thumbnail: "https://img.youtube.com/vi/FxSmBbXSDl0/hqdefault.jpg"
   },
   {
     id: "recipe-026", rank: 26,
@@ -366,7 +391,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["파스타", "베이컨", "양파", "생크림", "파마산치즈", "버터", "마늘", "소금"],
     summary: "집에서 만드는 크리미하고 진한 크림 파스타. 기본 재료로 카페 퀄리티를 내는 비법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림파스타"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림파스타",
+    thumbnail: "https://img.youtube.com/vi/pbgZbPbcPLo/hqdefault.jpg"
   },
   {
     id: "recipe-027", rank: 27,
@@ -380,7 +406,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["달걀", "당근", "파", "소금", "식용유"],
     summary: "예쁘고 맛있는 계란말이의 핵심. 속재료와 탄탄한 롤 모양을 만드는 흔들림 없는 기술.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란말이"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+계란말이",
+    thumbnail: "https://img.youtube.com/vi/T7YJviWhquo/hqdefault.jpg"
   },
   {
     id: "recipe-028", rank: 28,
@@ -394,7 +421,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["삼겹살", "양파", "대파", "고추장", "간장", "설탕", "마늘", "참기름"],
     summary: "간단하게 만드는 삼겹살 볶음. 1분 요리 채널의 꿀팁으로 집밥의 퀄리티를 높여라.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+삼겹살볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+삼겹살볶음",
+    thumbnail: "https://img.youtube.com/vi/y5PZDgLBafc/hqdefault.jpg"
   },
   {
     id: "recipe-029", rank: 29,
@@ -408,7 +436,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["오징어", "새우", "조개", "파", "부침가루", "달걀", "식용유"],
     summary: "해물이 가득한 바삭한 해물파전. 해산물과 파의 조화로 만들어내는 최고의 전 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+haemul+pajeon+seafood+pancake"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+haemul+pajeon+seafood+pancake",
+    thumbnail: "https://img.youtube.com/vi/G8wuo4K7cmE/hqdefault.jpg"
   },
   {
     id: "recipe-030", rank: 30,
@@ -422,7 +451,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["인스턴트커피", "설탕", "뜨거운물", "우유", "얼음"],
     summary: "2020년 SNS 열풍의 달고나 커피. 400번 저어 만드는 폭신한 커피 폼의 제조 비법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=달고나+커피+레시피"
+    youtubeUrl: "https://www.youtube.com/results?search_query=달고나+커피+레시피",
+    thumbnail: "https://img.youtube.com/vi/2ivMwyLhmxE/hqdefault.jpg"
   },
   {
     id: "recipe-031", rank: 31,
@@ -436,7 +466,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["콩나물", "파", "마늘", "고춧가루", "참기름", "소금"],
     summary: "아삭아삭 콩나물 무침의 황금 레시피. 콩나물을 제대로 데치는 법과 양념 비율의 비밀.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+콩나물무침"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+콩나물무침",
+    thumbnail: "https://img.youtube.com/vi/84s_EJlp0jU/hqdefault.jpg"
   },
   {
     id: "recipe-032", rank: 32,
@@ -450,7 +481,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["오이", "부추", "고춧가루", "마늘", "생강", "새우젓", "소금"],
     summary: "아삭하고 시원한 오이소박이. 여름철 입맛 살려주는 상큼한 오이 김치 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+oisobagi+cucumber+kimchi"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+oisobagi+cucumber+kimchi",
+    thumbnail: "https://img.youtube.com/vi/ApQUENQbgiY/hqdefault.jpg"
   },
   {
     id: "recipe-033", rank: 33,
@@ -464,7 +496,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["감자", "부침가루", "달걀", "파", "소금", "식용유"],
     summary: "바삭하고 쫄깃한 감자전. 감자를 갈아서 만드는 방법과 노릇하게 부치는 핵심 기술.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+감자전"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+감자전",
+    thumbnail: "https://img.youtube.com/vi/N82hJpl5cMM/hqdefault.jpg"
   },
   {
     id: "recipe-034", rank: 34,
@@ -478,7 +511,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭", "당면", "감자", "당근", "양파", "간장", "설탕", "청양고추"],
     summary: "달콤짭짤한 안동 찜닭. 당면까지 함께 조린 풍성한 찜닭의 정통 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+jjimdak+braised+chicken"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+jjimdak+braised+chicken",
+    thumbnail: "https://img.youtube.com/vi/MLXKSgEKu_w/hqdefault.jpg"
   },
   {
     id: "recipe-035", rank: 35,
@@ -492,7 +526,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["연어", "밥", "아보카도", "오이", "간장", "와사비", "참기름", "깨"],
     summary: "집에서 만드는 연어 덮밥. 신선한 연어와 아보카도로 만드는 프리미엄 한 끼.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+연어덮밥"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+연어덮밥",
+    thumbnail: "https://img.youtube.com/vi/AsozXZGlfng/hqdefault.jpg"
   },
   {
     id: "recipe-036", rank: 36,
@@ -506,7 +541,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["소갈비", "간장", "설탕", "배", "마늘", "파", "참기름", "깨"],
     summary: "양념이 깊게 배어든 갈비구이. 배를 이용한 연육 방법과 숯불 향이 나는 양념 비법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbi+grilled+ribs"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+galbi+grilled+ribs",
+    thumbnail: "https://img.youtube.com/vi/oK6AzUyd8EE/hqdefault.jpg"
   },
   {
     id: "recipe-037", rank: 37,
@@ -520,7 +556,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭", "고추장", "간장", "설탕", "마늘", "생강", "식용유", "전분"],
     summary: "치킨집 못지않은 양념치킨. 바삭하게 튀긴 닭에 달콤매콤한 양념을 코팅하는 핵심 방법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+양념치킨"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+양념치킨",
+    thumbnail: "https://img.youtube.com/vi/2HZO-YNHFPk/hqdefault.jpg"
   },
   {
     id: "recipe-038", rank: 38,
@@ -534,7 +571,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["냉면 면", "소고기", "오이", "달걀", "배", "겨자", "식초", "설탕"],
     summary: "시원하고 개운한 물냉면. 깊은 육수와 쫄깃한 면의 조화. 여름철 최고의 보양식.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+naengmyeon+cold+noodles"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+naengmyeon+cold+noodles",
+    thumbnail: "https://img.youtube.com/vi/1Iq9jCEULhA/hqdefault.jpg"
   },
   {
     id: "recipe-039", rank: 39,
@@ -548,7 +586,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["닭", "고추장", "고춧가루", "간장", "설탕", "양파", "당근", "떡"],
     summary: "춘천 닭갈비를 집에서! 양념이 쏙 배어든 닭갈비에 떡과 쫄면 사리로 푸짐하게.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+닭갈비"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+닭갈비",
+    thumbnail: "https://img.youtube.com/vi/HI8DlDs1gko/hqdefault.jpg"
   },
   {
     id: "recipe-040", rank: 40,
@@ -562,7 +601,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["단호박", "양파", "버터", "생크림", "닭육수", "소금", "후추"],
     summary: "달콤하고 부드러운 단호박 수프. 블렌더로 갈아 만드는 진한 크림수프의 황금 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+단호박수프"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+단호박수프",
+    thumbnail: "https://img.youtube.com/vi/UCC8SFJZi1Q/hqdefault.jpg"
   },
   {
     id: "recipe-041", rank: 41,
@@ -576,7 +616,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["순대", "돼지머리국물", "파", "깻잎", "새우젓", "된장", "다진마늘"],
     summary: "구수하고 얼큰한 순대국밥. 진한 돼지 국물과 순대의 조화로운 만남.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+순대국밥"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+순대국밥",
+    thumbnail: "https://img.youtube.com/vi/SVz1zNuyOyA/hqdefault.jpg"
   },
   {
     id: "recipe-042", rank: 42,
@@ -590,7 +631,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["삼겹살", "고추장", "간장", "설탕", "마늘", "파", "참기름"],
     summary: "매콤달콤하게 재운 고추장 삼겹살. 숯불 없이도 집에서 즐기는 불판 요리의 정석.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+고추장삼겹살"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+고추장삼겹살",
+    thumbnail: "https://img.youtube.com/vi/yCPV3UfSpNw/hqdefault.jpg"
   },
   {
     id: "recipe-043", rank: 43,
@@ -604,7 +646,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["두부", "다진돼지고기", "두반장", "마늘", "파", "청경채", "전분"],
     summary: "얼얼하고 깊은 맛의 마파두부. 중식당 못지않은 집에서 만드는 정통 마파두부 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+마파두부"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+마파두부",
+    thumbnail: "https://img.youtube.com/vi/oouc10liJ9o/hqdefault.jpg"
   },
   {
     id: "recipe-044", rank: 44,
@@ -618,7 +661,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["도라지", "고춧가루", "마늘", "설탕", "소금", "참기름", "깨"],
     summary: "쓴맛 없이 아삭하게 만드는 도라지무침. 도라지 손질의 핵심과 양념 비율 완벽 가이드.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+도라지무침"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+도라지무침",
+    thumbnail: "https://img.youtube.com/vi/2vrJR3ZpRf0/hqdefault.jpg"
   },
   {
     id: "recipe-045", rank: 45,
@@ -632,7 +676,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["미역", "소고기", "참기름", "마늘", "국간장", "소금"],
     summary: "생일마다 먹는 미역국의 정석. 참기름에 볶은 소고기와 미역이 만들어내는 깊고 구수한 국.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+miyeok+guk+seaweed+soup"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+miyeok+guk+seaweed+soup",
+    thumbnail: "https://img.youtube.com/vi/znpwSp0Ro2I/hqdefault.jpg"
   },
   {
     id: "recipe-046", rank: 46,
@@ -646,7 +691,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["닭", "모짜렐라치즈", "고추장", "고춧가루", "간장", "설탕", "양파"],
     summary: "SNS에서 난리난 치즈 닭갈비. 뜨끈한 닭갈비에 녹아내리는 치즈의 황홀한 조합.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+치즈닭갈비"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+치즈닭갈비",
+    thumbnail: "https://img.youtube.com/vi/2B-IJtm71_c/hqdefault.jpg"
   },
   {
     id: "recipe-047", rank: 47,
@@ -660,7 +706,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["달걀", "간장", "설탕", "마늘", "물"],
     summary: "밥 한 공기 뚝딱 만드는 간장 달걀 장조림. 부드럽게 삶은 달걀에 간장 양념이 배어든 국민 반찬.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+달걀장조림"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+달걀장조림",
+    thumbnail: "https://img.youtube.com/vi/3p4xH_IZhH4/hqdefault.jpg"
   },
   {
     id: "recipe-048", rank: 48,
@@ -674,7 +721,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["쌀", "양파", "화이트와인", "생크림", "파마산치즈", "버터", "버섯", "육수"],
     summary: "이탈리안 레스토랑 분위기의 크림 리소또. 아르보리오 쌀의 쫀득함과 크리미한 소스.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림리소또"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림리소또",
+    thumbnail: "https://img.youtube.com/vi/rHvSDoKWxaE/hqdefault.jpg"
   },
   {
     id: "recipe-049", rank: 49,
@@ -688,7 +736,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["오징어", "양파", "당근", "고추장", "고춧가루", "간장", "설탕", "마늘"],
     summary: "질기지 않고 쫄깃한 오징어볶음의 핵심. 오징어 손질법과 볶는 온도가 맛의 전부.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+오징어볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+오징어볶음",
+    thumbnail: "https://img.youtube.com/vi/0CL9U_Se8Gs/hqdefault.jpg"
   },
   {
     id: "recipe-050", rank: 50,
@@ -702,7 +751,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["얼음", "팥", "연유", "떡", "아이스크림", "설탕"],
     summary: "여름의 국민 디저트 팥빙수. 곱게 간 얼음과 달콤한 팥으로 만드는 시원한 빙수.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+팥빙수"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+팥빙수",
+    thumbnail: "https://img.youtube.com/vi/3o9mMQookT8/hqdefault.jpg"
   },
   {
     id: "recipe-051", rank: 51,
@@ -716,7 +766,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["소고기", "무", "파", "마늘", "국간장", "참기름"],
     summary: "시원하고 담백한 소고기 무국. 깔끔한 국물을 만드는 기본기가 담긴 집밥의 정수.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+소고기무국"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+소고기무국",
+    thumbnail: "https://img.youtube.com/vi/vG07DHeNH9c/hqdefault.jpg"
   },
   {
     id: "recipe-052", rank: 52,
@@ -730,7 +781,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["밥", "참치캔", "마요네즈", "간장", "깨", "김"],
     summary: "5분이면 완성되는 참치마요 주먹밥. 간단하지만 맛있는 도시락 아이템 1순위.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+참치마요주먹밥"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+참치마요주먹밥",
+    thumbnail: "https://img.youtube.com/vi/fO4EuF0U0zs/hqdefault.jpg"
   },
   {
     id: "recipe-053", rank: 53,
@@ -744,7 +796,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["토마토", "달걀", "파", "마늘", "간장", "설탕", "식용유"],
     summary: "중국식 토마토 달걀볶음. 새콤달콤한 토마토와 부드러운 달걀의 환상적인 조화.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+토마토달걀볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+토마토달걀볶음",
+    thumbnail: "https://img.youtube.com/vi/cSdcidZeN7A/hqdefault.jpg"
   },
   {
     id: "recipe-054", rank: 54,
@@ -758,7 +811,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["콩", "국수", "오이", "소금", "얼음"],
     summary: "여름철 보양식 콩국수. 직접 갈아낸 고소한 콩국물로 만드는 시원한 콩국수 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kong+guksu+soy+milk+noodles"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kong+guksu+soy+milk+noodles",
+    thumbnail: "https://img.youtube.com/vi/lC5gidi5CJk/hqdefault.jpg"
   },
   {
     id: "recipe-055", rank: 55,
@@ -772,7 +826,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["베이글", "크림치즈", "연어", "케이퍼", "양파", "딜", "레몬"],
     summary: "카페 감성 브런치를 집에서. 크림치즈와 연어의 조화로운 베이글 토스트 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림치즈베이글"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+크림치즈베이글",
+    thumbnail: "https://img.youtube.com/vi/0_VJxaa0Kis/hqdefault.jpg"
   },
   {
     id: "recipe-056", rank: 56,
@@ -786,7 +841,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["진미채", "고추장", "간장", "설탕", "마늘", "참기름", "깨", "마요네즈"],
     summary: "쫄깃하고 달콤매콤한 진미채볶음. 마요네즈 비법으로 더욱 부드럽게 만드는 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+진미채볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+진미채볶음",
+    thumbnail: "https://img.youtube.com/vi/xecKUiZBCtM/hqdefault.jpg"
   },
   {
     id: "recipe-057", rank: 57,
@@ -800,7 +856,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["떡", "어묵", "고추장", "간장", "설탕", "파", "양파", "육수"],
     summary: "마앙치의 정통 떡볶이 레시피. 쫄깃한 떡과 매콤달콤한 소스의 황금 비율 공개.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+tteokbokki+recipe"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+tteokbokki+recipe",
+    thumbnail: "https://img.youtube.com/vi/TA3Uo3a9674/hqdefault.jpg"
   },
   {
     id: "recipe-058", rank: 58,
@@ -814,7 +871,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["찹쌀", "대추", "밤", "잣", "간장", "설탕", "참기름", "계피"],
     summary: "명절의 전통 약밥. 찹쌀에 각종 견과류와 꿀로 만드는 달콤하고 쫀득한 약밥 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+yak+bap+sweet+rice"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+yak+bap+sweet+rice",
+    thumbnail: "https://img.youtube.com/vi/w_QL-oTsPOg/hqdefault.jpg"
   },
   {
     id: "recipe-059", rank: 59,
@@ -828,7 +886,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["밀가루", "달걀", "설탕", "버터", "레몬", "생크림", "레몬즙"],
     summary: "상큼한 레몬향 가득한 케이크. 레몬 커드 필링과 레몬 글레이즈로 완성하는 고급 케이크.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+레몬케이크"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+레몬케이크",
+    thumbnail: "https://img.youtube.com/vi/Va-Cgdvs9_s/hqdefault.jpg"
   },
   {
     id: "recipe-060", rank: 60,
@@ -842,7 +901,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["만두피", "돼지고기", "두부", "배추김치", "파", "마늘", "참기름", "간장"],
     summary: "손수 빚는 진짜 한국식 만두. 만두피 만들기부터 빚는 법까지 완벽한 정통 만두 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+mandu+dumplings"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+mandu+dumplings",
+    thumbnail: "https://img.youtube.com/vi/T-QjisxwM90/hqdefault.jpg"
   },
   {
     id: "recipe-061", rank: 61,
@@ -856,7 +916,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["시금치", "마늘", "간장", "참기름", "소금", "깨"],
     summary: "부드럽고 맛있는 시금치 나물. 살짝 데쳐 참기름으로 무치는 기본 나물 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+시금치나물"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+시금치나물",
+    thumbnail: "https://img.youtube.com/vi/tD8ApzPsDx8/hqdefault.jpg"
   },
   {
     id: "recipe-062", rank: 62,
@@ -870,7 +931,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["찹쌀가루", "꿀", "흑임자", "소금", "뜨거운물"],
     summary: "찰지고 달콤한 꿀떡 만들기. 쫀득한 찹쌀 반죽에 꿀과 흑임자로 채우는 전통 떡.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+꿀떡"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+꿀떡",
+    thumbnail: "https://img.youtube.com/vi/tXpM9h7Vz0k/hqdefault.jpg"
   },
   {
     id: "recipe-063", rank: 63,
@@ -884,7 +946,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["삼겹살", "된장", "마늘", "파", "상추", "깻잎"],
     summary: "된장과 함께 먹는 삼겹살의 진수. 구워지는 삼겹살과 쌈장의 완벽한 조합.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+된장삼겹살"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+된장삼겹살",
+    thumbnail: "https://img.youtube.com/vi/yE4orjlTpJo/hqdefault.jpg"
   },
   {
     id: "recipe-064", rank: 64,
@@ -898,7 +961,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["마라소스", "두부", "버섯", "어묵", "숙주", "당면", "청경채", "새우"],
     summary: "중독적인 얼얼한 맛의 마라탕. 집에서 만드는 마라탕 베이스 소스와 재료 손질 가이드.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+마라탕"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+마라탕",
+    thumbnail: "https://img.youtube.com/vi/2edm6tBz4wo/hqdefault.jpg"
   },
   {
     id: "recipe-065", rank: 65,
@@ -912,7 +976,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["닭가슴살", "양상추", "토마토", "오이", "올리브오일", "레몬", "소금"],
     summary: "다이어트에 최적화된 닭가슴살 샐러드. 담백한 닭가슴살과 신선한 채소의 건강한 조합.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+닭가슴살샐러드"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+닭가슴살샐러드",
+    thumbnail: "https://img.youtube.com/vi/QCWcb_t9-n8/hqdefault.jpg"
   },
   {
     id: "recipe-066", rank: 66,
@@ -926,7 +991,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["돼지고기", "된장", "마늘", "파", "생강", "깍두기"],
     summary: "부드럽게 삶은 수육의 정석. 잡냄새 없이 깔끔하게 삶는 비법과 김치와의 환상 궁합.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bossam+Korean+boiled+pork"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+bossam+Korean+boiled+pork",
+    thumbnail: "https://img.youtube.com/vi/t0Ta_ckc9O0/hqdefault.jpg"
   },
   {
     id: "recipe-067", rank: 67,
@@ -940,7 +1006,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["꽈리고추", "간장", "설탕", "참기름", "깨", "마늘"],
     summary: "찜통에서 쪄서 양념장에 무치는 꽈리고추찜. 간단하지만 깊은 맛의 여름 반찬.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+꽈리고추찜"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+꽈리고추찜",
+    thumbnail: "https://img.youtube.com/vi/Oxj6gSp8S_k/hqdefault.jpg"
   },
   {
     id: "recipe-068", rank: 68,
@@ -954,7 +1021,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["초콜릿", "버터", "달걀", "설탕", "밀가루", "코코아파우더", "견과류"],
     summary: "촉촉하고 진한 초코 브라우니. 바삭한 겉면과 촉촉한 속 사이의 완벽한 식감을 찾아서.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+초코브라우니"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+초코브라우니",
+    thumbnail: "https://img.youtube.com/vi/0IRilKlXAOI/hqdefault.jpg"
   },
   {
     id: "recipe-069", rank: 69,
@@ -968,7 +1036,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["참나물", "간장", "참기름", "마늘", "깨", "소금"],
     summary: "향긋한 참나물무침. 봄나물의 대표 참나물을 간단하게 무치는 기본 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+참나물무침"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+참나물무침",
+    thumbnail: "https://img.youtube.com/vi/UlsvKb-Bafs/hqdefault.jpg"
   },
   {
     id: "recipe-070", rank: 70,
@@ -982,7 +1051,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["스파게티", "마늘", "올리브오일", "청양고추", "파슬리", "소금"],
     summary: "마늘향 가득한 알리오 올리오. 재료는 단순하지만 기술이 필요한 이탈리안 파스타의 정석.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+알리오올리오"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+알리오올리오",
+    thumbnail: "https://img.youtube.com/vi/IKyLyRgb2mE/hqdefault.jpg"
   },
   {
     id: "recipe-071", rank: 71,
@@ -996,7 +1066,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["소면", "호박", "당근", "달걀", "멸치육수", "간장", "파", "마늘"],
     summary: "잔칫날 먹던 그 잔치국수. 멸치 육수로 만드는 맑고 시원한 국물과 국수의 완벽한 조화.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+janchi+guksu+noodle+soup"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+janchi+guksu+noodle+soup",
+    thumbnail: "https://img.youtube.com/vi/ZRESBwsRS_U/hqdefault.jpg"
   },
   {
     id: "recipe-072", rank: 72,
@@ -1010,7 +1081,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["소고기", "두부", "당면", "버섯", "파", "간장", "설탕", "참기름"],
     summary: "뚝배기에서 보글보글 끓이는 불고기. 뜨겁고 진한 국물까지 맛있는 뚝배기 불고기.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+뚝배기불고기"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+뚝배기불고기",
+    thumbnail: "https://img.youtube.com/vi/cplvvND67ac/hqdefault.jpg"
   },
   {
     id: "recipe-073", rank: 73,
@@ -1024,7 +1096,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["닭", "감자", "당근", "고추장", "간장", "설탕", "마늘", "참기름"],
     summary: "간단하게 만드는 닭볶음. 가정식의 정석! 뚜껑을 닫고 조려내는 촉촉하고 매콤한 닭요리.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+닭볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+닭볶음",
+    thumbnail: "https://img.youtube.com/vi/eeiqjyYgPew/hqdefault.jpg"
   },
   {
     id: "recipe-074", rank: 74,
@@ -1038,7 +1111,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["초밥용쌀", "연어", "참치", "오이", "아보카도", "김", "와사비", "간장"],
     summary: "집에서 만드는 초밥 플래터. 초밥 밥 짓는 방법부터 재료 준비까지 완벽한 홈파티 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+초밥만들기"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+초밥만들기",
+    thumbnail: "https://img.youtube.com/vi/w_efdISVMf8/hqdefault.jpg"
   },
   {
     id: "recipe-075", rank: 75,
@@ -1052,7 +1126,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["애호박", "달걀", "부침가루", "소금", "식용유"],
     summary: "명절 전 상차림의 기본 호박전. 노릇하게 부쳐낸 호박전의 촉촉한 식감을 살리는 법.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+hobak+jeon+zucchini+pancake"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+hobak+jeon+zucchini+pancake",
+    thumbnail: "https://img.youtube.com/vi/Kbx7QZXtQwQ/hqdefault.jpg"
   },
   {
     id: "recipe-076", rank: 76,
@@ -1066,7 +1141,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["소고기", "무", "들깨", "파", "마늘", "국간장"],
     summary: "구수하고 고소한 소고기 들깨 무국. 들깨를 넣어 더욱 진해진 국물의 깊은 맛.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+들깨무국"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+들깨무국",
+    thumbnail: "https://img.youtube.com/vi/poD6PdV2DY8/hqdefault.jpg"
   },
   {
     id: "recipe-077", rank: 77,
@@ -1080,7 +1156,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["달걀", "잉글리시머핀", "캐나다베이컨", "버터", "레몬", "홀랜다이즈"],
     summary: "브런치의 왕 에그 베네딕트. 수란 만드는 법과 홀랜다이즈 소스 만들기의 모든 것.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+에그베네딕트"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+에그베네딕트",
+    thumbnail: "https://img.youtube.com/vi/dwdvpze-xj8/hqdefault.jpg"
   },
   {
     id: "recipe-078", rank: 78,
@@ -1094,7 +1171,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["돼지고기", "전분", "달걀", "식초", "설탕", "간장", "당근", "파인애플"],
     summary: "집에서 만드는 탕수육. 바삭한 튀김과 새콤달콤한 소스로 만드는 중식의 대표 요리.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+탕수육"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+탕수육",
+    thumbnail: "https://img.youtube.com/vi/WneiVYnZgHo/hqdefault.jpg"
   },
   {
     id: "recipe-079", rank: 79,
@@ -1108,7 +1186,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["찹쌀가루", "쑥", "설탕", "콩고물", "소금"],
     summary: "향긋한 쑥 인절미. 봄에 만드는 쑥의 쫀득함과 고소한 콩고물의 완벽한 조합.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+쑥인절미"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+쑥인절미",
+    thumbnail: "https://img.youtube.com/vi/DMBsp4d0PlA/hqdefault.jpg"
   },
   {
     id: "recipe-080", rank: 80,
@@ -1122,7 +1201,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["낙지", "고추장", "고춧가루", "간장", "설탕", "마늘", "파", "참기름"],
     summary: "쫄깃하고 매콤한 낙지볶음. 낙지 손질법과 질겨지지 않게 볶는 타이밍의 핵심.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+낙지볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+낙지볶음",
+    thumbnail: "https://img.youtube.com/vi/PdC-DyRXhTc/hqdefault.jpg"
   },
   {
     id: "recipe-081", rank: 81,
@@ -1136,7 +1216,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["아몬드파우더", "슈가파우더", "달걀흰자", "설탕", "버터", "생크림"],
     summary: "실패 없는 프렌치 마카롱. 코크 만들기부터 필링 샌드까지 완벽한 마카롱 완성 가이드.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+마카롱"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+마카롱",
+    thumbnail: "https://img.youtube.com/vi/qfG6OToYfaE/hqdefault.jpg"
   },
   {
     id: "recipe-082", rank: 82,
@@ -1150,7 +1231,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["갈치", "무", "고추장", "간장", "마늘", "파", "고춧가루"],
     summary: "매콤달콤한 갈치조림. 갈치와 무가 조화롭게 어우러진 한국인의 소울 반찬.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+갈치조림"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+갈치조림",
+    thumbnail: "https://img.youtube.com/vi/mZ2C8gEw8Vk/hqdefault.jpg"
   },
   {
     id: "recipe-083", rank: 83,
@@ -1164,7 +1246,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["고등어", "소금", "청주", "식용유"],
     summary: "비린내 없이 바삭하게 굽는 고등어구이. 간단한 손질법과 완벽한 굽기의 비결.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+고등어구이"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+고등어구이",
+    thumbnail: "https://img.youtube.com/vi/zAcrph6qqTY/hqdefault.jpg"
   },
   {
     id: "recipe-084", rank: 84,
@@ -1178,7 +1261,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["생크림", "달걀노른자", "설탕", "바닐라빈"],
     summary: "프렌치 디저트의 정석 크림 브륄레. 토치로 설탕을 태워 완성하는 달콤하고 고급스러운 디저트.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+크림브륄레"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+크림브륄레",
+    thumbnail: "https://img.youtube.com/vi/iq9rNnKFhNY/hqdefault.jpg"
   },
   {
     id: "recipe-085", rank: 85,
@@ -1192,7 +1276,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["아귀", "콩나물", "미나리", "고추장", "고춧가루", "마늘", "들깨"],
     summary: "얼큰하고 진한 아귀찜. 쫄깃한 아귀와 아삭한 콩나물, 미나리가 어우러진 마산식 아귀찜.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+agujjim+spicy+monkfish"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+agujjim+spicy+monkfish",
+    thumbnail: "https://img.youtube.com/vi/NiRfqUDPxnc/hqdefault.jpg"
   },
   {
     id: "recipe-086", rank: 86,
@@ -1206,7 +1291,8 @@ const recipesData = [
     difficulty: "어려움",
     ingredients: ["꽃게", "간장", "마늘", "생강", "청양고추", "설탕", "물"],
     summary: "밥 도둑 간장게장. 게를 간장에 3일간 숙성시켜 만드는 깊은 맛의 정통 간장게장 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+ganjang+gejang+soy+sauce+crab"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+ganjang+gejang+soy+sauce+crab",
+    thumbnail: "https://img.youtube.com/vi/c8euGxGY32I/hqdefault.jpg"
   },
   {
     id: "recipe-087", rank: 87,
@@ -1220,7 +1306,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["돼지고기", "간장", "설탕", "마늘", "파", "참기름", "후추"],
     summary: "간장 베이스의 담백한 돼지 불백. 달콤짭짤한 양념이 스며든 부드러운 돼지고기 볶음.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+돼지불백"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+돼지불백",
+    thumbnail: "https://img.youtube.com/vi/10GHqiT9dC0/hqdefault.jpg"
   },
   {
     id: "recipe-088", rank: 88,
@@ -1234,7 +1321,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭발", "고추장", "고춧가루", "간장", "설탕", "마늘", "생강"],
     summary: "맥주 안주로 최고인 매콤달콤 닭발. 뼈에 붙은 쫄깃한 살이 매력인 닭발 볶음 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+닭발볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+닭발볶음",
+    thumbnail: "https://img.youtube.com/vi/4VUa3cGZYnU/hqdefault.jpg"
   },
   {
     id: "recipe-089", rank: 89,
@@ -1248,7 +1336,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["쌀국수", "소고기", "양파", "스프링어니언", "고수", "피시소스", "라임"],
     summary: "집에서 만드는 베트남 쌀국수. 진한 소고기 육수와 쌀국수의 조화로 만드는 포.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+쌀국수"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+쌀국수",
+    thumbnail: "https://img.youtube.com/vi/7PO_CV3RpA4/hqdefault.jpg"
   },
   {
     id: "recipe-090", rank: 90,
@@ -1262,7 +1351,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["식빵", "참치캔", "마요네즈", "양파", "오이", "상추", "머스타드"],
     summary: "간단하고 맛있는 참치 샌드위치. 양파와 마요네즈의 비율이 포인트인 클래식 샌드위치.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+참치샌드위치"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+참치샌드위치",
+    thumbnail: "https://img.youtube.com/vi/rlOywSJnPOU/hqdefault.jpg"
   },
   {
     id: "recipe-091", rank: 91,
@@ -1276,7 +1366,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["콩비지", "김치", "돼지고기", "파", "마늘", "소금"],
     summary: "구수하고 든든한 콩비지찌개. 콩비지와 신 김치의 조화로 만드는 겨울철 최고의 찌개.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kong+biji+soybean+paste+stew"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+kong+biji+soybean+paste+stew",
+    thumbnail: "https://img.youtube.com/vi/aBbQ4F0jBug/hqdefault.jpg"
   },
   {
     id: "recipe-092", rank: 92,
@@ -1290,7 +1381,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["떡국떡", "고추장", "간장", "마늘", "달걀", "파", "멸치육수"],
     summary: "설날의 매운 버전 떡국. 칼칼하고 얼큰한 국물로 끓이는 특별한 매운 떡국.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+매운떡국"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+매운떡국",
+    thumbnail: "https://img.youtube.com/vi/HTJZ_yJ9TdI/hqdefault.jpg"
   },
   {
     id: "recipe-093", rank: 93,
@@ -1304,7 +1396,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["찹쌀가루", "진달래꽃", "꿀", "설탕", "소금", "식용유"],
     summary: "봄의 전통 한과 화전. 찹쌀 반죽에 꽃을 올려 부친 아름답고 달콤한 전통 디저트.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+hwajeon+flower+rice+cake"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+hwajeon+flower+rice+cake",
+    thumbnail: "https://img.youtube.com/vi/XELHBDZ2Ngc/hqdefault.jpg"
   },
   {
     id: "recipe-094", rank: 94,
@@ -1318,7 +1411,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["닭", "토마토", "양파", "마살라 스파이스", "코코넛밀크", "마늘", "생강"],
     summary: "인도 카레 치킨 마살라. 향신료의 깊고 풍부한 맛이 일품인 집에서 만드는 인도 요리.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+치킨마살라"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹하루+치킨마살라",
+    thumbnail: "https://img.youtube.com/vi/8CzGlrSTiIY/hqdefault.jpg"
   },
   {
     id: "recipe-095", rank: 95,
@@ -1332,7 +1426,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["오리고기", "대파", "마늘", "간장", "설탕", "참기름", "깨"],
     summary: "고소한 오리고기와 파채의 만남. 불향 가득한 오리고기 볶음의 핵심 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+오리볶음"
+    youtubeUrl: "https://www.youtube.com/results?search_query=백종원+오리볶음",
+    thumbnail: "https://img.youtube.com/vi/IGK6NddItgw/hqdefault.jpg"
   },
   {
     id: "recipe-096", rank: 96,
@@ -1346,7 +1441,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["가래떡", "버터", "꿀", "간장", "참기름"],
     summary: "간단하게 만드는 구운 가래떡. 버터에 노릇하게 구워 꿀을 뿌리는 달콤한 간식.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+구운가래떡"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+구운가래떡",
+    thumbnail: "https://img.youtube.com/vi/EHStMsPMIFU/hqdefault.jpg"
   },
   {
     id: "recipe-097", rank: 97,
@@ -1360,7 +1456,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["유자", "설탕", "꿀"],
     summary: "겨울 비타민 유자청. 싱싱한 유자를 설탕과 꿀에 재워 만드는 건강한 홈메이드 유자청.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+유자청만들기"
+    youtubeUrl: "https://www.youtube.com/results?search_query=매일맛나+유자청만들기",
+    thumbnail: "https://img.youtube.com/vi/TFB9wk30SlA/hqdefault.jpg"
   },
   {
     id: "recipe-098", rank: 98,
@@ -1374,7 +1471,8 @@ const recipesData = [
     difficulty: "중간",
     ingredients: ["찹쌀가루", "콩고물", "생크림", "설탕", "우유", "연유"],
     summary: "쫀득한 인절미와 부드러운 아이스크림의 만남. 한국적인 재료로 만드는 퓨전 디저트.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+인절미아이스크림"
+    youtubeUrl: "https://www.youtube.com/results?search_query=쿠킹트리+인절미아이스크림",
+    thumbnail: "https://img.youtube.com/vi/OkG0wloFTUw/hqdefault.jpg"
   },
   {
     id: "recipe-099", rank: 99,
@@ -1388,7 +1486,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["청국장", "두부", "김치", "파", "마늘", "고춧가루", "멸치육수"],
     summary: "구수하고 진한 청국장찌개. 발효 청국장의 깊은 맛을 살린 건강한 한국 전통 발효 찌개.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+cheonggukjang+jjigae"
+    youtubeUrl: "https://www.youtube.com/results?search_query=Maangchi+cheonggukjang+jjigae",
+    thumbnail: "https://img.youtube.com/vi/vhwUZAXW2Wk/hqdefault.jpg"
   },
   {
     id: "recipe-100", rank: 100,
@@ -1402,7 +1501,8 @@ const recipesData = [
     difficulty: "쉬움",
     ingredients: ["고추장", "설탕", "간장", "마늘", "육수", "참기름"],
     summary: "분식집 맛 그대로! 만능 떡볶이 소스 만들기. 한 번 만들어두면 두고두고 활용하는 레시피.",
-    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+떡볶이소스"
+    youtubeUrl: "https://www.youtube.com/results?search_query=뚝딱이형+떡볶이소스",
+    thumbnail: "https://img.youtube.com/vi/M1hBDcnEXLk/hqdefault.jpg"
   }
 ];
 

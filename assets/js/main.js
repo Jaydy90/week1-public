@@ -672,8 +672,13 @@ const HomeScreen = {
       ing => `<span class="recipe-ingredient-tag">${ing}</span>`
     ).join('');
 
+    const thumbnailHTML = recipe.thumbnail
+      ? `<div class="recipe-thumbnail"><img src="${recipe.thumbnail}" alt="${recipe.title}" loading="lazy"></div>`
+      : '';
+
     return `
       <article class="recipe-card" style="--delay:${Math.min(index * 0.05, 0.8)}s" data-recipe-id="${recipe.id}">
+        ${thumbnailHTML}
         <div class="recipe-card-header">
           <div class="${rankClass}">${rankLabel}</div>
           <div class="recipe-title-block">
