@@ -2200,6 +2200,26 @@ const restaurantImageOverrides = {
   "진주회관": "assets/images/restaurants/jinju.jpg",
   "한옥집김치찜": "assets/images/restaurants/hanok.jpg",
   "평양면옥": "assets/images/restaurants/pyongyang.jpg",
+  // 흑백요리사 (chef)
+  "디핀": "assets/images/restaurants/deepin.jpg",
+  "트리드": "assets/images/restaurants/trid.jpg",
+  "비아 톨레도 파스타바": "assets/images/restaurants/viatoledo.jpg",
+  "리북방": "assets/images/restaurants/leebukbang.jpg",
+  "도량": "assets/images/restaurants/doryang.jpg",
+  "로컬릿": "assets/images/restaurants/localeat.jpg",
+  "초이닷": "assets/images/restaurants/choidot.jpg",
+  "티엔미미": "assets/images/restaurants/tienmimi.jpg",
+  "파브리키친": "assets/images/restaurants/fabrikitchen.jpg",
+  "만찢남": "assets/images/restaurants/manchitnam.jpg",
+  "구찌 오스테리아": "assets/images/restaurants/gucci.jpg",
+  "쵸이닷": "assets/images/restaurants/choydot.jpg",
+  "보노보노": "assets/images/restaurants/bonobono.jpg",
+  "안성재의 모수": "assets/images/restaurants/mosu.jpg",
+  "네기 다이닝라운지": "assets/images/restaurants/negi.jpg",
+  "가보정": "assets/images/restaurants/gabojung.jpg",
+  "쵸이랩": "assets/images/restaurants/choylab.jpg",
+  "익스퀴진": "assets/images/restaurants/exquisine.jpg",
+  "온지음": "assets/images/restaurants/onjium.jpg",
 };
 
 const allRestaurants = allRestaurantsRaw.map((line, index) => {
