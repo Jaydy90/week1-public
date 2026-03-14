@@ -2030,6 +2030,43 @@ const DetailScreen = {
   render() {
     const r = this.currentRestaurant;
 
+    // 히어로 사진
+    const heroImg = document.getElementById('detail-hero-img');
+    if (heroImg) {
+      heroImg.src = getRestaurantPhotoUrl(r);
+      heroImg.alt = r.name;
+    }
+
+    // 히어로 그룹 배지
+    const heroBadge = document.getElementById('detail-hero-badge');
+    if (heroBadge) {
+      let groupLabel, groupBadgeClass;
+      if (r.group === 'michelin') { groupLabel = '미쉐린'; groupBadgeClass = 'michelin'; }
+      else if (r.group === 'celebrity') { groupLabel = '유명인'; groupBadgeClass = 'celebrity'; }
+      else if (r.group === 'chef') { groupLabel = '흑백요리사'; groupBadgeClass = 'chef'; }
+      else if (r.group === 'bakery') {
+        const sub = r.bakerySubType || 'cafe';
+        groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
+        groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
+      } else { groupLabel = '검증 중'; groupBadgeClass = r.group || ''; }
+      heroBadge.textContent = groupLabel;
+      heroBadge.className = `info-card-group-badge ${groupBadgeClass}`;
+    }
+
+    // 히어로 리뷰 요약
+    const heroReview = document.getElementById('detail-hero-review');
+    if (heroReview) {
+      if (r.review) {
+        heroReview.innerHTML = `
+          <div class="detail-review-block">
+            <p class="detail-review-summary">${r.review.summary}</p>
+            <div class="detail-review-keywords">${r.review.keywords.map(kw => `<span class="review-kw">${kw}</span>`).join('')}</div>
+          </div>`;
+      } else {
+        heroReview.innerHTML = '';
+      }
+    }
+
     // 제목과 위치
     document.getElementById('detail-title').textContent = r.name;
     document.getElementById('detail-location').textContent = r.location || `${r.region} ${r.area}`;

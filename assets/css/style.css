@@ -2063,7 +2063,99 @@ textarea {
 
 /* 상세 화면 */
 .detail-header {
+  margin-bottom: 1rem;
+}
+
+/* ── 디테일 히어로: 카드 외면 내용을 크게 ── */
+.detail-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  background: rgba(255,255,255,0.95);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
   margin-bottom: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.07);
+}
+
+.detail-hero-photo {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.detail-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-hero-photo .info-card-group-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+}
+
+.detail-hero-info {
+  padding: 2rem 2rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.detail-hero-info .detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 0 0 0.2rem;
+  line-height: 1.2;
+}
+
+.detail-hero-info .detail-location {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.detail-hero-info .detail-category {
+  font-size: 0.95rem;
+  color: var(--secondary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.detail-hero-info .detail-menu {
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin: 0;
+}
+
+.detail-review-block {
+  margin-top: 1rem;
+  padding: 10px 12px;
+  background: rgba(244,196,90,0.13);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+}
+
+.detail-review-summary {
+  margin: 0 0 7px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.detail-review-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .back-button {
@@ -2842,6 +2934,23 @@ textarea {
 
   .action-button {
     min-width: 100%;
+  }
+
+  .detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-hero-photo {
+    border-radius: var(--radius) var(--radius) 0 0;
+    aspect-ratio: 16/9;
+  }
+
+  .detail-hero-info {
+    padding: 1.4rem 1.4rem 1.6rem;
+  }
+
+  .detail-hero-info .detail-title {
+    font-size: 1.5rem;
   }
 }
 

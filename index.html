@@ -135,7 +135,7 @@
     <link rel="dns-prefetch" href="https://js.stripe.com">
     <link rel="dns-prefetch" href="https://djmadubptsajvdvzpdvd.supabase.co">
 
-    <link rel="stylesheet" href="assets/css/style.css?v=49">
+    <link rel="stylesheet" href="assets/css/style.css?v=50">
     <link rel="stylesheet" href="assets/css/chefs-section.css?v=4">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
@@ -721,15 +721,26 @@
         <section class="page-section" id="detail" data-section="detail">
             <div class="detail-header">
                 <button class="back-button" id="detail-back-btn">← 뒤로</button>
-                <h1 class="detail-title" id="detail-title">식당 이름</h1>
-                <div class="detail-location" id="detail-location">서울 강남구</div>
+            </div>
+
+            <!-- 카드 히어로: 사진 + 핵심 정보 크게 보기 -->
+            <div class="detail-hero" id="detail-hero">
+                <div class="detail-hero-photo">
+                    <img id="detail-hero-img" src="" alt="" loading="lazy">
+                    <span class="info-card-group-badge" id="detail-hero-badge"></span>
+                </div>
+                <div class="detail-hero-info">
+                    <h1 class="detail-title" id="detail-title">식당 이름</h1>
+                    <div class="detail-location" id="detail-location">서울 강남구</div>
+                    <p class="detail-category" id="detail-category">카테고리</p>
+                    <p class="detail-menu" id="detail-menu"><strong>대표 메뉴:</strong> 메뉴명</p>
+                    <div class="detail-hero-review" id="detail-hero-review"></div>
+                </div>
             </div>
 
             <!-- 식당 정보 -->
             <div class="detail-info">
                 <div class="detail-main-info">
-                    <p class="detail-category" id="detail-category">카테고리</p>
-                    <p class="detail-menu" id="detail-menu"><strong>대표 메뉴:</strong> 메뉴명</p>
                     <p class="detail-address" id="detail-address">주소 정보</p>
                 </div>
 
@@ -1277,7 +1288,7 @@
     </script>
     <script src="assets/js/data/news.js?v=42"></script>
     <script src="assets/js/features/subscription.js?v=40"></script>
-    <script src="assets/js/main.js?v=62"></script>
+    <script src="assets/js/main.js?v=63"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4715957925440109" crossorigin="anonymous"></script>
 </body>
 </html>
