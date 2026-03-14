@@ -944,10 +944,14 @@ const HomeScreen = {
 
   // 인라인 상세 정보 표시 (클릭한 카드 바로 아래)
   showInlineDetail(restaurantId, clickedCard) {
-    // 레스토랑 데이터 찾기
-    let restaurant = window.nearbySpots.find(r => r.id === restaurantId);
-    if (!restaurant && window.allRestaurants) {
-      restaurant = window.allRestaurants.find(r => r.id === restaurantId);
+    // 레스토랑 데이터 찾기 (allRestaurants 우선 — review 필드 포함)
+    let restaurant = null;
+    if (window.allRestaurants) restaurant = window.allRestaurants.find(r => r.id === restaurantId);
+    if (!restaurant) restaurant = window.nearbySpots.find(r => r.id === restaurantId);
+    // nearbySpots에서 찾았지만 review 없으면 allRestaurants와 병합
+    if (restaurant && !restaurant.review && window.allRestaurants) {
+      const full = window.allRestaurants.find(r => r.id === restaurantId);
+      if (full) restaurant = Object.assign({}, restaurant, full);
     }
 
     if (!restaurant) {
@@ -991,6 +995,27 @@ const HomeScreen = {
   createInlineDetailHTML(r) {
     const badgeHTML = r.badgeType ? `<span class="badge-chip">${r.badgeType}</span>` : '';
 
+    // 그룹 배지
+    let groupLabel, groupBadgeClass;
+    if (r.group === 'michelin') { groupLabel = '미쉐린'; groupBadgeClass = 'michelin'; }
+    else if (r.group === 'celebrity') { groupLabel = '유명인'; groupBadgeClass = 'celebrity'; }
+    else if (r.group === 'chef') { groupLabel = '흑백요리사'; groupBadgeClass = 'chef'; }
+    else if (r.group === 'bakery') {
+      const sub = r.bakerySubType || 'cafe';
+      groupLabel = sub === 'bread-only' ? '빵집형' : sub === 'cafe-outlet' ? '콘센트 있음' : '카페형';
+      groupBadgeClass = `bakery bakery-${sub === 'bread-only' ? 'bread' : sub === 'cafe-outlet' ? 'outlet' : 'cafe'}`;
+    } else { groupLabel = ''; groupBadgeClass = ''; }
+
+    // 사진
+    const photoUrl = getRestaurantPhotoUrl(r);
+
+    // 리뷰
+    const reviewHTML = r.review ? `
+      <div class="detail-review-block">
+        <p class="detail-review-summary">${r.review.summary}</p>
+        <div class="detail-review-keywords">${r.review.keywords.map(kw => `<span class="review-kw">${kw}</span>`).join('')}</div>
+      </div>` : '';
+
     // 주소
     const addressHTML = r.address ? `<p class="inline-detail-address">📍 ${r.address}</p>` : '';
 
@@ -1022,20 +1047,25 @@ const HomeScreen = {
 
     return `
       <div class="inline-detail-header">
-        <div class="inline-detail-title-section">
-          <h2 class="inline-detail-title">${r.name}</h2>
-          <p class="inline-detail-location">${r.location || `${r.region} ${r.area}`}</p>
-          ${addressHTML}
-        </div>
         <button class="inline-detail-close" id="inline-detail-close">✕ 닫기</button>
       </div>
 
-      <div class="inline-detail-content">
-        <div class="inline-detail-main-info">
+      <div class="inline-hero">
+        <div class="inline-hero-photo">
+          <img src="${photoUrl}" alt="${r.name}" loading="lazy">
+          ${groupLabel ? `<span class="info-card-group-badge ${groupBadgeClass}">${groupLabel}</span>` : ''}
+        </div>
+        <div class="inline-hero-info">
+          <h2 class="inline-detail-title">${r.name}</h2>
+          <p class="inline-detail-location">${r.location || `${r.region} ${r.area}`}</p>
+          ${addressHTML}
           <p class="inline-detail-category">${r.category || r.badgeType || ''} ${badgeHTML}</p>
           <p class="inline-detail-menu"><strong>대표 메뉴:</strong> ${r.mainMenu || '정보 없음'}</p>
+          ${reviewHTML}
         </div>
+      </div>
 
+      <div class="inline-detail-content">
         <div class="inline-trust-evidence">
           <h3>신뢰 근거</h3>
           <p>${r.context || r.category || '신뢰할 수 있는 출처에서 확인되었습니다.'}</p>
