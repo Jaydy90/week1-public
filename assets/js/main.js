@@ -1963,6 +1963,12 @@ const DetailScreen = {
       restaurant = window.allRestaurants.find(r => r.id === id);
     }
 
+    // nearbySpots에서 찾았지만 review 등 추가 필드가 없으면 allRestaurants에서 병합
+    if (restaurant && !restaurant.review && window.allRestaurants) {
+      const full = window.allRestaurants.find(r => r.id === id);
+      if (full) restaurant = Object.assign({}, restaurant, full);
+    }
+
     return restaurant;
   },
 
